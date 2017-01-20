@@ -8,16 +8,43 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			.listt{width:140px;display:inline-block;}
+		</style>
 	</head>
 
 	<body>
+			<section>
+				<select>
+					<option value="" disabled >请选择首部</option>
+					<option value="首部一" selected>首部一</option>
+					<option value="首部二">首部二</option>
+					<option value="首部三">首部三</option>
+					<option value="首部四">首部四</option>
+					<option value="首部五">首部五</option>
+					<option value="首部六">首部六</option>
+					<option value="首部七">首部七</option>
+					
+				</select>
+			</section>			
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view mui-table-view-chevron">
-					
+					<li class="mui-table-view-cell"><div style="background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 200px;"></div></li>
+					<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
+					<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
+					<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
+					<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
+					<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
+					<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
+					<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
 				</ul>
+				
+				
+				
 			</div>
 		</div> 
 		<script src="js/mui.min.js"></script>
@@ -27,10 +54,6 @@
 					container: '#pullrefresh',
 					down: {
 						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
 					}
 				}
 			});
@@ -39,6 +62,7 @@
 			 */
 			function pulldownRefresh() {
 				setTimeout(function() {
+					/*
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for (var i = cells.length, len = i + 3; i < len; i++) {
@@ -48,6 +72,7 @@
 						//下拉刷新，新纪录插到最前面；
 						table.insertBefore(li, table.firstChild);
 					}
+					*/
 					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
 				}, 1500);
 			}

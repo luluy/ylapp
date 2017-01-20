@@ -5,7 +5,7 @@
 		"iPad"
 	],
 	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "mui登录模板",/*应用名称，程序桌面图标名称*/
+	"name": "智能灌溉",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -21,9 +21,7 @@
 		"url": "http://www.dcloud.io"
 	},
 	"permissions": {
-		"Accelerometer": {
-			"description": "访问加速度感应器"
-		},
+
 
 		"Cache": {
 			"description": "管理应用缓存"
@@ -34,55 +32,24 @@
 		},
 
 
-		"Downloader": {
-			"description": "文件下载管理"
-		},
+
 		"Events": {
 			"description": "应用扩展事件"
 		},
-		"File": {
-			"description": "访问本地文件系统"
-		},
-		"Gallery": {
-			"description": "访问系统相册"
-		},
 
-		"Invocation": {
-			"description": "使用Native.js能力"
-		},
 
-		"Orientation": {
-			"description": "访问方向感应器"
-		},
-		"Proximity": {
-			"description": "访问距离感应器"
-		},
-		"Storage": {
-			"description": "管理应用本地数据"
-		},
+
+
+
+
+
+
 		"UI": {},
-		"Uploader": {
-			"description": "管理文件上传任务"
-		},
-		"Runtime": {
-			"description": "访问运行期环境"
-		},
-		"XMLHttpRequest": {
-			"description": "跨域网络访问"
-		},
-		"Zip": {
-			"description": "文件压缩与解压缩"
-		},
-
-
-
-
-
-
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Share":{},"OAuth":{},"Device":{}
+		"Runtime": {},
+		"Device": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -105,7 +72,16 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"
+				]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -167,9 +143,9 @@
 					}
 				},
 				"android": {
-					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
+					/*普通屏启动图片，分辨率：240x282*/
+					/*大屏启动图片，分辨率：320x442*/
+					/*高分屏启动图片，分辨率：480x762*/
 					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
 					"xxhdpi": ""
 				}
@@ -365,14 +341,23 @@
 			},
 			"sbkz.html": {
 				"resources": [
-					"sbkz_sub.html"
+					"sbkz_sub.html",
+					"js/classie.js",
+					"js/selectFx.js",
+					"css/cs-skin-elastic.css",
+					"css/demo.css",
+					"css/normalize.css",
+					"css/cs-select.css",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"sbkz_sub.html": {
 				"resources": [
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/demo.css",
+					"img/machineHouse.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -409,7 +394,9 @@
 			},
 			"tjjc.html": {
 				"resources": [
-					"tjkz_sub.html"
+					"tjkz_sub.html",
+					"css/mui.min.css",
+					"tjjc_sub.html"
 				],
 				"refer": [],
 				"priority": 0
@@ -428,6 +415,34 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"tjjc_sub.html": {
+				"resources": [
+					"css/mui.min.css",
+					"img/closeStatus.png",
+					"img/openStatus.png",
+					"img/temperature.png",
+					"img/humidity.png",
+					"img/sunshine.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"tjkz_sub.html": {
+				"resources": [
+					"css/mui.min.css",
+					"img/openStatus.png",
+					"img/closeStatus.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"lgjh_sub.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -439,7 +454,7 @@
 			]
 		}
 	},
-	"unpackage":[
-	  "README.md"
+	"unpackage": [
+		"README.md"
 	]
 }

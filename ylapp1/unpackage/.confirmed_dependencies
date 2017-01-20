@@ -44,8 +44,10 @@
       "css/feedback-page.css",
       "js/feedback-page.js",
       "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-      "js/mui.view.js"
-    ]
+      "js/mui.view.js",
+      "images/iconfont-tianjia.png"
+    ],
+    "refer": []
   },
   "tab-webview-main.html": {
     "resources": [
@@ -63,18 +65,21 @@
   "tab-webview-subpage-contact.html": {
     "resources": [
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "tab-webview-subpage-about.html": {
     "resources": [
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "tab-webview-subpage-chat.html": {
     "resources": [
       "fonts/mui.ttf",
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "nav_nine.html": {
     "resources": [
@@ -85,7 +90,8 @@
       "images/muwu.jpg",
       "images/shuijiao.jpg",
       "css/app.css"
-    ]
+    ],
+    "refer": []
   },
   "nav_nine1.html": {
     "resources": [
@@ -115,11 +121,19 @@
   "tab-webview-subpage-setting.html": {
     "resources": [
       "fonts/mui.ttf"
-    ]
+    ],
+    "refer": []
   },
   "sbkz.html": {
     "resources": [
-      "sbkz_sub.html"
+      "sbkz_sub.html",
+      "js/classie.js",
+      "js/selectFx.js",
+      "css/cs-skin-elastic.css",
+      "css/demo.css",
+      "css/normalize.css",
+      "css/cs-select.css",
+      "css/mui.min.css"
     ],
     "refer": [
       "sbkz_sub.html"
@@ -127,8 +141,11 @@
   },
   "sbkz_sub.html": {
     "resources": [
-      "css/mui.min.css"
-    ]
+      "css/mui.min.css",
+      "css/demo.css",
+      "img/machineHouse.png"
+    ],
+    "refer": []
   },
   "tjkz.html": {
     "resources": [
@@ -160,14 +177,18 @@
   "jfkz_sub.html": {
     "resources": [
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "tjjc.html": {
     "resources": [
-      "tjkz_sub.html"
+      "tjkz_sub.html",
+      "css/mui.min.css",
+      "tjjc_sub.html"
     ],
     "refer": [
-      "tjkz_sub.html"
+      "tjkz_sub.html",
+      "tjjc_sub.html"
     ]
   },
   "rz.html": {
@@ -180,6 +201,31 @@
     ]
   },
   "rz_sub.html": {
+    "resources": [
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tjjc_sub.html": {
+    "resources": [
+      "css/mui.min.css",
+      "img/closeStatus.png",
+      "img/openStatus.png",
+      "img/temperature.png",
+      "img/humidity.png",
+      "img/sunshine.png"
+    ],
+    "refer": []
+  },
+  "tjkz_sub.html": {
+    "resources": [
+      "css/mui.min.css",
+      "img/openStatus.png",
+      "img/closeStatus.png"
+    ],
+    "refer": []
+  },
+  "lgjh_sub.html": {
     "resources": [
       "css/mui.min.css"
     ]
