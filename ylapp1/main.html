@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				console.log('direction');
+				$.init();
+				var settings = app.getSettings();
+				var account = doc.getElementById('account');
+				var subpages = ['nav_nine1.html', 'tab-webview-subpage-chat.html', 'tab-webview-subpage-contact.html', 'tab-webview-subpage-setting.html'];
+				var subpage_style = {
+					top: '0px',
+					bottom: '0px'
+				};
+				
+			
+				
+				
+				var aniShow = {};				
+				//
+				window.addEventListener('show', function() {
+					var state = app.getState();
+					console.log('main_show');
+					//account.innerText = state.account;
+				}, false);
+				$.plusReady(function() {
+					console.log('plusReady');
+					var self = plus.webview.currentWebview();
+					for (var i = 0; i < 4; i++) {
+						var temp = {};
+						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+						if (i > 0) {
+							sub.hide();
+						}else{
+							temp[subpages[i]] = "true";
+							mui.extend(aniShow,temp);
+						}
+						self.append(sub);
+					}					
+
+					//--
+					$.oldBack = mui.back;
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
