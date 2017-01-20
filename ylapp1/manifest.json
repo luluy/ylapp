@@ -117,11 +117,11 @@
 					}
 				},
 				"android": {
-					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
-					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
-					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
-					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "unpackage/res/icons/144x144.png"
+					"mdpi": "img/app48.png", /*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "img/app48.png", /*大屏程序图标，分辨率：48x48*/
+					"hdpi": "img/app72.png", /*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "img/app96.png",/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "img/app144.png"
 				}
 			},
 			"splashscreen": {
@@ -146,8 +146,8 @@
 					/*普通屏启动图片，分辨率：240x282*/
 					/*大屏启动图片，分辨率：320x442*/
 					/*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": ""
+					"xhdpi": "img/app720.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "img/app1080.png","hdpi":"img/app480.png","ldpi":"img/app320.png","mdpi":"img/app240.png"
 				}
 			}
 		}
@@ -455,6 +455,7 @@
 		}
 	},
 	"unpackage": [
-		"README.md"
+	  "README.md",
+	  "libs/easymob-webim-sdk/quickstart.md"
 	]
 }
