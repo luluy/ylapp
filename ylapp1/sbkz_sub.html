@@ -33,7 +33,13 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell"><div style="background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 200px;"></div></li>
+					<li class="mui-table-view-cell">
+						<div style="text-align: center;background-color: red;background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 200px;">
+								<div class="mui-switch mui-switch-blue mui-active" style="margin: 0px;">
+									<div class="mui-switch-handle"></div>
+								</div>
+						</div>
+					</li>
 					<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
 					<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
 					<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
@@ -48,6 +54,7 @@
 			</div>
 		</div> 
 		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -96,6 +103,7 @@
 			}
 			if (mui.os.plus) {
 				mui.plusReady(function() {
+					sbkz_init();
 					//setTimeout(function() {
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
@@ -103,8 +111,13 @@
 				});
 			} else {
 				mui.ready(function() {
+					sbkz_init();
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
 				});
+			}
+			
+			function sbkz_init(){
+				
 			}
 		</script>
 	</body>

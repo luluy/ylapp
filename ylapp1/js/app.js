@@ -163,4 +163,5 @@
 	
 	owner.hosturl = "http://1.85.44.234/";
 	owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
+	owner.bg_user_login = "control/ashx/yangling.ashx";
 }(mui, window.app = {}));
