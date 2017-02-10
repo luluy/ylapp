@@ -357,7 +357,8 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/demo.css",
-					"img/machineHouse.png"
+					"img/machineHouse.png",
+					"img/machineHouse_gray.png"
 				],
 				"refer": [],
 				"priority": 0

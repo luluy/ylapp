@@ -167,6 +167,7 @@
                 
 
 		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -220,11 +221,15 @@
 					//setTimeout(function() {
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
-
+					//console.log(JSON.stringify(app.shoubu));
+					var shoubu = getdata("shoubu");
+					mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
+					
+					mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
 				});
 			}
 		</script>

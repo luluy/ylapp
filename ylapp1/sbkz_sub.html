@@ -10,6 +10,8 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
 			.listt{width:140px;display:inline-block;}
+			.switch-open{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 180px;padding-top:80px;}
+			.switch-close{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse_gray.png);height: 180px;padding-top:80px;}
 		</style>
 	</head>
 
@@ -34,12 +36,13 @@
 				<!--数据列表-->
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
-						<div style="text-align: center;background-color: red;background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 200px;">
-								<div class="mui-switch mui-switch-blue mui-active" style="margin: 0px;">
-									<div class="mui-switch-handle"></div>
-								</div>
+						<div class="switch-open">
+							<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
+								<div class="mui-switch-handle"></div>
+							</div>
 						</div>
 					</li>
+					<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
 					<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
 					<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
 					<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
@@ -118,7 +121,54 @@
 			
 			function sbkz_init(){
 				
+				//plus.nativeUI.showWaiting("正在获取首部数据...");
+			
+				mui.ajax(app.c_a_yangling, {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						//plus.nativeUI.closeWaiting();
+						savedata("shoubu",data);
+						//mui.each(data,function(idx,item){console.log(JSON.stringify(item));});
+
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(data);
+						//异常处理；
+						//plus.nativeUI.closeWaiting();
+						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					}
+				});						
+				
+				
 			}
+			
+			mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+				//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
+				/**
+				 * toggle 事件监听
+				 */
+				this.addEventListener('toggle', function(event) {
+					//event.detail.isActive 可直接获取当前状态
+					var btn = ['是', '否'];
+					if(event.detail.isActive){
+							mui.confirm('你确定要开启编码为H01-1的泵站吗？', '', btn, function(e) {
+								e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
+							})						
+						removeClass(this.parentNode,"switch-close");
+						addClass(this.parentNode,"switch-open");
+					}else{
+						removeClass(this.parentNode,"switch-open");
+						addClass(this.parentNode,"switch-close");
+					}
+					//this.parentNode.parentNode.className = "";
+					//this.parentNode.parentNode.className = "switch-close";
+					//this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
+				});
+			});			
+			
 		</script>
 	</body>
 

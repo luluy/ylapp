@@ -1,233 +1,234 @@
 {
-  "main.html": {
-    "refer": [
-      "setting.html",
-      "tab-webview-subpage-setting.html",
-      "tab-webview-subpage-chat.html",
-      "tab-webview-main.html",
-      "tab-webview-subpage-contact.html",
-      "nav_nine.html",
-      "nav_nine1.html"
-    ],
-    "resources": [
-      "css/mui.min.css",
-      "tab-webview-main.html",
-      "nav_nine.html",
-      "nav_nine1.html"
-    ]
-  },
-  "login.html": {
-    "resources": [
-      "js/app.js",
-      "js/mui.min.js",
-      "images/sinaweibo.png",
-      "css/mui.min.css",
-      "css/style.css",
-      "images/weixin.png",
-      "images/qq.png",
-      "js/mui.enterfocus.js",
-      "fonts/mui.ttf"
-    ],
-    "refer": [
-      "main.html"
-    ]
-  },
-  "setting.html": {
-    "resources": [
-      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css",
-      "libs/easymob-webim-sdk/json2.js",
-      "libs/easymob-webim-sdk/jquery-1.11.1.js",
-      "js/mui.locker.js",
-      "js/feedback.js",
-      "css/feedback-page.css",
-      "js/feedback-page.js",
-      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-      "js/mui.view.js",
-      "images/iconfont-tianjia.png"
-    ],
-    "refer": []
-  },
-  "tab-webview-main.html": {
-    "resources": [
-      "tab-webview-subpage-about.html",
-      "fonts/mui.ttf",
-      "css/mui.min.css"
-    ],
-    "refer": [
-      "tab-webview-subpage-about.html",
-      "tab-webview-subpage-setting.html",
-      "tab-webview-subpage-chat.html",
-      "tab-webview-subpage-contact.html"
-    ]
-  },
-  "tab-webview-subpage-contact.html": {
-    "resources": [
-      "css/mui.min.css"
-    ],
-    "refer": []
-  },
-  "tab-webview-subpage-about.html": {
-    "resources": [
-      "css/mui.min.css"
-    ],
-    "refer": []
-  },
-  "tab-webview-subpage-chat.html": {
-    "resources": [
-      "fonts/mui.ttf",
-      "css/mui.min.css"
-    ],
-    "refer": []
-  },
-  "nav_nine.html": {
-    "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "images/yuantiao.jpg",
-      "images/cbd.jpg",
-      "images/muwu.jpg",
-      "images/shuijiao.jpg",
-      "css/app.css"
-    ],
-    "refer": []
-  },
-  "nav_nine1.html": {
-    "resources": [
-      "images/cbd.jpg",
-      "images/muwu.jpg",
-      "images/yuantiao.jpg",
-      "fonts/mui.ttf",
-      "images/shuijiao.jpg",
-      "css/mui.min.css",
-      "img/drafts.png",
-      "img/dial.png",
-      "img/add.png",
-      "img/home.png",
-      "img/grade.png",
-      "img/setting.png"
-    ],
-    "refer": [
-      "setting.html",
-      "sbkz.html",
-      "tjkz.html",
-      "rz.html",
-      "tjjc.html",
-      "jfkz.html",
-      "lgjh.html"
-    ]
-  },
-  "tab-webview-subpage-setting.html": {
-    "resources": [
-      "fonts/mui.ttf"
-    ],
-    "refer": []
-  },
-  "sbkz.html": {
-    "resources": [
-      "sbkz_sub.html",
-      "js/classie.js",
-      "js/selectFx.js",
-      "css/cs-skin-elastic.css",
-      "css/demo.css",
-      "css/normalize.css",
-      "css/cs-select.css",
-      "css/mui.min.css"
-    ],
-    "refer": [
-      "sbkz_sub.html"
-    ]
-  },
-  "sbkz_sub.html": {
-    "resources": [
-      "css/mui.min.css",
-      "css/demo.css",
-      "img/machineHouse.png"
-    ],
-    "refer": []
-  },
-  "tjkz.html": {
-    "resources": [
-      "tjkz_sub.html",
-      "css/mui.min.css",
-      "tjjc_sub.html"
-    ],
-    "refer": [
-      "tjkz_sub.html",
-      "tjjc_sub.html"
-    ]
-  },
-  "lgjh.html": {
-    "resources": [
-      "lgjh_sub.html"
-    ],
-    "refer": [
-      "lgjh_sub.html"
-    ]
-  },
-  "jfkz.html": {
-    "resources": [
-      "jfkz_sub.html"
-    ],
-    "refer": [
-      "jfkz_sub.html"
-    ]
-  },
-  "jfkz_sub.html": {
-    "resources": [
-      "css/mui.min.css"
-    ],
-    "refer": []
-  },
-  "tjjc.html": {
-    "resources": [
-      "tjkz_sub.html",
-      "css/mui.min.css",
-      "tjjc_sub.html"
-    ],
-    "refer": [
-      "tjkz_sub.html",
-      "tjjc_sub.html"
-    ]
-  },
-  "rz.html": {
-    "resources": [
-      "css/mui.min.css",
-      "rz_sub.html"
-    ],
-    "refer": [
-      "rz_sub.html"
-    ]
-  },
-  "rz_sub.html": {
-    "resources": [
-      "css/mui.min.css"
-    ],
-    "refer": []
-  },
-  "tjjc_sub.html": {
-    "resources": [
-      "css/mui.min.css",
-      "img/closeStatus.png",
-      "img/openStatus.png",
-      "img/temperature.png",
-      "img/humidity.png",
-      "img/sunshine.png"
-    ],
-    "refer": []
-  },
-  "tjkz_sub.html": {
-    "resources": [
-      "css/mui.min.css",
-      "img/openStatus.png",
-      "img/closeStatus.png"
-    ],
-    "refer": []
-  },
-  "lgjh_sub.html": {
-    "resources": [
-      "css/mui.min.css"
-    ]
-  }
+	"main.html": {
+		"refer": [
+			"setting.html",
+			"tab-webview-subpage-setting.html",
+			"tab-webview-subpage-chat.html",
+			"tab-webview-main.html",
+			"tab-webview-subpage-contact.html",
+			"nav_nine.html",
+			"nav_nine1.html"
+		],
+		"resources": [
+			"css/mui.min.css",
+			"tab-webview-main.html",
+			"nav_nine.html",
+			"nav_nine1.html"
+		]
+	},
+	"login.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"images/sinaweibo.png",
+			"css/mui.min.css",
+			"css/style.css",
+			"images/weixin.png",
+			"images/qq.png",
+			"js/mui.enterfocus.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"main.html"
+		]
+	},
+	"setting.html": {
+		"resources": [
+			"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"libs/easymob-webim-sdk/json2.js",
+			"libs/easymob-webim-sdk/jquery-1.11.1.js",
+			"js/mui.locker.js",
+			"js/feedback.js",
+			"css/feedback-page.css",
+			"js/feedback-page.js",
+			"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+			"js/mui.view.js",
+			"images/iconfont-tianjia.png"
+		],
+		"refer": []
+	},
+	"tab-webview-main.html": {
+		"resources": [
+			"tab-webview-subpage-about.html",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"tab-webview-subpage-about.html",
+			"tab-webview-subpage-setting.html",
+			"tab-webview-subpage-chat.html",
+			"tab-webview-subpage-contact.html"
+		]
+	},
+	"tab-webview-subpage-contact.html": {
+		"resources": [
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"tab-webview-subpage-about.html": {
+		"resources": [
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"tab-webview-subpage-chat.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"nav_nine.html": {
+		"resources": [
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"images/yuantiao.jpg",
+			"images/cbd.jpg",
+			"images/muwu.jpg",
+			"images/shuijiao.jpg",
+			"css/app.css"
+		],
+		"refer": []
+	},
+	"nav_nine1.html": {
+		"resources": [
+			"images/cbd.jpg",
+			"images/muwu.jpg",
+			"images/yuantiao.jpg",
+			"fonts/mui.ttf",
+			"images/shuijiao.jpg",
+			"css/mui.min.css",
+			"img/drafts.png",
+			"img/dial.png",
+			"img/add.png",
+			"img/home.png",
+			"img/grade.png",
+			"img/setting.png"
+		],
+		"refer": [
+			"setting.html",
+			"sbkz.html",
+			"tjkz.html",
+			"rz.html",
+			"tjjc.html",
+			"jfkz.html",
+			"lgjh.html"
+		]
+	},
+	"tab-webview-subpage-setting.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"sbkz.html": {
+		"resources": [
+			"sbkz_sub.html",
+			"js/classie.js",
+			"js/selectFx.js",
+			"css/cs-skin-elastic.css",
+			"css/demo.css",
+			"css/normalize.css",
+			"css/cs-select.css",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"sbkz_sub.html"
+		]
+	},
+	"sbkz_sub.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/demo.css",
+			"img/machineHouse.png",
+			"img/machineHouse_gray.png"
+		],
+		"refer": []
+	},
+	"tjkz.html": {
+		"resources": [
+			"tjkz_sub.html",
+			"css/mui.min.css",
+			"tjjc_sub.html"
+		],
+		"refer": [
+			"tjkz_sub.html",
+			"tjjc_sub.html"
+		]
+	},
+	"lgjh.html": {
+		"resources": [
+			"lgjh_sub.html"
+		],
+		"refer": [
+			"lgjh_sub.html"
+		]
+	},
+	"jfkz.html": {
+		"resources": [
+			"jfkz_sub.html"
+		],
+		"refer": [
+			"jfkz_sub.html"
+		]
+	},
+	"jfkz_sub.html": {
+		"resources": [
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"tjjc.html": {
+		"resources": [
+			"tjkz_sub.html",
+			"css/mui.min.css",
+			"tjjc_sub.html"
+		],
+		"refer": [
+			"tjkz_sub.html",
+			"tjjc_sub.html"
+		]
+	},
+	"rz.html": {
+		"resources": [
+			"css/mui.min.css",
+			"rz_sub.html"
+		],
+		"refer": [
+			"rz_sub.html"
+		]
+	},
+	"rz_sub.html": {
+		"resources": [
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"tjjc_sub.html": {
+		"resources": [
+			"css/mui.min.css",
+			"img/closeStatus.png",
+			"img/openStatus.png",
+			"img/temperature.png",
+			"img/humidity.png",
+			"img/sunshine.png"
+		],
+		"refer": []
+	},
+	"tjkz_sub.html": {
+		"resources": [
+			"css/mui.min.css",
+			"img/openStatus.png",
+			"img/closeStatus.png"
+		],
+		"refer": []
+	},
+	"lgjh_sub.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	}
 }
