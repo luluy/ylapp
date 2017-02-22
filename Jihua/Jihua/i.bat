@@ -1,0 +1,1 @@
+installutil  bin\Debug\jihua.exe
