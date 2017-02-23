@@ -21,7 +21,7 @@ namespace Jihua
         protected override void OnStart(string[] args)
         {
             timer1 = new System.Timers.Timer();
-            timer1.Interval = 1000;  //设置计时器事件间隔执行时间
+            timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
         }
