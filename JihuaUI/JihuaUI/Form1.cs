@@ -18,6 +18,7 @@ namespace JihuaUI
     public partial class Form1 : Form
     {
         System.Timers.Timer timer1;
+        CookieCollection cookies = new CookieCollection();
         static String DefaultUserAgent = "Jihua";
         public Form1()
         {
@@ -30,32 +31,37 @@ namespace JihuaUI
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
+            doo();
         }
 
         private void timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             //执行SQL语句或其他操作
-            doo();
+            //doo();
         }
 
-        static async void doo()
+        async void doo()
         {
             //示例API可以参考：http://dev.jiepang.com/doc/get/users/show
-            var url = "http://1.85.44.234/irriplan/ashx/bg_irriplan.ashx?action=getFineIrriPlanList";
-            //var url = "http://1.85.44.234/admin/ashx/bg_user_login.ashx";
+            var host = "http://1.85.44.234/";
+            var url_login = host + "admin/ashx/bg_user_login.ashx";
+            var url_gettask = host + "irriplan/ashx/bg_irriplan.ashx?action=getFineIrriPlanList";
 
+           // IDictionary<string, string> parameters = { "action": 'login', 'city': '', 'remember': 'sevenday', 'loginName': 'admin', 'loginPwd': 'admin' };
             IDictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("action", "getFineIrriPlanList");
-            //parameters.Add("action", "logout");
-            parameters.Add("test", "test");
+            parameters.Add("action", "login");
+            //parameters.Add("remember", "sevenday");
+            parameters.Add("loginName", "admin");
+            parameters.Add("loginPwd", "admin");
 
-            HttpWebResponse response = CreatePostHttpResponse(url, parameters, null, null, Encoding.UTF8, null);
+            HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
+            //cookies = response.Cookies;
             StreamReader sr = new StreamReader(response.GetResponseStream());
             Console.WriteLine(sr.ReadToEnd());
         }
 
 
-        public static HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
+        public HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -78,7 +84,7 @@ namespace JihuaUI
                 request = WebRequest.Create(url) as HttpWebRequest;
             }
             request.Method = "POST";
-            request.ContentType = "application/json";
+            request.ContentType = "application/x-www-form-urlencoded";
 
             if (!string.IsNullOrEmpty(userAgent))
             {
