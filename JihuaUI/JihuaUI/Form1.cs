@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace JihuaUI
 {
     public partial class Form1 : Form
@@ -20,6 +22,11 @@ namespace JihuaUI
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
         static String DefaultUserAgent = "Jihua";
+        static String host = "http://1.85.44.234/";
+        static String url_login = host + "admin/ashx/bg_user_login.ashx";
+        static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx?action=getFineIrriPlanList";
+
+
         public Form1()
         {
             InitializeComponent();
@@ -42,24 +49,30 @@ namespace JihuaUI
 
         async void doo()
         {
-            //示例API可以参考：http://dev.jiepang.com/doc/get/users/show
-            var host = "http://1.85.44.234/";
-            var url_login = host + "admin/ashx/bg_user_login.ashx";
-            var url_gettask = host + "irriplan/ashx/bg_irriplan.ashx?action=getFineIrriPlanList";
+            login();
+        }
 
-           // IDictionary<string, string> parameters = { "action": 'login', 'city': '', 'remember': 'sevenday', 'loginName': 'admin', 'loginPwd': 'admin' };
+        public bool login()
+        {
+            // IDictionary<string, string> parameters = { "action": 'login', 'city': '', 'remember': 'sevenday', 'loginName': 'admin', 'loginPwd': 'admin' };
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "login");
-            //parameters.Add("remember", "sevenday");
+            parameters.Add("remember", "sevenday");
             parameters.Add("loginName", "admin");
             parameters.Add("loginPwd", "admin");
 
             HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
-            //cookies = response.Cookies;
-            StreamReader sr = new StreamReader(response.GetResponseStream());
-            Console.WriteLine(sr.ReadToEnd());
-        }
 
+            cookies = response.Cookies;
+            StreamReader sr = new StreamReader(response.GetResponseStream());
+            String txt = sr.ReadToEnd();
+            Console.WriteLine(txt);
+            loginstatus ret = JsonConvert.DeserializeObject<loginstatus>(txt);
+            object ret1 = JsonConvert.DeserializeObject(txt);
+
+
+            return false;
+        }
 
         public HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
         {
@@ -134,5 +147,11 @@ namespace JihuaUI
         {
             return true; //总是接受  
         }
+    }
+
+    public class loginstatus
+    {
+        public String msg { get; set; }
+        public bool success { get; set; }
     }
 }
