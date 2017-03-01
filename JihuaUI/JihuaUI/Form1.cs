@@ -19,13 +19,14 @@ namespace JihuaUI
 {
     public partial class Form1 : Form
     {
+        WebSocketSharp.WebSocket wss;
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
         static String DefaultUserAgent = "Jihua";
         static String host = "http://1.85.44.234/";
         static String url_login = host + "admin/ashx/bg_user_login.ashx";
-        static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx?action=getFineIrriPlanList";
-
+        static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
+        List<x1> start, end;
 
         public Form1()
         {
@@ -34,10 +35,14 @@ namespace JihuaUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            wss = new WebSocketSharp.WebSocket("ws://1.85.44.234:9612");
+            wss.OnMessage += new
             timer1 = new System.Timers.Timer();
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
+            start = new List<x1>();
+            end = new List<x1>();
             doo();
         }
 
@@ -49,7 +54,10 @@ namespace JihuaUI
 
         async void doo()
         {
-            login();
+            if (login())
+            {
+                gettask();
+            }
         }
 
         public bool login()
@@ -68,10 +76,35 @@ namespace JihuaUI
             String txt = sr.ReadToEnd();
             Console.WriteLine(txt);
             loginstatus ret = JsonConvert.DeserializeObject<loginstatus>(txt);
-            object ret1 = JsonConvert.DeserializeObject(txt);
+            return ret.success;
+        }
 
+        public bool gettask()
+        {
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("action", "getFineIrriPlanList");
+            parameters.Add("stm", "2017-02-01");
+            //parameters.Add("etm", "admin");
+            //parameters.Add("loginPwd", "admin");
 
-            return false;
+            HttpWebResponse response = CreatePostHttpResponse(url_gettask, parameters, null, null, Encoding.UTF8, cookies);
+
+            cookies = response.Cookies;
+            StreamReader sr = new StreamReader(response.GetResponseStream());
+            String txt = sr.ReadToEnd();
+            Console.WriteLine(txt);
+            tasks ret = JsonConvert.DeserializeObject<tasks>(txt);
+            if(ret.total > 0)
+            {
+                foreach(x1 x in ret.rows)
+                {
+                    if(x.RUNMODE == "1")
+                    {
+                        start.Add(x);
+                    }
+                }
+            }
+            return true;
         }
 
         public HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
@@ -153,5 +186,34 @@ namespace JihuaUI
     {
         public String msg { get; set; }
         public bool success { get; set; }
+    }
+
+
+    public class x1
+    {
+        public String ID { get; set; }
+        public String TITLE;
+        public String SGNM;
+        public String BGNM;
+        public String PID;
+        public String SID;
+        public String CCD;
+        public String TLNG;
+        public String DAYS;
+        public String GTP;
+        public String STM;
+        public String ETM;
+        public String RUNMODE;
+        public String RUNSTATE;
+        public String HCD;
+        public String ACTSTM;
+        public String ACTETM;
+        public String MSG;
+
+    }
+
+    public class tasks{
+        public int total;
+        public x1[] rows;
     }
 }
