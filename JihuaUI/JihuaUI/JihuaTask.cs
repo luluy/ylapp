@@ -15,6 +15,7 @@ namespace JihuaUI
     class JihuaTask
     {
         WebSocketSharp.WebSocket wss;
+        static object wss_lock = new object();
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
         static TimeSpan ts = new TimeSpan(1, 0, 0);
@@ -26,6 +27,7 @@ namespace JihuaUI
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
         List<x1> start, end,outdate;
         static object _lock = new object();
+
         volatile bool exit;
         Thread jihua;
 
@@ -40,7 +42,7 @@ namespace JihuaUI
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
-            jihua = new Thread(this.JihuaThread);
+            jihua = new Thread(new ThreadStart(this.JihuaThread));
             jihua.Start();
             doo();
             return true;
@@ -102,123 +104,140 @@ namespace JihuaUI
             parameters.Add("remember", "sevenday");
             parameters.Add("loginName", "admin");
             parameters.Add("loginPwd", "admin");
+            loginstatus ret = new loginstatus();
 
             HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
+            if (response != null)
+            {
 
-            cookies = response.Cookies;
-            StreamReader sr = new StreamReader(response.GetResponseStream());
-            String txt = sr.ReadToEnd();
-            Console.WriteLine(txt);
-            loginstatus ret = JsonConvert.DeserializeObject<loginstatus>(txt);
+                cookies = response.Cookies;
+                StreamReader sr = new StreamReader(response.GetResponseStream());
+                String txt = sr.ReadToEnd();
+                //Console.WriteLine(txt);
+                ret = JsonConvert.DeserializeObject<loginstatus>(txt);
+            }
             return ret.success;
         }
 
         public bool gettask()
         {
+            
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "getFineIrriPlanList");
-            parameters.Add("stm", "2017-02-01");
+            //parameters.Add("stm", "2017-02-01");
             //parameters.Add("etm", "admin");
             //parameters.Add("loginPwd", "admin");
-
-            HttpWebResponse response = CreatePostHttpResponse(url_gettask, parameters, null, null, Encoding.UTF8, cookies);
-
-            cookies = response.Cookies;
-            StreamReader sr = new StreamReader(response.GetResponseStream());
-            String txt = sr.ReadToEnd();
-            //Console.WriteLine(txt);
-            tasks ret = JsonConvert.DeserializeObject<tasks>(txt);
-            if (ret.total > 0)
+            try
             {
-                lock (_lock)
+                HttpWebResponse response = CreatePostHttpResponse(url_gettask, parameters, null, null, Encoding.UTF8, cookies);
+
+                cookies = response.Cookies;
+                StreamReader sr = new StreamReader(response.GetResponseStream());
+                String txt = sr.ReadToEnd();
+                //Console.WriteLine(txt);
+                tasks ret = JsonConvert.DeserializeObject<tasks>(txt);
+                if (ret.total > 0)
                 {
-                    foreach (x1 x in ret.rows)
+                    lock (_lock)
                     {
-                        if (x.RUNMODE == "1")
+                        foreach (x1 x in ret.rows)
                         {
-                            //if((!start.Contains(x)) && (!end.Contains(x)) &&(!outdate.Contains(x)))
-                            //    start.Add(x);
-                            if (start.Contains(x))
-                                continue;
-                            if (end.Contains(x))
-                                continue;
-                            if (outdate.Contains(x))
-                                continue;
-                            start.Add(x);
+                            if (x.RUNMODE == "1")
+                            {
+                                //if((!start.Contains(x)) && (!end.Contains(x)) &&(!outdate.Contains(x)))
+                                //    start.Add(x);
+                                if (start.Contains(x))
+                                    continue;
+                                if (end.Contains(x))
+                                    continue;
+                                if (outdate.Contains(x))
+                                    continue;
+                                start.Add(x);
+                                Console.WriteLine(x.STM + " 新任务...");
+                            }
                         }
                     }
                 }
             }
+            catch (Exception c1) { }
             return true;
         }
 
         public HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
         {
-            if (string.IsNullOrEmpty(url))
+            try
             {
-                throw new ArgumentNullException("url");
-            }
-            if (requestEncoding == null)
-            {
-                throw new ArgumentNullException("requestEncoding");
-            }
-            HttpWebRequest request = null;
-            //如果是发送HTTPS请求  
-            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-            {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-                request = WebRequest.Create(url) as HttpWebRequest;
-                request.ProtocolVersion = HttpVersion.Version10;
-            }
-            else
-            {
-                request = WebRequest.Create(url) as HttpWebRequest;
-            }
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            if (!string.IsNullOrEmpty(userAgent))
-            {
-                request.UserAgent = userAgent;
-            }
-            else
-            {
-                request.UserAgent = DefaultUserAgent;
-            }
-
-            if (timeout.HasValue)
-            {
-                request.Timeout = timeout.Value;
-            }
-            if (cookies != null)
-            {
-                request.CookieContainer = new CookieContainer();
-                request.CookieContainer.Add(cookies);
-            }
-            //如果需要POST数据  
-            if (!(parameters == null || parameters.Count == 0))
-            {
-                StringBuilder buffer = new StringBuilder();
-                int i = 0;
-                foreach (string key in parameters.Keys)
+                if (string.IsNullOrEmpty(url))
                 {
-                    if (i > 0)
-                    {
-                        buffer.AppendFormat("&{0}={1}", key, parameters[key]);
-                    }
-                    else
-                    {
-                        buffer.AppendFormat("{0}={1}", key, parameters[key]);
-                    }
-                    i++;
+                    throw new ArgumentNullException("url");
                 }
-                byte[] data = requestEncoding.GetBytes(buffer.ToString());
-                using (Stream stream = request.GetRequestStream())
+                if (requestEncoding == null)
                 {
-                    stream.Write(data, 0, data.Length);
+                    throw new ArgumentNullException("requestEncoding");
                 }
+                HttpWebRequest request = null;
+                //如果是发送HTTPS请求  
+                if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                    request = WebRequest.Create(url) as HttpWebRequest;
+                    request.ProtocolVersion = HttpVersion.Version10;
+                }
+                else
+                {
+                    request = WebRequest.Create(url) as HttpWebRequest;
+                }
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                if (!string.IsNullOrEmpty(userAgent))
+                {
+                    request.UserAgent = userAgent;
+                }
+                else
+                {
+                    request.UserAgent = DefaultUserAgent;
+                }
+
+                if (timeout.HasValue)
+                {
+                    request.Timeout = timeout.Value;
+                }
+                if (cookies != null)
+                {
+                    request.CookieContainer = new CookieContainer();
+                    request.CookieContainer.Add(cookies);
+                }
+                //如果需要POST数据  
+                if (!(parameters == null || parameters.Count == 0))
+                {
+                    StringBuilder buffer = new StringBuilder();
+                    int i = 0;
+                    foreach (string key in parameters.Keys)
+                    {
+                        if (i > 0)
+                        {
+                            buffer.AppendFormat("&{0}={1}", key, parameters[key]);
+                        }
+                        else
+                        {
+                            buffer.AppendFormat("{0}={1}", key, parameters[key]);
+                        }
+                        i++;
+                    }
+                    byte[] data = requestEncoding.GetBytes(buffer.ToString());
+                    using (Stream stream = request.GetRequestStream())
+                    {
+                        stream.Write(data, 0, data.Length);
+                    }
+                }
+                return request.GetResponse() as HttpWebResponse;
             }
-            return request.GetResponse() as HttpWebResponse;
+            catch(Exception e1)
+            {
+
+            }
+            return null;
         }
 
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
@@ -241,24 +260,44 @@ namespace JihuaUI
                 }
                 if(x != null)
                 {
-                    Console.Write(x.STM);
+                    //Console.Write(x.STM);
                     DateTime s = Convert.ToDateTime(x.STM);
-                    if(s > (DateTime.Now - ts))
+                    DateTime now = DateTime.Now;
+                    now = now.AddSeconds(0-now.Second);
+                    now = now.AddMilliseconds(0-now.Millisecond);
+                    if((s == (now)))
                     {
                         lock (_lock)
                         {
                             end.Add(x);
                             start.Remove(x);
                         }
-                        Console.Write("启动任务...");
+                        Console.WriteLine(x.STM + "启动任务...");
+
+                    }else if( s < now)
+                    {
+                        if (s > (now - ts))
+                        {
+                            lock (_lock)
+                            {
+                                end.Add(x);
+                                start.Remove(x);
+                            }
+                            Console.WriteLine(x.STM + "启动任务(晚)...");
+                        }
+                        else
+                        {
+                            lock (_lock)
+                            {
+                                outdate.Add(x);
+                                start.Remove(x);
+                            }
+                            Console.WriteLine(x.STM + "启动已经过期...");
+                        }
                     }
                     else
                     {
-                        lock (_lock)
-                        {
-                            outdate.Add(x);
-                            start.Remove(x);
-                        }
+                        //Console.WriteLine("任务等待启动...");
                     }
                 }
                 Thread.Sleep(1);
@@ -304,6 +343,39 @@ namespace JihuaUI
         //{
         //    type = OType.waitforstart;
         //}
+
+        public override bool Equals(object o)
+        {
+            if (o is x1)
+            {
+                x1 obj = o as x1;
+                if (this == obj)
+                    return true;
+                if (obj == null)
+                    return false;
+                if (this.ID != obj.ID)
+                    return false;
+                if (this.TITLE != obj.TITLE) return false;
+                if (this.SGNM != obj.SGNM) return false;
+                if (this.BGNM != obj.BGNM) return false;
+                if (this.PID != obj.PID) return false;
+                if (this.SID != obj.SID) return false;
+                if (this.CCD != obj.CCD) return false;
+                if (this.TLNG != obj.TLNG) return false;
+                if (this.DAYS != obj.DAYS) return false;
+                if (this.GTP != obj.GTP) return false;
+                if (this.STM != obj.STM) return false;
+                if (this.ETM != obj.ETM) return false;
+                if (this.RUNMODE != obj.RUNMODE) return false;
+                if (this.RUNSTATE != obj.RUNSTATE) return false;
+                if (this.HCD != obj.HCD) return false;
+                if (this.ACTSTM != obj.ACTSTM) return false;
+                if (this.ACTETM != obj.ACTETM) return false;
+                if (this.MSG != obj.MSG) return false;
+                return true;
+            }
+            return false;
+        }
 
     }
 
