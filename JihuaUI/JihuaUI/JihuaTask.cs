@@ -16,6 +16,8 @@ namespace JihuaUI
     {
         WebSocketSharp.WebSocket wss;
         static object wss_lock = new object();
+        IDictionary<string, string> rtu;
+        DateTime dtLastrtu;
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
         static TimeSpan ts = new TimeSpan(1, 0, 0);
@@ -25,6 +27,7 @@ namespace JihuaUI
         static String host = "http://1.85.44.234/";
         static String url_login = host + "admin/ashx/bg_user_login.ashx";
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
+        static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
         List<x1> start, end,outdate;
         static object _lock = new object();
 
@@ -33,7 +36,11 @@ namespace JihuaUI
 
         public bool init()
         {
+            login();
             exit = false;
+            rtu = new Dictionary<string, string>();
+            dtLastrtu = DateTime.Now.AddDays(-2);
+            //getrtu();
             wss = null;
             start = new List<x1>();
             end = new List<x1>();
@@ -42,6 +49,7 @@ namespace JihuaUI
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
+            connect();
             jihua = new Thread(new ThreadStart(this.JihuaThread));
             jihua.Start();
             doo();
@@ -82,7 +90,10 @@ namespace JihuaUI
             wss.OnMessage += (s, e1) => { Console.WriteLine(e1.Data); };
             wss.OnOpen += (s, e1) => {
                 String a = @"{ctp:""0"",uid:""admin"",utp:""1"",op:""0""}";
-                wss.Send(a);
+                lock (wss_lock)
+                {
+                    wss.Send(a);
+                }
                 Console.WriteLine(" websocket open!");
             };
             wss.OnClose += (s, e1) =>
@@ -249,29 +260,39 @@ namespace JihuaUI
         {
             while (!exit)
             {
+                getrtu();
                 x1 x = null;
+                
+                DateTime now = DateTime.Now;
+                now = now.AddSeconds(0 - now.Second);
+                now = now.AddMilliseconds(0 - now.Millisecond);
                 lock (_lock)
                 {
-                    if(start.Count >= 1)
-                    {
-                        x = start.First();
+                    //if(start.Count >= 1)
+                    //{
+                    //    x = start.First();
                         //start.Remove(x);
+                    //}
+                    foreach(x1 a  in start)
+                    {
+                        DateTime s = Convert.ToDateTime(a.STM);
+                        if (s > now) continue;
+                        x = a;
                     }
                 }
                 if(x != null)
                 {
                     //Console.Write(x.STM);
                     DateTime s = Convert.ToDateTime(x.STM);
-                    DateTime now = DateTime.Now;
-                    now = now.AddSeconds(0-now.Second);
-                    now = now.AddMilliseconds(0-now.Millisecond);
-                    if((s == (now)))
+
+                    if ((s == (now)))
                     {
                         lock (_lock)
                         {
                             end.Add(x);
                             start.Remove(x);
                         }
+                        openswitch(x);
                         Console.WriteLine(x.STM + "启动任务...");
 
                     }else if( s < now)
@@ -283,6 +304,7 @@ namespace JihuaUI
                                 end.Add(x);
                                 start.Remove(x);
                             }
+                            openswitch(x);
                             Console.WriteLine(x.STM + "启动任务(晚)...");
                         }
                         else
@@ -303,7 +325,56 @@ namespace JihuaUI
                 Thread.Sleep(1);
             }
         }
+
+        private void getrtu()
+        {
+            DateTime now = DateTime.Now;
+            if (dtLastrtu.Day == now.Day) return;
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("action", "getSTCDRel");
+            try
+            {
+                HttpWebResponse response = CreatePostHttpResponse(url_getrtu, parameters, null, null, Encoding.UTF8, cookies);
+
+                cookies = response.Cookies;
+                StreamReader sr = new StreamReader(response.GetResponseStream());
+                String txt = sr.ReadToEnd();
+                //Console.WriteLine(txt);
+                rtus ret = JsonConvert.DeserializeObject<rtus>(txt);
+                if (ret.total > 0)
+                {
+                    foreach (rtu x in ret.rows)
+                    {
+                        rtu.Add(x.CD, x.STCD);
+                    }
+                }
+                Console.WriteLine("getrtu ok...");
+                dtLastrtu = now;
+            }
+            catch (Exception c1) { }
+       
+        }
+
+
+        private void openswitch(x1 x)
+        {
+            lock (wss_lock)
+            {
+                String rtuid = rtu[x.HCD];
+                String cmd = "{\"ctp\":1,\"uid\":\"admin\",\"utp\":1,\"rtu\": \"" +rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\"}"; 
+
+                wss.Send(cmd);
+            }
+
+        }
+
+        private void closeswitch(x1 x)
+        {
+
+        }
+
     }
+
 
 
     public class loginstatus
@@ -381,7 +452,24 @@ namespace JihuaUI
 
     public class tasks
     {
+        public String msg;
+        public bool success;
         public int total;
         public x1[] rows;
+    }
+
+    public class rtu
+    {
+        public String STCD;
+        public String CD;
+
+    }
+
+    public class rtus
+    {
+        public String msg;
+        public bool success;
+        public int total;
+        public rtu[] rows;
     }
 }
