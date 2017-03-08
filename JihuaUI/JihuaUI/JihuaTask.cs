@@ -360,7 +360,7 @@ namespace JihuaUI
         {
             lock (wss_lock)
             {
-                String rtuid = rtu[x.HCD];
+                String rtuid = "17010084";// rtu[x.HCD];
                 String cmd = "{\"ctp\":1,\"uid\":\"admin\",\"utp\":1,\"rtu\": \"" +rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\"}"; 
 
                 wss.Send(cmd);
@@ -370,7 +370,13 @@ namespace JihuaUI
 
         private void closeswitch(x1 x)
         {
+            lock (wss_lock)
+            {
+                String rtuid = "17010084";// rtu[x.HCD];
+                String cmd = "{\"ctp\":1,\"uid\":\"admin\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\"}";
 
+                wss.Send(cmd);
+            }
         }
 
     }
