@@ -16,7 +16,7 @@ namespace JihuaUI
     {
         WebSocketSharp.WebSocket wss;
         static object wss_lock = new object();
-        IDictionary<string, string> rtu;
+        IDictionary<string, string> rtu,utr;
         DateTime dtLastrtu;
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
@@ -28,7 +28,8 @@ namespace JihuaUI
         static String url_login = host + "admin/ashx/bg_user_login.ashx";
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
         static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
-        List<x1> start, end,outdate;
+        static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";//"irriplan/ashx/bg_irrplan.ashx";
+        List<x1> start, end,outdate,ok;
         static object _lock = new object();
 
         volatile bool exit;
@@ -39,12 +40,14 @@ namespace JihuaUI
             login();
             exit = false;
             rtu = new Dictionary<string, string>();
+            utr = new Dictionary<string, string>();
             dtLastrtu = DateTime.Now.AddDays(-2);
             //getrtu();
             wss = null;
             start = new List<x1>();
             end = new List<x1>();
             outdate = new List<x1>();
+            ok = new List<x1>();
             timer1 = new System.Timers.Timer();
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
@@ -76,6 +79,7 @@ namespace JihuaUI
         private void reconnect()
         {
             int timeout = 6000;
+            
 
         }
 
@@ -87,9 +91,17 @@ namespace JihuaUI
 
             }
             wss = new WebSocketSharp.WebSocket("ws://1.85.44.234:9612");
-            wss.OnMessage += (s, e1) => { Console.WriteLine(e1.Data); };
+            wss.OnMessage += (s, e1) => {
+                Console.WriteLine(e1.Data);
+                sockobj d = JsonConvert.DeserializeObject<sockobj>(e1.Data);
+                if (d.op == "4D")
+                {
+                    update(d);
+                }
+
+            };
             wss.OnOpen += (s, e1) => {
-                String a = @"{ctp:""0"",uid:""admin"",utp:""1"",op:""0""}";
+                String a = @"{ctp:""0"",uid:""service"",utp:""1"",op:""0""}";
                 lock (wss_lock)
                 {
                     wss.Send(a);
@@ -107,14 +119,55 @@ namespace JihuaUI
             wss.Connect();
         }
 
+
+        public bool update(sockobj x)
+        {
+            int state = 4;
+            if (x.success)
+            {
+                if(x.value == "0101")
+                {
+                    state = 2;
+                }else if(x.value == "0100")
+                {
+                    state = 3;
+                }
+            }
+            else
+            {
+
+            }
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("action", "updateIrriPlanState");
+            parameters.Add("state", state.ToString());
+            parameters.Add("stm", DateTime.Now.ToString());
+            parameters.Add("hcd", utr[x.rtu]);
+            parameters.Add("acttm", DateTime.Now.ToString());
+            parameters.Add("msg", x.message);
+            parameters.Add("id", "1");
+            loginstatus ret = new loginstatus();
+
+            HttpWebResponse response = CreatePostHttpResponse(url_update, parameters, null, null, Encoding.UTF8, cookies);
+            if (response != null)
+            {
+
+                //cookies = response.Cookies;
+                StreamReader sr = new StreamReader(response.GetResponseStream());
+                String txt = sr.ReadToEnd();
+                //Console.WriteLine(txt);
+                ret = JsonConvert.DeserializeObject<loginstatus>(txt);
+                return ret.success;
+            }
+            return true;
+        }
+
         public bool login()
         {
-            // IDictionary<string, string> parameters = { "action": 'login', 'city': '', 'remember': 'sevenday', 'loginName': 'admin', 'loginPwd': 'admin' };
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "login");
             parameters.Add("remember", "sevenday");
-            parameters.Add("loginName", "admin");
-            parameters.Add("loginPwd", "admin");
+            parameters.Add("loginName", "service");
+            parameters.Add("loginPwd", "123456");
             loginstatus ret = new loginstatus();
 
             HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
@@ -124,10 +177,11 @@ namespace JihuaUI
                 cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
-                //Console.WriteLine(txt);
+                Console.WriteLine(txt);
                 ret = JsonConvert.DeserializeObject<loginstatus>(txt);
+                return ret.success;
             }
-            return ret.success;
+            return false;
         }
 
         public bool gettask()
@@ -135,14 +189,11 @@ namespace JihuaUI
             
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "getFineIrriPlanList");
-            //parameters.Add("stm", "2017-02-01");
-            //parameters.Add("etm", "admin");
-            //parameters.Add("loginPwd", "admin");
             try
             {
                 HttpWebResponse response = CreatePostHttpResponse(url_gettask, parameters, null, null, Encoding.UTF8, cookies);
 
-                cookies = response.Cookies;
+                //cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
                 //Console.WriteLine(txt);
@@ -162,6 +213,8 @@ namespace JihuaUI
                                 if (end.Contains(x))
                                     continue;
                                 if (outdate.Contains(x))
+                                    continue;
+                                if (ok.Contains(x))
                                     continue;
                                 start.Add(x);
                                 Console.WriteLine(x.STM + " 新任务...");
@@ -246,7 +299,7 @@ namespace JihuaUI
             }
             catch(Exception e1)
             {
-
+                Console.WriteLine(e1.Message);
             }
             return null;
         }
@@ -268,16 +321,12 @@ namespace JihuaUI
                 now = now.AddMilliseconds(0 - now.Millisecond);
                 lock (_lock)
                 {
-                    //if(start.Count >= 1)
-                    //{
-                    //    x = start.First();
-                        //start.Remove(x);
-                    //}
                     foreach(x1 a  in start)
                     {
                         DateTime s = Convert.ToDateTime(a.STM);
-                        if (s > now) continue;
+                        if (s >= now) continue;
                         x = a;
+                        break;
                     }
                 }
                 if(x != null)
@@ -322,7 +371,42 @@ namespace JihuaUI
                         //Console.WriteLine("任务等待启动...");
                     }
                 }
-                Thread.Sleep(1);
+
+                x = null;
+
+                lock (_lock)
+                {
+                    foreach (x1 a in end)
+                    {
+                        DateTime s = Convert.ToDateTime(a.STM);
+                        if (s >= now) continue;
+                        x = a;
+                        break;
+                    }
+                }
+                if (x != null)
+                {
+                    //Console.Write(x.STM);
+                    DateTime s = Convert.ToDateTime(x.STM);
+
+                    lock (_lock)
+                    {
+                        ok.Add(x);
+                        end.Remove(x);
+                    }
+                    closeswitch(x);
+                    Console.WriteLine(x.STM + "停止任务...");
+
+                }
+                /*
+                lock (wss_lock)
+                {
+                    if (!wss.IsAlive)
+                        wss.Connect();
+                }
+                */
+
+                    Thread.Sleep(1);
             }
         }
 
@@ -336,7 +420,7 @@ namespace JihuaUI
             {
                 HttpWebResponse response = CreatePostHttpResponse(url_getrtu, parameters, null, null, Encoding.UTF8, cookies);
 
-                cookies = response.Cookies;
+                //cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
                 //Console.WriteLine(txt);
@@ -346,6 +430,7 @@ namespace JihuaUI
                     foreach (rtu x in ret.rows)
                     {
                         rtu.Add(x.CD, x.STCD);
+                        utr.Add(x.STCD, x.CD);
                     }
                 }
                 Console.WriteLine("getrtu ok...");
@@ -361,7 +446,7 @@ namespace JihuaUI
             lock (wss_lock)
             {
                 String rtuid = "17010084";// rtu[x.HCD];
-                String cmd = "{\"ctp\":1,\"uid\":\"admin\",\"utp\":1,\"rtu\": \"" +rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\"}"; 
+                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\"}"; 
 
                 wss.Send(cmd);
             }
@@ -373,7 +458,7 @@ namespace JihuaUI
             lock (wss_lock)
             {
                 String rtuid = "17010084";// rtu[x.HCD];
-                String cmd = "{\"ctp\":1,\"uid\":\"admin\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\"}";
+                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\"}";
 
                 wss.Send(cmd);
             }
@@ -477,5 +562,24 @@ namespace JihuaUI
         public bool success;
         public int total;
         public rtu[] rows;
+    }
+
+    public class sockobj
+    {
+        public String ctp;
+        public String uid;
+        public String utp;
+        public String utp_name;
+        public String rtu;
+        public String op;
+        public String op_desc;
+        public String value;
+        public String otp;
+        public String broad;
+        public bool success;
+        public String message;
+        public String serial;
+        public String tm;
+        public String data;
     }
 }
