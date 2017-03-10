@@ -228,7 +228,9 @@
 	},
 	"lgjh_sub.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/calendar.js",
+			"js/jquery.js"
 		]
 	}
 }
