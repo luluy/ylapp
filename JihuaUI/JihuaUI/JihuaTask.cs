@@ -122,6 +122,7 @@ namespace JihuaUI
 
         public bool update(sockobj x)
         {
+            String stm = "";
             int state = 4;
             if (x.success)
             {
@@ -137,10 +138,11 @@ namespace JihuaUI
             {
 
             }
+            
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "updateIrriPlanState");
             parameters.Add("state", state.ToString());
-            parameters.Add("stm", DateTime.Now.ToString());
+            parameters.Add("stm", stm);
             parameters.Add("hcd", utr[x.rtu]);
             parameters.Add("acttm", DateTime.Now.ToString());
             parameters.Add("msg", x.message);
@@ -445,8 +447,8 @@ namespace JihuaUI
         {
             lock (wss_lock)
             {
-                String rtuid = "17010084";// rtu[x.HCD];
-                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\"}"; 
+                String rtuid =  rtu[x.HCD];
+                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\",\"serial\":\"" + x.GUID + "\"}"; 
 
                 wss.Send(cmd);
             }
@@ -457,8 +459,8 @@ namespace JihuaUI
         {
             lock (wss_lock)
             {
-                String rtuid = "17010084";// rtu[x.HCD];
-                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\"}";
+                String rtuid = rtu[x.HCD];
+                String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\",\"serial\":\"" + x.GUID + "\"}";
 
                 wss.Send(cmd);
             }
@@ -499,6 +501,7 @@ namespace JihuaUI
         public String ACTSTM;
         public String ACTETM;
         public String MSG;
+        public String GUID;
         //public OType type;
 
         //public x1()
@@ -581,5 +584,6 @@ namespace JihuaUI
         public String serial;
         public String tm;
         public String data;
+        public String guid;
     }
 }
