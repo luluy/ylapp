@@ -29,7 +29,7 @@ namespace JihuaUI
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
         static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
         static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";//"irriplan/ashx/bg_irrplan.ashx";
-        List<x1> start, end,outdate,ok;
+        List<x1> start, end,outdate,ok,pending;
         static object _lock = new object();
 
         volatile bool exit;
@@ -48,6 +48,7 @@ namespace JihuaUI
             end = new List<x1>();
             outdate = new List<x1>();
             ok = new List<x1>();
+            pending = new List<x1>();
             timer1 = new System.Timers.Timer();
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
@@ -70,7 +71,7 @@ namespace JihuaUI
 
         async void doo()
         {
-            if (login())
+            //if (login())
             {
                 gettask();
             }
@@ -217,6 +218,8 @@ namespace JihuaUI
                                 if (outdate.Contains(x))
                                     continue;
                                 if (ok.Contains(x))
+                                    continue;
+                                if (pending.Contains(x))
                                     continue;
                                 start.Add(x);
                                 Console.WriteLine(x.STM + " 新任务...");
@@ -380,7 +383,7 @@ namespace JihuaUI
                 {
                     foreach (x1 a in end)
                     {
-                        DateTime s = Convert.ToDateTime(a.STM);
+                        DateTime s = Convert.ToDateTime(a.ETM);
                         if (s >= now) continue;
                         x = a;
                         break;
@@ -389,7 +392,7 @@ namespace JihuaUI
                 if (x != null)
                 {
                     //Console.Write(x.STM);
-                    DateTime s = Convert.ToDateTime(x.STM);
+                    DateTime s = Convert.ToDateTime(x.ETM);
 
                     lock (_lock)
                     {
@@ -431,8 +434,8 @@ namespace JihuaUI
                 {
                     foreach (rtu x in ret.rows)
                     {
-                        rtu.Add(x.CD, x.STCD);
-                        utr.Add(x.STCD, x.CD);
+                        rtu[x.CD] = x.STCD;
+                        utr[x.STCD] = x.CD;
                     }
                 }
                 Console.WriteLine("getrtu ok...");
