@@ -29,7 +29,7 @@ namespace JihuaUI
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
         static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
         static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";//"irriplan/ashx/bg_irrplan.ashx";
-        List<x1> start, end,outdate,ok,pending;
+        List<x1> start, end,outdate,ok,pending,pendinge;
         static object _lock = new object();
 
         volatile bool exit;
@@ -49,6 +49,7 @@ namespace JihuaUI
             outdate = new List<x1>();
             ok = new List<x1>();
             pending = new List<x1>();
+            pendinge = new List<x1>();
             timer1 = new System.Timers.Timer();
             timer1.Interval = 6000;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
@@ -92,6 +93,7 @@ namespace JihuaUI
 
             }
             wss = new WebSocketSharp.WebSocket("ws://1.85.44.234:9612");
+            wss.WaitTime = new TimeSpan(0, 0, 8);
             wss.OnMessage += (s, e1) => {
                 Console.WriteLine(e1.Data);
                 sockobj d = JsonConvert.DeserializeObject<sockobj>(e1.Data);
@@ -125,29 +127,73 @@ namespace JihuaUI
         {
             String stm = "";
             int state = 4;
+            String hcd = utr[x.rtu];
+            String Guid = x.serial;
+
+
             if (x.success)
             {
-                if(x.value == "0101")
+                if(x.value == "0101") //开机
                 {
                     state = 2;
-                }else if(x.value == "0100")
+                    lock (_lock)
+                    {
+                        foreach(x1 o in pending)
+                        {
+                            if(o.GUID == Guid)
+                            {
+                                stm = o.STM;
+                                pendinge.Add(o);
+                                pending.Remove(o);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else if(x.value == "0100")//关机
                 {
                     state = 3;
+                    lock (_lock)
+                    {
+                        foreach (x1 o in pendinge)
+                        {
+                            if (o.GUID == Guid)
+                            {
+                                stm = o.STM;
+                                end.Add(o);
+                                pendinge.Remove(o);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             else
             {
-
+                lock (_lock)
+                {
+                    foreach (x1 o in pending)
+                    {
+                        if (o.GUID == Guid)
+                        {
+                            stm = o.STM;
+                            outdate.Add(o);
+                            pendinge.Remove(o);
+                            break;
+                        }
+                    }
+                }
             }
             
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "updateIrriPlanState");
             parameters.Add("state", state.ToString());
             parameters.Add("stm", stm);
-            parameters.Add("hcd", utr[x.rtu]);
+            parameters.Add("hcd", hcd);
             parameters.Add("acttm", DateTime.Now.ToString());
             parameters.Add("msg", x.message);
             parameters.Add("id", "1");
+            parameters.Add("guid", Guid);
             loginstatus ret = new loginstatus();
 
             HttpWebResponse response = CreatePostHttpResponse(url_update, parameters, null, null, Encoding.UTF8, cookies);
@@ -220,6 +266,8 @@ namespace JihuaUI
                                 if (ok.Contains(x))
                                     continue;
                                 if (pending.Contains(x))
+                                    continue;
+                                if (pendinge.Contains(x))
                                     continue;
                                 start.Add(x);
                                 Console.WriteLine(x.STM + " 新任务...");
@@ -336,30 +384,25 @@ namespace JihuaUI
                 }
                 if(x != null)
                 {
-                    //Console.Write(x.STM);
                     DateTime s = Convert.ToDateTime(x.STM);
-
                     if ((s == (now)))
                     {
                         lock (_lock)
                         {
-                            end.Add(x);
+                            x.initretry();
+                            pending.Add(x);
                             start.Remove(x);
                         }
-                        openswitch(x);
-                        Console.WriteLine(x.STM + "启动任务...");
-
                     }else if( s < now)
                     {
                         if (s > (now - ts))
                         {
                             lock (_lock)
                             {
-                                end.Add(x);
+                                x.initretry();
+                                pending.Add(x);
                                 start.Remove(x);
                             }
-                            openswitch(x);
-                            Console.WriteLine(x.STM + "启动任务(晚)...");
                         }
                         else
                         {
@@ -368,7 +411,6 @@ namespace JihuaUI
                                 outdate.Add(x);
                                 start.Remove(x);
                             }
-                            Console.WriteLine(x.STM + "启动已经过期...");
                         }
                     }
                     else
@@ -396,12 +438,10 @@ namespace JihuaUI
 
                     lock (_lock)
                     {
-                        ok.Add(x);
+                        x.initretry();
+                        pendinge.Add(x);
                         end.Remove(x);
                     }
-                    closeswitch(x);
-                    Console.WriteLine(x.STM + "停止任务...");
-
                 }
                 /*
                 lock (wss_lock)
@@ -410,8 +450,39 @@ namespace JihuaUI
                         wss.Connect();
                 }
                 */
+                lock (_lock)
+                {
+                    foreach (x1 o in pending)
+                    {
+                        if (o.retry())
+                        {
+                            openswitch(o);
+                        }
+                        else if(o.getretry() > 3)
+                        {
+                            pending.Remove(o);
+                            outdate.Add(o);
+                            break;
+                        }
+                    }
 
-                    Thread.Sleep(1);
+                    foreach(x1 o in pendinge)
+                    {
+                        if (o.retry())
+                        {
+                            closeswitch(o);
+                        }
+                        else if(o.getretry() > 3)
+                        {
+                            pendinge.Remove(o);
+                            outdate.Add(o);
+                            break;
+                        }
+                    }
+                }
+
+
+                Thread.Sleep(1);
             }
         }
 
@@ -454,6 +525,8 @@ namespace JihuaUI
                 String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid+ "\",\"op\":\"4D\",\"value\":\"0101\",\"serial\":\"" + x.GUID + "\"}"; 
 
                 wss.Send(cmd);
+                Console.WriteLine(x.STM + "发送开启阀门命令...");
+
             }
 
         }
@@ -466,6 +539,7 @@ namespace JihuaUI
                 String cmd = "{\"ctp\":1,\"uid\":\"service\",\"utp\":1,\"rtu\": \"" + rtuid + "\",\"op\":\"4D\",\"value\":\"0000\",\"serial\":\"" + x.GUID + "\"}";
 
                 wss.Send(cmd);
+                Console.WriteLine(x.ETM + "发送关闭阀门命令...");
             }
         }
 
@@ -505,6 +579,25 @@ namespace JihuaUI
         public String ACTETM;
         public String MSG;
         public String GUID;
+        private int iRetry;
+        private DateTime last_iRetry;
+        public int getretry() { return iRetry; }
+        public void initretry() {
+            iRetry = 0;
+            last_iRetry = DateTime.Now.AddMinutes(-3);
+        }
+        public bool retry()
+        {
+            TimeSpan ts = DateTime.Now - last_iRetry;
+            if (ts.TotalSeconds  >= (3 * 60))
+            {
+                iRetry++;
+                last_iRetry = DateTime.Now;
+                if (iRetry <=3)
+                    return true;
+            }
+            return false;
+        }
         //public OType type;
 
         //public x1()

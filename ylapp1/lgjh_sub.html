@@ -15,14 +15,15 @@ body {
 #CalendarMain {
 	width: 300px;
 	height: 300px;
-	border: 1px solid #ccc;
+	border: 0px solid #ccc;
 	margin: 0 auto;
 	margin-top: 8px;
+	background-color: red;
 }
 #title {
 	width: 100%;
 	height: 30px;
-	background-color: #b9121b;
+	background-color: cornflowerblue;
 }
 .selectBtn {
 	font-weight: 900;
@@ -56,7 +57,7 @@ body {
 	float: right;
 }
 #context {
-	background-color: #fff;
+	background-color: cornflowerblue;
 	width: 100%;
 }
 .week {
@@ -65,7 +66,7 @@ body {
 }
 .week>h3 {
 	float: left;
-	color: #808080;
+	color: white ;
 	text-align: center;
 	margin: 0;
 	padding: 0;
@@ -102,18 +103,34 @@ body {
 	border-radius: 50%;
 	color: #fff;
 }
+
+.dataItem>a {
+	background-color: rosybrown;
+	width: 25px;
+	line-height: 25px;
+	float: left;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	color: #fff;
+}
+
+
 #foots {
 	width: 100%;
-	height: 35px;
-	background-color: #fff;
-	border-top: 1px solid #ccc;
+	height: 0px;
+	background-color: red;
+	border-top: 0px solid #ccc;
 	margin-top: -1px;
+	visibility: hidden;
+	
 }
 #footNow {
 	float: left;
 	margin: 6px 0 0 5px;
-	color: #009ad6;
+	color: white;
 	font-family: "微软雅黑";
+	visibility: hidden;
 }
 #Container {
 	overflow: hidden;
@@ -171,31 +188,42 @@ body {
 	</head>
 
 	<body>
-<div id="Demo">
-<div id="CalendarMain">
-  <div id="title"> <a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a></div>
-  <div id="context">
-    <div class="week">
-      <h3> 一 </h3>
-      <h3> 二 </h3>
-      <h3> 三 </h3>
-      <h3> 四 </h3>
-      <h3> 五 </h3>
-      <h3> 六 </h3>
-      <h3> 日 </h3>
-    </div>
-    <div id="center">
-      <div id="centerMain">
-        <div id="selectYearDiv"></div>
-        <div id="centerCalendarMain">
-          <div id="Container"></div>
-        </div>
-        <div id="selectMonthDiv"></div>
-      </div>
-    </div>
-    <div id="foots" ><a id="footNow">19:14:34</a></div>
-  </div>
+<div id="Demo" style="background-color: cornflowerblue;margin: 0;">
+	<div id="CalendarMain">
+		<div id="title"> <a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a>
+		</div>
+		<div id="context">
+			<div class="week">
+			  <h3> 一 </h3>
+			  <h3> 二 </h3>
+			  <h3> 三 </h3>
+			  <h3> 四 </h3>
+			  <h3> 五 </h3>
+			  <h3> 六 </h3>
+			  <h3> 日 </h3>
+			</div>
+			<div id="center">
+				<div id="centerMain">
+					<div id="selectYearDiv"></div>
+					<div id="centerCalendarMain">
+						<div id="Container"></div>
+					</div>
+					<div id="selectMonthDiv"></div>
+				</div>
+			</div>
+		</div>
+		<div id="foots" ><a id="footNow">19:14:34</a>
+		</div>
+	</div>
 </div>
+<div class="mui-card">
+	<!--页眉，放置标题-->
+	<div class="mui-card-header">页眉</div>
+	<!--内容区-->
+	<div class="mui-card-content">内容区</div>
+	<!--页脚，放置补充信息或支持的操作-->
+	<div class="mui-card-footer">页脚</div>
+</div>	
 		<script src="js/mui.min.js"></script>
 		<script src="js/jquery.js"></script>
 
@@ -288,10 +316,12 @@ body {
 				$("#Container").css("height", "0px").css("width", "0px").css("margin-left", $("#context").width() / 2 + "px").css("margin-top", ($("#context").height() - 30) / 2 + "px");
 				$("#Container").animate({
 					width: $("#context").width() + "px",
-					height: ($("#context").height() - 30) * 2 + "px",
+					height: (($("#context").height() - 30) * 2 - 80) + "px",
 					marginLeft: "0px",
 					marginTop: "0px"
 				}, 300, function() {
+					//alert(($("#context").height() - 30) );
+					console.log($("#Container").innerHTML);
 					$calendarItem.css("visibility", "visible");
 				});
 				$(".dayItem").css("width", $("#context").width() + "px");
@@ -302,6 +332,7 @@ body {
 					"height": itemPaddintTop + "px"
 				});
 				$(".currentItem>a").css("margin-left", ($(".item").width() - 25) / 2 + "px").css("margin-top", ($(".item").height() - 25) / 2 + "px");
+				$(".dataItem>a").css("margin-left", ($(".item").width() - 25) / 2 + "px").css("margin-top", ($(".item").height() - 25) / 2 + "px");
 				$(".week>h3").css("width", $(".week").width() / 7 + "px");
 				this.RunningTime();
 			},
@@ -456,7 +487,7 @@ body {
 				//生成当月的日期
 				for (var i = 0; i < nowDaysNub; i++) {
 					if (i == (nowDay - 1)) $dayItem.append("<div class=\"item currentItem\"><a>" + (i + 1) + "</a></div>");
-					else $dayItem.append("<div class=\"item\" onclick=go(this);><a>" + (i + 1) + "</a><br>.</div>");
+					else $dayItem.append("<div class=\"item dataItem\" onclick=go(this);><a>" + (i + 1) + "</a></div>");
 				}
 
 				//获取总共已经生成的天数
@@ -556,7 +587,7 @@ body {
 		}
 		
 		function go(obj){
-			alert(obj.innerText);
+			alert(obj.parentNode.parentNode.parentNode.innerHTML);
 		}
 		</script>
 		
