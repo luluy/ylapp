@@ -190,7 +190,7 @@ function addClass(obj, cls){
 }
 
 function removeClass(obj, cls){
-	if(obj == undefined) return;
+	if(obj == undefined){ console.log("removeClass - obj is null");return;}
 	while(hasClass(obj,cls)){
 		removeClass1(obj,cls);
 	}
@@ -200,11 +200,12 @@ function removeClass(obj, cls){
  
 function removeClass1(obj, cls){
 	//console.log("removeClass" + obj + cls);
-	if(obj == undefined) return;
+	if(obj == undefined){console.log("removeClass1 - obj is null"); return;}
     var obj_class = ' '+obj.className+' ';//获取 class 内容, 并在首尾各加一个空格. ex) 'abc        bcd' -> ' abc        bcd '
     obj_class = obj_class.replace(/(\s+)/gi, ' '),//将多余的空字符替换成一个空格. ex) ' abc        bcd ' -> ' abc bcd '
     removed = obj_class.replace(' '+cls+' ', ' ');//在原来的 class 替换掉首尾加了空格的 class. ex) ' abc bcd ' -> 'bcd '
     removed = removed.replace(/(^\s+)|(\s+$)/g, '');//去掉首尾空格. ex) 'bcd ' -> 'bcd'
+    console.log("removeClass1 - new " + removed);
     obj.className = removed;//替换原来的 class.
 }
  
