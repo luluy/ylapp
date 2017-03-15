@@ -364,6 +364,7 @@ body {
 			currentYear: 0,
 			currentMonth: 0,
 			selday:0,
+			curday:0,
 			efstartidx:0,
 			efendidx:0,
 			isRunning: false,
@@ -518,7 +519,7 @@ body {
 				preDay.setYear(firstDay.getYear());
 				preDay.setMonth(firstDay.getMonth());
 				preDay.setDate(0);
-				console.log(preDay.toString());
+				
 				var cd = $("#centerCalendarMain").children();
 				//console.log(cd[firstDay.getDay()].innerHTML + " - " + firstDay.getDay() + firstDay.toString());
 				var j = 1;
@@ -544,6 +545,7 @@ body {
 					
 					//removeClass(cd[i],"lastItem");
 					if(j == nowday){
+						this.curday = nowday;
 						cd[i].innerHTML = "<a>" + j + "</a>";	
 						cd[i].className = "item currentItem";
 						//addClass(cd[i],"currentItem");
@@ -654,22 +656,49 @@ body {
 		}
 		
 		function go(obj){
+			CalendarHandler.selday = obj.innerText;
 			//console.log(obj.innerHTML);
 			var objs = obj.parentNode.children;
-			console.log(CalendarHandler.efstartidx + " - " + CalendarHandler.efendidx + " -- " + objs.length);
 			for(var i = CalendarHandler.efstartidx; i <= CalendarHandler.efendidx; i++){
-				//console.log(objs[i].innerText);
-				if(objs[i] == obj){
+				if(objs[i].innerText == CalendarHandler.curday){
 					objs[i].className = "item currentItem";
-					console.log(objs[i].innerText);
 				}else if(objs[i].innerText == obj.innerText){
+					objs[i].innerHTML = "<a>" + obj.innerText + "</a>";
 					objs[i].className = "item currentSelItem";
+					
 				}else{
+					objs[i].innerHTML = objs[i].innerText ;
 					objs[i].className = "item dataItem";
 				}
 			}
-			obj.className = "item currentSelItem";
-			CalendarHandler.selday = obj.innerText;
+			//plus.nativeUI.showWaiting("获取任务列表");
+			console.log(window.app.gettaskurl);
+			mui.ajax(window.app.gettaskurl, {
+				data:{ 'action': 'getFineIrriPlanList'},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 60000, //超时时间设置为10秒；
+				cache:false,
+				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+					//plus.nativeUI.closeWaiting();
+					console.log(JSON.stringify(data));
+	                if(data.success == true){
+						return ;
+	                }else{
+	                    return ;
+	                }
+				},
+				error: function(xhr, type, errorThrown) {
+					console.log(app.gettaskurl +  errorThrown);
+					//异常处理；
+					//plus.nativeUI.closeWaiting();
+					//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					return;
+				}
+			});					
+			
+			//obj.className = "item currentSelItem";
+			//console.log(obj.parentNode.innerHTML);
 			//alert(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
 			//console.log(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
 			//console.log(CalendarHandler.currentMonth + CalendarHandler.selday);

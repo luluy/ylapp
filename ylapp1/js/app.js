@@ -168,6 +168,8 @@
 	owner.hosturl = "http://1.85.44.234/";
 	owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
 	owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
+	owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";
+	console.log(owner.gettaskurl);
 }(mui, window.app = {}));
 
 
