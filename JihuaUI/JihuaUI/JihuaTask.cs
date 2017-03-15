@@ -29,6 +29,7 @@ namespace JihuaUI
         static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
         static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
         static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";//"irriplan/ashx/bg_irrplan.ashx";
+        int getrtutimeout = 6000;
         List<x1> start, end,outdate,ok,pending,pendinge;
         static object _lock = new object();
 
@@ -44,14 +45,14 @@ namespace JihuaUI
             dtLastrtu = DateTime.Now.AddDays(-2);
             //getrtu();
             wss = null;
-            start = new List<x1>();
-            end = new List<x1>();
-            outdate = new List<x1>();
-            ok = new List<x1>();
-            pending = new List<x1>();
-            pendinge = new List<x1>();
+            start = new List<x1>(); // 等待到达预订开始时间后执行的等待列表。
+            end = new List<x1>(); // 任务开始后已经发送开始命令，并接收到命令回复的列表(等待到达预订关闭时间后执行的等待列表。)
+            outdate = new List<x1>(); // 过期任务列表
+            ok = new List<x1>(); // 完成《开始-结束》计划流程的列表
+            pending = new List<x1>(); // 到了任务开始时间，已经发送了开始命令，还没有收到回复的列表。
+            pendinge = new List<x1>(); // 到了任务结束时间，已经发送了停止命令，还没有收到回复的列表。
             timer1 = new System.Timers.Timer();
-            timer1.Interval = 6000;  //设置计时器事件间隔执行时间
+            timer1.Interval = getrtutimeout;  //设置计时器事件间隔执行时间
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
             connect();
@@ -122,13 +123,14 @@ namespace JihuaUI
             wss.Connect();
         }
 
-
         public bool update(sockobj x)
         {
             String stm = "";
             int state = 4;
             String hcd = utr[x.rtu];
             String Guid = x.serial;
+
+            if (x.uid != "service") return false;
 
 
             if (x.success)
@@ -143,7 +145,7 @@ namespace JihuaUI
                             if(o.GUID == Guid)
                             {
                                 stm = o.STM;
-                                pendinge.Add(o);
+                                end.Add(o);
                                 pending.Remove(o);
                                 break;
                             }
@@ -160,7 +162,7 @@ namespace JihuaUI
                             if (o.GUID == Guid)
                             {
                                 stm = o.STM;
-                                end.Add(o);
+                                ok.Add(o);
                                 pendinge.Remove(o);
                                 break;
                             }
@@ -222,7 +224,6 @@ namespace JihuaUI
             HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
             if (response != null)
             {
-
                 cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
@@ -253,7 +254,7 @@ namespace JihuaUI
                     {
                         foreach (x1 x in ret.rows)
                         {
-                            if (x.RUNMODE == "1")
+                            if (x.RUNSTATE == "1")
                             {
                                 //if((!start.Contains(x)) && (!end.Contains(x)) &&(!outdate.Contains(x)))
                                 //    start.Add(x);
@@ -616,6 +617,8 @@ namespace JihuaUI
                     return false;
                 if (this.ID != obj.ID)
                     return false;
+                if (this.GUID != obj.GUID) return false;
+                return true;
                 if (this.TITLE != obj.TITLE) return false;
                 if (this.SGNM != obj.SGNM) return false;
                 if (this.BGNM != obj.BGNM) return false;

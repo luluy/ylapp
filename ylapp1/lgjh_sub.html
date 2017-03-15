@@ -18,6 +18,7 @@ body {
 	border: 0px solid #ccc;
 	margin: 0 auto;
 	margin-top: 8px;
+	
 }
 #title {
 	width: 100%;
@@ -76,42 +77,54 @@ body {
 	float: left;
 }
 .lastItem {
-	color: #d1c7b7 !important;
-	visibility: hidden;
+	color: #d1c7b7 !important;	
 }
 .item {
-	color: #333;
+	color: #fff;
 	float: left;
 	text-align: center;
 	cursor: pointer;
 	margin: 0;
 	font-family: "微软雅黑";
 	font-size: 13px;
+	width: 42px; line-height: 34px; height: 34px;
 	
 }
 .item:hover {
-	color: #b9121b;
+	color: #fff;
 }
 .currentItem>a {
 	background-color: #b9121b;
-	width: 25px;
-	line-height: 25px;
+	width: 42px;
+	line-height: 34px;
 	float: left;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	color: #fff;
+	color: #fff;.
+}
+
+.currentSelItem>a {
+	background-color: darkgray;
+	width: 42px;
+	line-height: 34px;
+	float: left;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	color: #fff;.
 }
 
 .dataItem>a {
-	background-color: rosybrown;
+	
 	width: 25px;
-	line-height: 25px;
+	line-height: 34px;
 	float: left;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
 	color: #fff;
+
 }
 
 
@@ -145,36 +158,37 @@ body {
 }
 #selectYearDiv {
 	float: left;
-	background-color: #fff;
+	background-color: cornflowerblue;
 }
 #selectYearDiv>div {
 	float: left;
 	text-align: center;
 	font-family: "微软雅黑";
 	font-size: 16px;
-	border: 1px solid #ccc;
+	border: 0px solid #ccc;
 	margin-left: -1px;
 	margin-top: -1px;
 	cursor: pointer;
-	color: #909090;
+	color: white;
 }
 .currentYearSd, .currentMontSd {
 	color: #ff4400 !important;
 }
 #selectMonthDiv {
 	float: left;
-	background-color: #fff;
+	background-color: cornflowerblue;
 }
 #selectMonthDiv>div {
-	color: #909090;
+	color: white;
 	float: left;
 	text-align: center;
 	font-family: "微软雅黑";
 	font-size: 16px;
-	border: 1px solid #ccc;
+	border: 0px solid #ccc;
 	margin-left: -1px;
 	margin-top: -1px;
 	cursor: pointer;
+	background-color: black);
 }
 #selectYearDiv>div:hover, #selectMonthDiv>div:hover {
 	background-color: #efefef;
@@ -182,36 +196,87 @@ body {
 #centerCalendarMain {
 	float: left;
 }
+
+
+.iw {width:42px;float:left;color: #fff;margin-top: 3px;margin-bottom: 3px;text-align: center;}
+.gray {color: darkgray;};
+.iwh{width: 42px; line-height: 34px; height: 34px;};
+
 </style>
 		
 	</head>
 
 	<body>
 <div id="Demo" style="background-color: cornflowerblue;margin: 0;">
-	<div id="CalendarMain">
-		<div id="title" style="height:38px"> <a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a>
+	<div id="CalendarMain"style="height: 280px;">
+		<div id="title" style="height: 36px;">
+			<a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();">&lt;</a>
+			<a class="selectBtn selectYear" href="javascript:" onclick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2017年</a>
+			<a class="selectBtn selectMonth" onclick="CalendarHandler.CreateSelectMonth()">3月</a> 
+			<a class="selectBtn nextMonth" href="javascript:" onclick="CalendarHandler.CalculateNextMonthDays();">&gt;</a>
+			<a class="selectBtn currentDay" href="javascript:" onclick="CalendarHandler.CreateCurrentCalendar(0,0,0);" style="display: none;">今天</a>
 		</div>
-		<div id="context">
+		<div id="context" style="height: 230px;">
 			<div class="week">
-			  <h3>一</h3>
-			  <h3>二</h3>
-			  <h3>三</h3>
-			  <h3>四</h3>
-			  <h3>五</h3>
-			  <h3>六 </h3>
-			  <h3>日</h3>
+				<div class="iw gray">日</div>
+				<div class="iw">一</div>
+				<div class="iw">二</div>
+				<div class="iw">三</div>
+				<div class="iw">四</div>
+				<div class="iw">五</div>
+				<div class="iw gray">六</div>
+			
 			</div>
-			<div id="center">
-				<div id="centerMain">
-					<div id="selectYearDiv"></div>
-					<div id="centerCalendarMain">
-						<div id="Container"></div>
+			<div id="center" style="height: 200px;">
+				<div id="centerMain" style="">
+					<div id="selectYearDiv" style="height: 180px; width: 300px;"></div>
+					<div id="centerCalendarMain" style="height: 180px;width: 300px;">
+						<div class="item lastItem">27</div>
+						<div class="item lastItem">28</div>
+						<div class="item " onclick="go(this);">1</div>
+						<div class="item dataItem" onclick="go(this);"><a>2</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>3</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>4</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>5</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>6</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>7</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>8</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>9</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>10</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>11</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>12</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>13</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>14</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>15</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>16</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>17</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>18</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>19</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>20</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>21</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>22</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>23</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>24</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>25</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>26</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>27</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>28</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>29</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>30</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>31</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>1</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>2</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>3</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>4</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>5</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>6</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>7</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>8</a></div>
+						<div class="item dataItem" onclick="go(this);"><a>9</a></div>
 					</div>
-					<div id="selectMonthDiv"></div>
+					<div id="selectMonthDiv" style="height: 200px; width: 300px;"></div>
 				</div>
 			</div>
-		</div>
-		<div id="foots" ><a id="footNow">19:14:34</a>
 		</div>
 	</div>
 </div>
@@ -225,8 +290,7 @@ body {
 </div>	
 		<script src="js/mui.min.js"></script>
 		<script src="js/jquery.js"></script>
-
-		<script src="js/calendar.js"></script>
+		<script src="js/app.js"></script>
 
 		<script>
 			mui.init({
@@ -291,6 +355,7 @@ body {
 		</script>
 		
 <script type="text/javascript">
+	var curobj = null;
 		$(document).ready(function(e) {
 			CalendarHandler.initialize();
 		});
@@ -298,42 +363,17 @@ body {
 		var CalendarHandler = {
 			currentYear: 0,
 			currentMonth: 0,
+			selday:0,
+			efstartidx:0,
+			efendidx:0,
 			isRunning: false,
 			showYearStart:2009,
 			tag:0,
 			initialize: function() {
-				$calendarItem = this.CreateCalendar(0, 0, 0);
-				$("#Container").append($calendarItem);
-
-				$("#context").css("height", $("#CalendarMain").height() - 65 + "px");
-				$("#center").css("height", $("#context").height() - 30 + "px");
-				$("#selectYearDiv").css("height", $("#context").height() - 30 + "px").css("width", $("#context").width() + "px");
-				$("#selectMonthDiv").css("height", $("#context").height() - 30 + "px").css("width", $("#context").width() + "px");
-				$("#centerCalendarMain").css("height", $("#context").height() - 30 + "px").css("width", $("#context").width() + "px");
-
-				$calendarItem.css("height", $("#context").height() - 30 + "px"); //.css("visibility","hidden");
-				$("#Container").css("height", "0px").css("width", "0px").css("margin-left", $("#context").width() / 2 + "px").css("margin-top", ($("#context").height() - 30) / 2 + "px");
-				$("#Container").animate({
-					width: $("#context").width() + "px",
-					height: (($("#context").height() - 30) * 2 - 80) + "px",
-					marginLeft: "0px",
-					marginTop: "0px"
-				}, 300, function() {
-					//alert(($("#context").height() - 30) );
-					console.log($("#Container").innerHTML);
-					$calendarItem.css("visibility", "visible");
-				});
-				$(".dayItem").css("width", $("#context").width() + "px");
-				var itemPaddintTop = $(".dayItem").height() / 6;
-				$(".item").css({
-					"width": $(".week").width() / 7 + "px",
-					"line-height": itemPaddintTop + "px",
-					"height": itemPaddintTop + "px"
-				});
-				$(".currentItem>a").css("margin-left", ($(".item").width() - 25) / 2 + "px").css("margin-top", ($(".item").height() - 25) / 2 + "px");
-				$(".dataItem>a").css("margin-left", ($(".item").width() - 25) / 2 + "px").css("margin-top", ($(".item").height() - 25) / 2 + "px");
-				$(".week>h3").css("width", $(".week").width() / 7 + "px");
-				this.RunningTime();
+				var now = new Date();
+				this.currentYear = now.getFullYear();
+				this.currentMonth = now.getMonth() + 1;
+				$calendarItem = this.CreateCalendar(now.getFullYear(), now.getMonth()+1, now.getDate());
 			},
 			CreateSelectYear: function(showYearStart) {
 				CalendarHandler.showYearStart=showYearStart;
@@ -369,9 +409,9 @@ body {
 					$("#selectYearDiv").append($yearItem);
 					$yearItem.click(function(){
 						$calendarItem=CalendarHandler.CreateCalendar(Number($(this).html()),1,1);
-						$("#Container").append($calendarItem);
+						//$("#Container").append($calendarItem);
 						CalendarHandler.CSS()
-					    CalendarHandler.isRunning = true;
+					    //CalendarHandler.isRunning = true;
 					    $($("#Container").find(".dayItem")[0]).animate({
 						height: "0px"
 					    }, 300, function() {
@@ -400,9 +440,9 @@ body {
 					$("#selectMonthDiv").append($monthItem);
 					$monthItem.click(function(){
 						$calendarItem=CalendarHandler.CreateCalendar(CalendarHandler.currentYear,Number($(this).attr("id")),1);
-						$("#Container").append($calendarItem);
+						//$("#Container").append($calendarItem);
 						CalendarHandler.CSS()
-					    CalendarHandler.isRunning = true;
+					    //CalendarHandler.isRunning = true;
 					    $($("#Container").find(".dayItem")[0]).animate({
 						height: "0px"
 					    }, 300, function() {
@@ -454,11 +494,11 @@ body {
 				return mDay;
 			},
 			CreateCalendar: function(y, m, d) {
+				//console.log(y + "-" + m + "-" + d );
 				$dayItem = $("<div class=\"dayItem\"></div>");
 				//获取当前月份的天数
 				var nowDate = new Date();
-				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0))
-				$(".currentDay").hide();
+				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0)) $(".currentDay").hide();
 				var nowYear = y == 0 ? nowDate.getFullYear() : y;
 				this.currentYear = nowYear;
 				var nowMonth = m == 0 ? nowDate.getMonth() + 1 : m;
@@ -466,42 +506,66 @@ body {
 				var nowDay = d == 0 ? nowDate.getDate() : d;
 				$(".selectYear").html(nowYear + "年");
 				$(".selectMonth").html(nowMonth + "月");
-				var nowDaysNub = this.CalculateMonthDays(nowMonth, nowYear);
-				//获取当月第一天是星期几
-				//var weekDate = new Date(nowYear+"-"+nowMonth+"-"+1);
-				//alert(weekDate.getDay());
-				var nowWeek = parseInt(this.CalculateWeek(nowYear, nowMonth, 1));
-				//nowWeek=weekDate.getDay()==0?7:weekDate.getDay();
-				//var nowWeek=weekDate.getDay();
-				//获取上个月的天数
-				var lastMonthDaysNub = this.CalculateMonthDays((nowMonth - 1), nowYear);
-
-				if (nowWeek != 0) {
-					//生成上月剩下的日期
-					for (var i = (lastMonthDaysNub - (nowWeek - 1)); i < lastMonthDaysNub; i++) {
-						$dayItem.append("<div class=\"item lastItem\"><a>" + (i + 1) + "</a></div>");
+				var firstDay = new Date();
+				firstDay.setDate(1);
+				firstDay.setYear(nowYear);
+				firstDay.setMonth(nowMonth-1);
+				var maxDay = new Date();
+				maxDay.setYear(firstDay.getFullYear());
+				maxDay.setMonth(firstDay.getMonth() + 1);
+				maxDay.setDate(0);
+				var preDay = new Date();
+				preDay.setYear(firstDay.getYear());
+				preDay.setMonth(firstDay.getMonth());
+				preDay.setDate(0);
+				console.log(preDay.toString());
+				var cd = $("#centerCalendarMain").children();
+				//console.log(cd[firstDay.getDay()].innerHTML + " - " + firstDay.getDay() + firstDay.toString());
+				var j = 1;
+				var startidx = firstDay.getDay();
+				var i = 0;
+				j = preDay.getDate() - startidx + 1;
+				for( i = 0; i < startidx; i++){
+					//cd[i].removeClass("dataItem");
+					cd[i].className = "item";
+					removeClass(cd[i],"dataItem");
+					addClass(cd[i],"lastItem");
+					cd[i].innerHTML = j;
+					j++;					
+				}
+				
+				j = 1;
+				i = startidx ;
+				var nowday = nowDate.getDate();
+				this.efstartidx = startidx;
+				for(i = startidx;i < startidx + maxDay.getDate(); i++){
+					cd[i].className = "item dateItem";
+					cd[i].innerHTML = j;
+					
+					//removeClass(cd[i],"lastItem");
+					if(j == nowday){
+						cd[i].innerHTML = "<a>" + j + "</a>";	
+						cd[i].className = "item currentItem";
+						//addClass(cd[i],"currentItem");
+						curobj = cd[i];
 					}
+					j++;
 				}
-
-				//生成当月的日期
-				for (var i = 0; i < nowDaysNub; i++) {
-					if (i == (nowDay - 1)) $dayItem.append("<div class=\"item currentItem\"><a>" + (i + 1) + "</a></div>");
-					else $dayItem.append("<div class=\"item dataItem\" onclick=go(this);><a>" + (i + 1) + "</a></div>");
+				this.efendidx = i -1;
+				j = 1;
+				for(; i < 42; i++){
+					cd[i].innerHTML = j;
+					cd[i].className = "item";
+					removeClass(cd[i],"dataItem");
+					addClass(cd[i],"lastItem");
+					j++;
 				}
-
-				//获取总共已经生成的天数
-				var hasCreateDaysNub = nowWeek + nowDaysNub;
-	/*			//如果小于42，往下个月推算
-				if (hasCreateDaysNub < 42) {
-					for (var i = 0; i <= (42 - hasCreateDaysNub); i++) {
-						$dayItem.append("<div class=\"item lastItem\"><a>" + (i + 1) + "</a></div>");
-					}
-				}
-*/
-				return $dayItem;
+				
+				curobj.click();
+				return "";
 			},
 			CSS: function() {
-				var itemPaddintTop = $(".dayItem").height() / 6;
+				var itemPaddintTop = $("#centerCalendarMain").height() / 6;
 				$(".item").css({
 					"width": $(".week").width() / 7 + "px",
 					"line-height": itemPaddintTop + "px",
@@ -519,9 +583,11 @@ body {
 					if (y == nowDate.getFullYear() && m == nowDate.getMonth() + 1) d = nowDate.getDate();
 					else d = 1;
 					$calendarItem = this.CreateCalendar(y, m, d);
-					$("#Container").append($calendarItem);
-
+					console.log("" + y + m + d);
+					//$("#Container").append($calendarItem);
+					return;
 					this.CSS();
+					return;
 					this.isRunning = true;
 					$($("#Container").find(".dayItem")[0]).animate({
 						height: "0px"
@@ -542,7 +608,8 @@ body {
 					if (y == nowDate.getFullYear() && m == nowDate.getMonth() + 1) d = nowDate.getDate();
 					else d = 1;
 					$calendarItem = this.CreateCalendar(y, m, d);
-					$("#Container").append($calendarItem);
+					return;
+					//$("#Container").append($calendarItem);
 					var itemPaddintTop = $(".dayItem").height() / 6;
 					this.CSS();
 					this.isRunning = true;
@@ -558,7 +625,8 @@ body {
 				if (this.isRunning == false) {
 					$(".currentDay").hide();
 					$calendarItem = this.CreateCalendar(0, 0, 0);
-					$("#Container").append($calendarItem);
+					//$("#Container").append($calendarItem);
+					return;
 					this.isRunning = true;
 					$($("#Container").find(".dayItem")[0]).animate({
 						height: "0px"
@@ -586,7 +654,25 @@ body {
 		}
 		
 		function go(obj){
-			alert(obj.parentNode.parentNode.parentNode.innerHTML);
+			//console.log(obj.innerHTML);
+			var objs = obj.parentNode.children;
+			console.log(CalendarHandler.efstartidx + " - " + CalendarHandler.efendidx + " -- " + objs.length);
+			for(var i = CalendarHandler.efstartidx; i <= CalendarHandler.efendidx; i++){
+				//console.log(objs[i].innerText);
+				if(objs[i] == obj){
+					objs[i].className = "item currentItem";
+					console.log(objs[i].innerText);
+				}else if(objs[i].innerText == obj.innerText){
+					objs[i].className = "item currentSelItem";
+				}else{
+					objs[i].className = "item dataItem";
+				}
+			}
+			obj.className = "item currentSelItem";
+			CalendarHandler.selday = obj.innerText;
+			//alert(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
+			//console.log(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
+			//console.log(CalendarHandler.currentMonth + CalendarHandler.selday);
 		}
 		</script>
 		
