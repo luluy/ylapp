@@ -693,13 +693,13 @@ body {
 					for(var i = 0; i < data.total; i++){
 						var subitems =  $("#taskitems_copy").children().children();
 						subitems[0].innerText = data.rows[i].TITLE;
-						console.log(subitems.length);
+						//console.log(subitems.length);
 						subitems[1].innerText = data.rows[i].STM + " - " + data.rows[i].ETM;
 						subitems[2].innerText = data.rows[i].SGNM + " - " + data.rows[i].BGNM;
 						$("#taskitems").append($("#taskitems_copy").html());
-						console.log("dd");
+						//console.log("dd");
 					}
-					console.log($("#taskitems").html());
+					//console.log($("#taskitems").html());
 				},
 				error: function(xhr, type, errorThrown) {
 					console.log(app.gettaskurl +  errorThrown);

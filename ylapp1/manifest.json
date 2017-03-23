@@ -358,7 +358,10 @@
 					"css/mui.min.css",
 					"css/demo.css",
 					"img/machineHouse.png",
-					"img/machineHouse_gray.png"
+					"img/machineHouse_gray.png",
+					"js/app.js",
+					"js/mui.min.js",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -442,7 +445,9 @@
 				"resources": [
 					"css/mui.min.css",
 					"js/calendar.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/app.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

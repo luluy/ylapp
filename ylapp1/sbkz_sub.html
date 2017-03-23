@@ -12,12 +12,14 @@
 			.listt{width:140px;display:inline-block;}
 			.switch-open{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 180px;padding-top:80px;}
 			.switch-close{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse_gray.png);height: 180px;padding-top:80px;}
+			.show0{visibility: visible;};
+			.hide0{display: none;};
 		</style>
 	</head>
 
 	<body>
 			<section>
-				<select>
+				<select id="sb_sel">
 					<option value="" disabled >请选择首部</option>
 					<option value="首部一" selected>首部一</option>
 					<option value="首部二">首部二</option>
@@ -34,30 +36,32 @@
 			
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell">
-						<div class="switch-open">
-							<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
-								<div class="mui-switch-handle"></div>
+				<div id="sb_show" style="display: none;">
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<div class="switch-open">
+								<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
+									<div class="mui-switch-handle"></div>
+								</div>
 							</div>
-						</div>
-					</li>
-					<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
-					<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
-					<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
-					<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
-					<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
-					<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
-					<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
-					<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
-				</ul>
-				
+						</li>
+						<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
+						<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
+						<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
+						<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
+						<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
+						<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
+						<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
+						<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
+					</ul>
+				</div>
 				
 				
 			</div>
 		</div> 
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
 		<script>
 			mui.init({
 				pullRefresh: {
@@ -122,6 +126,9 @@
 			function sbkz_init(){
 				
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
+				$("#sb_sel").change(function(){
+					console.log($(this).children('option:selected').val());
+				});
 			
 				mui.ajax(app.c_a_yangling, {
 					dataType: 'json', //服务器返回json格式数据
@@ -131,7 +138,14 @@
 					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
 						//plus.nativeUI.closeWaiting();
 						savedata("shoubu",data);
-						//mui.each(data,function(idx,item){console.log(JSON.stringify(item));});
+						$("#sb_sel").empty();
+						console.log($("#sb_sel").html());
+						$("#sb_show").className = "hide0";
+						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						mui.each(data,function(idx,item){
+							console.log(item.cnm);
+							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
+						});
 
 					},
 					error: function(xhr, type, errorThrown) {
