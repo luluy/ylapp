@@ -169,6 +169,7 @@
 	owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
 	owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
 	owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";
+	owner.bg_monitor = owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";
 	console.log(owner.gettaskurl);
 }(mui, window.app = {}));
 

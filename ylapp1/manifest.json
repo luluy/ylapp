@@ -436,7 +436,8 @@
 				"resources": [
 					"css/mui.min.css",
 					"img/openStatus.png",
-					"img/closeStatus.png"
+					"img/closeStatus.png",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0

@@ -36,24 +36,26 @@
 			
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<div id="sb_show" style="display:none">
-					<ul class="mui-table-view mui-table-view-chevron">
-						<li class="mui-table-view-cell">
-							<div class="switch-open">
-								<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
-									<div class="mui-switch-handle"></div>
+				<div id="sb_show_box">
+					<div id="sb_show" style="display:none">
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<div class="switch-open">
+									<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
+										<div class="mui-switch-handle"></div>
+									</div>
 								</div>
-							</div>
-						</li>
-						<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
-						<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
-						<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
-						<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
-						<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
-						<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
-						<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
-						<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
-					</ul>
+							</li>
+							<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
+							<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
+							<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
+							<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
+							<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
+							<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
+							<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
+						</ul>
+					</div>
 				</div>
 				
 				
@@ -128,6 +130,33 @@
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
 				$("#sb_sel").change(function(){
 					console.log($(this).children('option:selected').val());
+					
+					mui.ajax(app.bg_monitor, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						cache:false,
+						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+							//plus.nativeUI.closeWaiting();
+							console.log(JSON.stringify(data));
+							var show_box = $("#sb_show_box").children();
+							console.log(show_box[0].innerHTML);
+							mui.each(data.rows,function(idx,item){
+								console.log(JSON.stringify(item));
+								
+							});
+	
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(data);
+							//异常处理；
+							//plus.nativeUI.closeWaiting();
+							//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+						}
+					});									
+						
+					
+					
 					$("#sb_show").show();
 				});
 			

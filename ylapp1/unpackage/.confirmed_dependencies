@@ -13,7 +13,9 @@
 			"css/mui.min.css",
 			"tab-webview-main.html",
 			"nav_nine.html",
-			"nav_nine1.html"
+			"nav_nine1.html",
+			"js/app.js",
+			"js/mui.min.js"
 		]
 	},
 	"login.html": {
@@ -225,7 +227,8 @@
 		"resources": [
 			"css/mui.min.css",
 			"img/openStatus.png",
-			"img/closeStatus.png"
+			"img/closeStatus.png",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},
