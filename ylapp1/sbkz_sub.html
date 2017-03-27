@@ -12,8 +12,7 @@
 			.listt{width:140px;display:inline-block;}
 			.switch-open{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 180px;padding-top:80px;}
 			.switch-close{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse_gray.png);height: 180px;padding-top:80px;}
-			.show0{visibility: visible;};
-			.hide0{display: none;};
+
 		</style>
 	</head>
 
@@ -37,20 +36,20 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<div id="sb_show_box">
-					<div id="sb_show" style="display:none">
+					<div id="sb_show"  class="sb_tem">
 						<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
 								<div class="switch-open">
-									<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
+									<div class="mui-switch mui-switch-blue mui-active" style="margin: 0 auto;">
 										<div class="mui-switch-handle"></div>
 									</div>
 								</div>
 							</li>
-							<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
-							<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
-							<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
-							<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
-							<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
+							<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span class="sb_pcd">H01-1</span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行状态</span><span class="sb_run_cond">开启</span></li>
+							<li class="mui-table-view-cell"><span class="listt">启动时间</span><span class="sb_runtm">00:00</span></li>
+							<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span class="sb_q">0.00立方米/小时</span></li>
+							<li class="mui-table-view-cell"><span class="listt">累计流量</span><span class="sb_acc_w">0.000立方米</span></li>
 							<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
 							<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
 							<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
@@ -65,6 +64,8 @@
 		<script src="js/app.js"></script>
 		<script src="js/jquery.js"></script>
 		<script>
+			var show_box = $("#sb_show_box").children(".sb_tem").clone(true);
+			$("#sb_show_box").children(".sb_tem").hide();
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -129,7 +130,8 @@
 				
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
 				$("#sb_sel").change(function(){
-					console.log($(this).children('option:selected').val());
+					var sb_sel_idx = $(this).children('option:selected').val();
+					//console.log(sb_sel_idx);
 					
 					mui.ajax(app.bg_monitor, {
 						dataType: 'json', //服务器返回json格式数据
@@ -138,14 +140,63 @@
 						cache:false,
 						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
 							//plus.nativeUI.closeWaiting();
-							console.log(JSON.stringify(data));
-							var show_box = $("#sb_show_box").children();
-							console.log(show_box[0].innerHTML);
+							
+							
+							var show_tem = $(show_box).clone(true,false);
 							mui.each(data.rows,function(idx,item){
-								console.log(JSON.stringify(item));
+								var curobj = $("#sb_show_box").children("."+item.pcd);
+								if(curobj[0] == undefined){
+									var new0 = $(show_tem).clone(true);
+									new0.attr("class",item.pcd);
+									new0.attr("id","box"+item.pcd);
+									mui.each($(new0).children(),function(i,it){
+										mui.each($(it).children().children(".switch-open"),function(i0,it0){
+											$(it0).attr("class",item.run_cond==0?"switch-close":"switch-open");
+											$($(it0).children()[0]).attr("id","switch" + item.pcd);
+											$($(it0).children()[0]).attr("class",item.run_cond==0?"mui-switch mui-switch-blue":"mui-switch mui-switch-blue mui-active");
+										})										
+										mui.each($(it).children().children(".sb_pcd"),function(i0,it0){
+											it0.innerHTML = item.pcd;
+										})
+										mui.each($(it).children().children(".sb_run_cond"),function(i0,it0){
+											it0.innerHTML = item.run_cond == 0?"关闭":"开启";
+										})										
+										mui.each($(it).children().children(".sb_runtm"),function(i0,it0){
+											it0.innerHTML = item.runtm;
+										})										
+										mui.each($(it).children().children(".sb_q"),function(i0,it0){
+											it0.innerHTML = item.q+"立方米/小时"
+										})										
+										mui.each($(it).children().children(".sb_acc_w"),function(i0,it0){
+											it0.innerHTML = item.acc_w + "立方米";
+										})										
+									});
+									$("#sb_show_box").prepend(new0);//.append(new0);
+									curobj[0] = new0;
+								}
+								
+								$(curobj[0]).hide();
+								if($(curobj[0]).attr("class").indexOf(sb_sel_idx) >= 0){
+									
+									$(curobj[0]).show();
+								}
+								
+								
 								
 							});
-	
+							console.log($("#sb_show_box").html());
+							mui('.mui-content .mui-switch')['switch']();
+							mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+								//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
+								/**
+								 * toggle 事件监听
+								 */
+
+								this.removeEventListener('toggle',sb_toggle);
+								this.addEventListener('toggle', sb_toggle);
+							});			
+										
+
 						},
 						error: function(xhr, type, errorThrown) {
 							console.log(data);
@@ -157,7 +208,7 @@
 						
 					
 					
-					$("#sb_show").show();
+					//$("#sb_show").show();
 				});
 			
 				mui.ajax(app.c_a_yangling, {
@@ -169,17 +220,16 @@
 						//plus.nativeUI.closeWaiting();
 						savedata("shoubu",data);
 						$("#sb_sel").empty();
-						console.log($("#sb_sel").html());
-						$("#sb_show").className = "hide0";
+						//console.log($("#sb_sel").html());
 						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
 						mui.each(data,function(idx,item){
-							console.log(JSON.stringify(item));
+							//console.log(JSON.stringify(item));
 							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
 						});
 
 					},
 					error: function(xhr, type, errorThrown) {
-						console.log(data);
+						//console.log(data);
 						//异常处理；
 						//plus.nativeUI.closeWaiting();
 						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
@@ -189,30 +239,23 @@
 				
 			}
 			
-			mui('.mui-content .mui-switch').each(function() { //循环所有toggle
-				//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
-				/**
-				 * toggle 事件监听
-				 */
-				this.addEventListener('toggle', function(event) {
-					//event.detail.isActive 可直接获取当前状态
-					var btn = ['是', '否'];
-					if(event.detail.isActive){
-							mui.confirm('你确定要开启编码为H01-1的泵站吗？', '', btn, function(e) {
-								e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
-							})						
-						removeClass(this.parentNode,"switch-close");
-						addClass(this.parentNode,"switch-open");
-					}else{
-						removeClass(this.parentNode,"switch-open");
-						addClass(this.parentNode,"switch-close");
-					}
-					//this.parentNode.parentNode.className = "";
-					//this.parentNode.parentNode.className = "switch-close";
-					//this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
-				});
-			});			
 			
+			function sb_toggle (event) {
+				//event.detail.isActive 可直接获取当前状态
+				var btn = ['是', '否'];
+				var idstr = $(this).attr("id").substring(6);
+				if(event.detail.isActive){
+						mui.confirm('你确定要开启编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+							e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
+						})						
+					removeClass(this.parentNode,"switch-close");
+					addClass(this.parentNode,"switch-open");
+				}else{
+					removeClass(this.parentNode,"switch-open");
+					addClass(this.parentNode,"switch-close");
+				}
+			}			
+
 		</script>
 	</body>
 
