@@ -18,7 +18,7 @@
 		<div class="mui-card" style="margin: 3px;padding: 3px;">
 			<div class="mui-card-header">		
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="sb_sel">
 						<option value="" disabled >请选择首部</option>
 						<option value="首部一" selected>首部一</option>
 						<option value="首部二">首部二</option>
@@ -39,7 +39,7 @@
 			<div class="mui-card-header">
 				
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="fz_sel">
 						<option value="" disabled >请选择分组</option>
 						<option value="分组一" selected>分组一</option>
 						<option value="分组二">分组二</option>
@@ -54,121 +54,44 @@
 			</div>
 		</div>
 		
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
+		<div id="fm_box">
+			<div id="fm_tem" class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
+				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span class="fmname">大棚一</span><span class="mui-pull-right" style="color: gray;display: none;">2017-01-20 17:00:00</span></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
+					        <div style="text-align: center;">
+					        	<img src="img/openStatus.png" style="width:130px;" class="fmimg">
+					        	<div style="margin-top: 10px;" class="fmstate">状态：开启</div>
+									<div class="mui-switch mui-switch-blue mui-active" style="margin: 0 auto; ">
+										<div class="mui-switch-handle"></div>
+									</div>
+					        
 					        </div>
+					        <!--
 					        <div class="mui-col-xs-6" style="text-align: center;">
 					        	<img src="img/closeStatus.png" style="width:130px;">
 					        	<div style="margin-top: 10px;">状态：关闭</div>
 					        </div>							
+                            -->
 						</div>
 					</div>
 				</div>
-			</div>	
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>				
-                
+			</div>			
+        </div>        
 
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/websocket.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/formatDate.js"></script>
 		<script>
+			var sb_sel_idx = "";
+			var fz_sel_idx = "";
+			var fm_tem = $("#fm_tem").clone(true);
+			//$("#fm_box").empty();
+			
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -222,16 +145,88 @@
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
 					//console.log(JSON.stringify(app.shoubu));
-					
+					init00();
 					var shoubu = getdata("shoubu");
 					mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
-					
+					init00();
 					mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
 				});
+			}
+			
+			function init00(){
+				$("#fz_sel").empty();
+				$("#sb_sel").empty();
+				$("#sb_sel").change(function(){
+					sb_sel_idx = $(this).children('option:selected').val();
+					console.log(sb_sel_idx);
+					$("#fm_box").empty();
+					loadfz();
+					//$("#sb_show").show();
+				});				
+				
+				mui.ajax(app.c_a_yangling, {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						//plus.nativeUI.closeWaiting();
+						savedata("shoubu",data);
+						$("#sb_sel").empty();
+						//console.log($("#sb_sel").html());
+						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						mui.each(data,function(idx,item){
+							//console.log(JSON.stringify(item));
+							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
+						});
+						
+						
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//console.log(data);
+						//异常处理；
+						//plus.nativeUI.closeWaiting();
+						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					}
+				});					
+			}
+			
+			function loadfz(){
+				
+				$("#fz_sel").change(function(){
+					fz_sel_idx = $(this).children('option:selected').val();
+					console.log(fz_sel_idx);
+					var fms = JSON.parse(fz_sel_idx);
+					$("#fm_box").empty();
+					mui.each(fms.ghouse,function(idx,item){
+						var fm = fm_tem.clone(true);
+						fm.find(".fmname").html(item.hcd);
+						fm.find(".fmimg").attr("src", item.valve[0].state == "0" ? "img/closeStatus.png":"img/openStatus.png");
+						fm.find(".fmstate").html("状态：" + (item.valve[0].state == "0" ? "关闭":"开启"));
+						$("#fm_box").append(fm);
+					});
+				});	
+				
+				var shoubu = getdata("shoubu");
+				
+				$("#fz_sel").empty();
+				//console.log($("#sb_sel").html());
+				$("#fz_sel").append("<option value='' disabled='' selected>请选择分组</option>");
+				mui.each(shoubu,function(idx,item){
+					if(item.ccd == sb_sel_idx){
+						mui.each(item.group,function(idxfz,itemfz){
+							//console.log(JSON.stringify(item));
+							$("#fz_sel").append("<option value='"+JSON.stringify(itemfz)+"' >"+itemfz.gnm+"</option>");
+						});
+						return false;
+					}
+				});
+										
 			}
 		</script>
 	</body>

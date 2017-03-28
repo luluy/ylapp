@@ -361,7 +361,10 @@
 					"img/machineHouse_gray.png",
 					"js/app.js",
 					"js/mui.min.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/websocket.js",
+					"js/utils.js",
+					"js/formatDate.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -437,7 +440,11 @@
 					"css/mui.min.css",
 					"img/openStatus.png",
 					"img/closeStatus.png",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/formatDate.js",
+					"js/utils.js",
+					"js/websocket.js",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -170,6 +170,7 @@
 	owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
 	owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";
 	owner.bg_monitor = owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";
+	owner.bg_stat = owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";
 	//console.log(owner.gettaskurl);
 }(mui, window.app = {}));
 
