@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "gg.yx.xa",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "智能灌溉",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
@@ -121,7 +121,7 @@
 					"ldpi": "img/app48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "img/app72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "img/app96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "img/app144.png"
+					"xxhdpi": "img/app144.png","xxxhdpi":"img/app192.png"
 				}
 			},
 			"splashscreen": {
@@ -444,7 +444,9 @@
 					"js/formatDate.js",
 					"js/utils.js",
 					"js/websocket.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/app.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
