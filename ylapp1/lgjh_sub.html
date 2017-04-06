@@ -680,8 +680,8 @@ body {
 			var stm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + CalendarHandler.selday;// + "00:00:00";
 			var etm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + (parseInt(CalendarHandler.selday) + 1);// + "23:59:59";
 			console.log(stm + " - " + etm);
-			console.log(window.app.gettaskurl);
-			mui.ajax(window.app.gettaskurl, {
+			console.log(window.app.gettaskurl());
+			mui.ajax(window.app.gettaskurl(), {
 				data:{ 'action': 'getFineIrriPlanList','stm':stm,'etm':etm},
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
@@ -702,7 +702,7 @@ body {
 					//console.log($("#taskitems").html());
 				},
 				error: function(xhr, type, errorThrown) {
-					console.log(app.gettaskurl +  errorThrown);
+					console.log(app.gettaskurl() +  errorThrown);
 					//异常处理；
 					//plus.nativeUI.closeWaiting();
 					//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');

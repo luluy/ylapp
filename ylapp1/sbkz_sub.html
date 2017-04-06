@@ -143,23 +143,23 @@
 			
 			function sbkz_init(){
 				loadSTCD();
-                            /*初始化网络并登录*/
-                            /*登录*/
-                            sys_irri.packet.ctp = 0;
-                            sys_irri.packet.uid = app.getState().account;
-                            sys_irri.packet.utp = 1;
-                            sys_irri.packet.op = "EF";
-                            fun_initWebSocket(sys_irri.packet.toString());
+                /*初始化网络并登录*/
+                /*登录*/
+                sys_irri.packet.ctp = 0;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.op = "EF";
+                fun_initWebSocket(sys_irri.packet.toString());
 				
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
 				$("#sb_sel").change(function(){
 					sb_sel_idx = $(this).children('option:selected').val();
-					//console.log(sb_sel_idx);
+					console.log(sb_sel_idx);
 					loadbz();
 					//$("#sb_show").show();
 				});
 			
-				mui.ajax(app.c_a_yangling, {
+				mui.ajax(app.c_a_yangling(), {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 60000, //超时时间设置为10秒；
@@ -170,10 +170,17 @@
 						$("#sb_sel").empty();
 						//console.log($("#sb_sel").html());
 						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						var selected0 = "";//" selected ";
 						mui.each(data,function(idx,item){
 							//console.log(JSON.stringify(item));
 							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
+							if(selected0 == "") selected0 = item.ccd;
 						});
+						//console.log(sel_val);
+						//sb_sel_idx = $("#sb_sel").children('option:selected').val();
+						//console.log(sb_sel_idx);
+						//loadbz();
+						$('#sb_sel').val(selected0).trigger('change');
 
 					},
 					error: function(xhr, type, errorThrown) {
@@ -196,32 +203,32 @@
 				if(!isToggleMan){ isToggleMan = true;return;}
 				isToggleMan = true;
 				if(event.detail.isActive){
-						mui.confirm('你确定要开启编码为'+idstr+'的泵站吗？', '', btn, function(e) {
-							//e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
-							if(e.index == 0){
-								pumpoperate(idstr,true);
-							}
-							else{
+					mui.confirm('你确定要开启编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!pumpoperate(idstr,true)){
 								isToggleMan = false;
 								mui("#"+idstr0).switch().toggle();
+								
 							}
-						})						
-					//removeClass(this.parentNode,"switch-close");
-					//addClass(this.parentNode,"switch-open");
+						}
+						else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
 				}else{
-						mui.confirm('你确定要关闭编码为'+idstr+'的泵站吗？', '', btn, function(e) {
-							//e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
-							if(e.index == 0){
-								pumpoperate(idstr,false);
-							}else{
-								//console.log("#"+$(this).attr("id"));
+					mui.confirm('你确定要关闭编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!pumpoperate(idstr,true)){
 								isToggleMan = false;
 								mui("#"+idstr0).switch().toggle();
+								
 							}
-						})						
-					
-					//removeClass(this.parentNode,"switch-open");
-					//addClass(this.parentNode,"switch-close");
+						}else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
 				}
 			}		
 			
@@ -241,6 +248,7 @@
                 console.log(JSON.stringify(sys_irri));
                 if (ws && ws.readyState == 1) {
                     ws.send(sys_irri.packet.toString());
+                    return true;
                 } else {
                     //layer.closeAll();
                     mui.toast("连接已经断开，操作失败！");
@@ -250,20 +258,23 @@
                 mui.toast("没有找到对应的测站！");
                 //window.clearTimeout(bumptimeout);
             }
+            return false;
         }
 			
         /*装载测站对应关系*/
         function loadSTCD(){
-            
-			mui.ajax(app.bg_stat, {
+            var url_bg_stat = app.bg_stat();
+            console.log(url_bg_stat);
+			mui.ajax(url_bg_stat, {
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
 				timeout: 60000, //超时时间设置为10秒；
 				cache:false,
 				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(JSON.stringify(data));
                     if (data.rows.length > 0) {
                         stcdList = data.rows;
-                        console.log(JSON.stringify(stcdList));
+                        
                     }
 
 				},
@@ -273,8 +284,8 @@
         };
         
         function loadbz(){
-					
-					mui.ajax(app.bg_monitor, {
+					var url_monitor = app.bg_monitor();
+					mui.ajax(url_monitor, {
 						dataType: 'json', //服务器返回json格式数据
 						type: 'get', //HTTP请求类型
 						timeout: 60000, //超时时间设置为10秒；

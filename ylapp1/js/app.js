@@ -20,8 +20,8 @@
 		}
 		
 		plus.nativeUI.showWaiting("正在登录...");
-	
-		mui.ajax(app.loginurl, {
+		
+		mui.ajax(app.loginurl(), {
 			data:{ 'action': 'login', 'city': '', 'remember': 'sevenday', 'loginName': loginInfo.account, 'loginPwd': loginInfo.password },
 			dataType: 'json', //服务器返回json格式数据
 			type: 'get', //HTTP请求类型
@@ -166,11 +166,17 @@
 	
 	owner.shoubu = {};
 	owner.hosturl = "http://1.85.44.234/";
-	owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
-	owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
-	owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";
-	owner.bg_monitor = owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";
-	owner.bg_stat = owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";
+	
+	owner.loginurl = function(){return owner.hosturl + "admin/ashx/bg_user_login.ashx";}
+	owner.c_a_yangling = function(){ return owner.hosturl + "control/ashx/yangling.ashx";}
+	owner.gettaskurl = function(){ return owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";}
+	owner.bg_monitor = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";}
+	owner.bg_stat = function(){ return owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";}
+	//owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
+	//owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
+	//owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";
+	//owner.bg_monitor = owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";
+	//owner.bg_stat = owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";
 	//console.log(owner.gettaskurl);
 }(mui, window.app = {}));
 
