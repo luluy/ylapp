@@ -493,6 +493,7 @@
 		(function($, doc) {
 			//$.init();
 			$.plusReady(function() {
+				if(app.hosturl != "") mui("#web_adr_txt")[0].value = app.hosturl;
 				var settings = app.getSettings();
 				var lockStateButton = doc.getElementById("lockState");
 				var locker = doc.querySelector('.mui-locker');
@@ -573,9 +574,9 @@
 				//				console.log(e.detail.page.id + ' beforeBack');
 			});
 			view.addEventListener('pageBack', function(e) {
-								console.log(e.detail.page.id + ' back');
+								console.log(e.detail.page.id + ' back' + mui("#web_adr_txt")[0].value);
 				if(e.detail.page.id == 'web_adr'){
-					
+					app.hosturl = mui("#web_adr_txt")[0].value;
 				}else if(e.detail.page.id == 'ws_adr'){
 					
 				}

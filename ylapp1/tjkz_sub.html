@@ -86,9 +86,15 @@
 		<script src="js/utils.js"></script>
 		<script src="js/formatDate.js"></script>
 		<script>
+	        var valveList = [];　//阀门列表信息
+	        var stcdList = [];   //测站关系表
+        var bumpList = [{ pcd: 'H01-1', run_cond: '1', v: 380, q: 53, acc_w: 1234.6, p: 1.2, tm: '2017-01-12 12:56:02',runtm:'' },
+        { pcd: 'H02-1', run_cond: '0', v: 380, q: 50, acc_w: 3234.6, p: 1.2, tm: '2017-01-12 10:05:02', runtm: ''}];
+			
+			var isToggleMan = true;
 			var sb_sel_idx = "";
 			var fz_sel_idx = "";
-			var fm_tem = $("#fm_tem").clone(true);
+			var fz_tem = $("#fm_tem").clone(true);
 			$("#fm_box").empty();
 			
 			mui.init({
@@ -146,13 +152,13 @@
 					//console.log(JSON.stringify(app.shoubu));
 					init00();
 					var shoubu = getdata("shoubu");
-					mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
+					//mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
 					init00();
-					mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
+					//mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
 				});
 			}
 			
@@ -161,12 +167,12 @@
 				$("#sb_sel").empty();
 				$("#sb_sel").change(function(){
 					sb_sel_idx = $(this).children('option:selected').val();
-					console.log(sb_sel_idx);
+					//console.log(sb_sel_idx);
 					$("#fm_box").empty();
 					loadfz();
 					//$("#sb_show").show();
 				});				
-				
+				loadSTCD();
 				mui.ajax(app.c_a_yangling(), {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
@@ -202,32 +208,45 @@
 				
 				$("#fz_sel").change(function(){
 					fz_sel_idx = $(this).children('option:selected').val();
-					console.log(fz_sel_idx);
+					//console.log(fz_sel_idx);
 					var fms = JSON.parse(fz_sel_idx);
 					$("#fm_box").empty();
-					mui.each(fms.ghouse,function(idx,item){
-						var fm = fm_tem.clone(true);
-						fm.find(".fmname").html(item.hcd);
-						fm.find(".fmimg").attr("src", item.valve[0].state == "0" ? "img/closeStatus.png":"img/openStatus.png");
-						fm.find(".fmstate").html("状态：" + (item.valve[0].state == "0" ? "关闭":"开启"));
-						var obj =fm.find(".mui-switch");
-						console.log(obj.html());
-						mui(obj)['switch']();
-						mui(obj)[0].addEventListener('toggle',function(){console.log("ddddff");})
-						$("#fm_box").append(fm);
-					});
-					console.log(mui('.fm_box .mui-switch').length);
-							mui('.fm_box .mui-switch')['switch']();
-							mui('.fm_box .mui-switch').each(function() { //循环所有toggle
-								//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
-								/**
-								 * toggle 事件监听
-								 */
-								console.log(this);
-								this.removeEventListener('toggle',sb_toggle);
-								this.addEventListener('toggle', sb_toggle);
-							});						
 					
+					//url_getfm;
+					mui.ajax(app.url_getfm(), {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						cache:false,
+						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+							mui.each(fms.ghouse,function(idx,item){
+								mui.each(data.rows,function(idx0,item0){
+									if(item0.VCD == item.valve[0].vcd){
+										var fm = fz_tem.clone(true);
+										fm.find(".fmname").html(item.hcd);
+										console.log(JSON.stringify(item));
+										fm.find(".fmimg").attr("src", item0.RUN_COND != "1" ? "img/closeStatus.png":"img/openStatus.png");
+										fm.find(".fmstate").html("状态：" + (item0.RUN_COND != "1" ? "关闭":"开启"));
+										var obj =fm.find(".mui-switch");
+										mui(obj)['switch']();
+										$(obj).attr("id","sw" + item.hcd);
+										$(obj).attr("class",item0.RUN_COND != "1" ?"mui-switch mui-switch-blue":"mui-switch mui-switch-blue mui-active");
+										
+										mui(obj)[0].addEventListener('toggle',fz_toggle)
+										$("#fm_box").append(fm);										
+										
+										return false;
+									}
+								});
+							});							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(data);
+							//异常处理；
+							//plus.nativeUI.closeWaiting();
+							//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+						}
+					});						
 				});	
 				
 				var shoubu = getdata("shoubu");
@@ -254,13 +273,13 @@
 				//event.detail.isActive 可直接获取当前状态
 				var btn = ['是', '否'];
 				var idstr0 = $(this).attr("id");
-				var idstr = $(this).attr("id").substring(6);
+				var idstr = $(this).attr("id").substring(2);
 				if(!isToggleMan){ isToggleMan = true;return;}
 				isToggleMan = true;
 				if(event.detail.isActive){
-					mui.confirm('你确定要开启编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+					mui.confirm('你确定要开启编码为'+idstr+'的阀门吗？', '', btn, function(e) {
 						if(e.index == 0){
-							if(!pumpoperate(idstr,true)){
+							if(!ghouseoperate(idstr,true)){
 								isToggleMan = false;
 								mui("#"+idstr0).switch().toggle();
 								
@@ -272,9 +291,9 @@
 						}
 					})						
 				}else{
-					mui.confirm('你确定要关闭编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+					mui.confirm('你确定要关闭编码为'+idstr+'的阀门吗？', '', btn, function(e) {
 						if(e.index == 0){
-							if(!pumpoperate(idstr,true)){
+							if(!ghouseoperate(idstr,false)){
 								isToggleMan = false;
 								mui("#"+idstr0).switch().toggle();
 								
@@ -286,7 +305,54 @@
 					})						
 				}
 			}		
-						
+					
+				
+		    /*模拟阀门启闭操作  operate为"11"二进制字符串*/
+		    function ghouseoperate(house, operate) {
+		        /*此处的house是大棚的编码，取相对应的stcd*/
+		        var stcd = getObjByValue(stcdList, "CD", house);
+		        if (stcd) {
+		            /*阀门操作*/
+		            sys_irri.packet.ctp = 1;
+		            sys_irri.packet.uid = app.getState().account;
+		            sys_irri.packet.utp = 1;
+		            sys_irri.packet.rtu = stcd.STCD;
+		            sys_irri.packet.op = "4D";
+		            sys_irri.packet.value = operate == "1" ? '0101' : '0100';
+		
+		            if (ws && ws.readyState == 1) {
+		                ws.send(sys_irri.packet.toString());
+		            } else {
+		               mui.toast("连接已经断开，操作失败！");
+		            }
+		        } else {
+		        	mui.toast("没有找到对应的测站！");
+		        }
+		
+		    };
+				
+				
+        /*装载测站对应关系*/
+        function loadSTCD(){
+            var url_bg_stat = app.bg_stat();
+            console.log(url_bg_stat);
+			mui.ajax(url_bg_stat, {
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 60000, //超时时间设置为10秒；
+				cache:false,
+				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+					//console.log(JSON.stringify(data));
+                    if (data.rows.length > 0) {
+                        stcdList = data.rows;
+                        
+                    }
+
+				},
+				error: function(xhr, type, errorThrown) {
+				}
+			});			            
+        };				
 			
 		</script>
 	</body>

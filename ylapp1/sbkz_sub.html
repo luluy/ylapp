@@ -154,7 +154,7 @@
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
 				$("#sb_sel").change(function(){
 					sb_sel_idx = $(this).children('option:selected').val();
-					console.log(sb_sel_idx);
+					//console.log(sb_sel_idx);
 					loadbz();
 					//$("#sb_show").show();
 				});
@@ -219,7 +219,7 @@
 				}else{
 					mui.confirm('你确定要关闭编码为'+idstr+'的泵站吗？', '', btn, function(e) {
 						if(e.index == 0){
-							if(!pumpoperate(idstr,true)){
+							if(!pumpoperate(idstr,false)){
 								isToggleMan = false;
 								mui("#"+idstr0).switch().toggle();
 								
@@ -271,7 +271,7 @@
 				timeout: 60000, //超时时间设置为10秒；
 				cache:false,
 				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
                     if (data.rows.length > 0) {
                         stcdList = data.rows;
                         
