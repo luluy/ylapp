@@ -166,13 +166,14 @@
 	
 	owner.shoubu = {};
 	owner.hosturl = "http://1.85.44.234/";
-	owner.wsurl = "ws://1.85.44.234:9612sss";//var sys_websocket = "ws://1.85.44.234:9612";
+	owner.wsurl = "ws://1.85.44.234:9612";//var sys_websocket = "ws://1.85.44.234:9612";
 	
 	owner.loginurl = function(){return owner.hosturl + "admin/ashx/bg_user_login.ashx";}
 	owner.c_a_yangling = function(){ return owner.hosturl + "control/ashx/yangling.ashx";}
 	owner.gettaskurl = function(){ return owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";}
 	owner.bg_monitor = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";}
 	owner.url_getfm = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getVALVERealAllData";}
+	owner.url_getghouse = function(){return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getGHOUSERealDataByHCD";};
 	owner.bg_stat = function(){ return owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";}
 	//owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
 	//owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";

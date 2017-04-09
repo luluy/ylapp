@@ -47,24 +47,25 @@ function fun_initWebSocket(a) {
                     break;
                 case '4D': /*阀门*/
                     if (rs.success) {
-                        layer.closeAll();
+                        //layer.closeAll();
                         var operate = rs.value;   //"0101"
                         var value = parseInt(operate.substr(2, 2));  //subtring(2,4);
                         var house = getObjByValue(stcdList, "STCD", stcd).CD;
                         if ((value & 1) == 1) {
-                            $("#" + house + "-1").attr("src", "images/valve-open.png");
-                            $("#" + house + "-1").attr("state", "1");
+                            //$("#" + house + "-1").attr("src", "images/valve-open.png");
+                            //$("#" + house + "-1").attr("state", "1");
                         }
                         else if ((value & 1) == 0) {
-                            $("#" + house + "-1").attr("src", "images/valve-close.png");
-                            $("#" + house + "-1").attr("state", "0");
+                            //$("#" + house + "-1").attr("src", "images/valve-close.png");
+                            //$("#" + house + "-1").attr("state", "0");
                         };
-                        layer.msg("操作成功！", { icon: 1, time: 3000 });
-                        window.clearTimeout(valvetimeout);
+                        //layer.msg("操作成功！", { icon: 1, time: 3000 });
+                        //window.clearTimeout(valvetimeout);
                     } else {
-                        layer.closeAll();
-                        layer.msg(rs.message, { icon: 2, time: 3000 });
-                        window.clearTimeout(valvetimeout);
+                        //layer.closeAll();
+                        //layer.msg(rs.message, { icon: 2, time: 3000 });
+                        mui.toast(rs.message);
+                        //window.clearTimeout(valvetimeout);
                     }
                     break;
                 case '4C': /*泵站*/

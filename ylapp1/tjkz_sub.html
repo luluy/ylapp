@@ -173,6 +173,14 @@
 					//$("#sb_show").show();
 				});				
 				loadSTCD();
+                /*初始化网络并登录*/
+                /*登录*/
+                sys_irri.packet.ctp = 0;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.op = "EF";
+                fun_initWebSocket(sys_irri.packet.toString());				
+				
 				mui.ajax(app.c_a_yangling(), {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
@@ -342,7 +350,7 @@
 				timeout: 60000, //超时时间设置为10秒；
 				cache:false,
 				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-					//console.log(JSON.stringify(data));
+					console.log(JSON.stringify(data));
                     if (data.rows.length > 0) {
                         stcdList = data.rows;
                         
