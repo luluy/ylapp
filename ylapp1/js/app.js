@@ -172,8 +172,10 @@
 	owner.c_a_yangling = function(){ return owner.hosturl + "control/ashx/yangling.ashx";}
 	owner.gettaskurl = function(){ return owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";}
 	owner.bg_monitor = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getPUMPRealAllData";}
+	owner.url_getsb = function() { return owner.hosturl + "irriplan/ashx/bg_irrigroup.ashx?action=getCDNM";}
+	owner.url_getfz = function() { return owner.hosturl + "irriplan/ashx/bg_irrigroup.ashx?action=getGroupCDNM";}
 	owner.url_getfm = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getVALVERealAllData";}
-	owner.url_getghouse = function(){return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getGHOUSERealDataByHCD";};
+	owner.url_getghouse = function(){return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getGHOUSERealAllDataByID";};
 	owner.bg_stat = function(){ return owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";}
 	//owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
 	//owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";

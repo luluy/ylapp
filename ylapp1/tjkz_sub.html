@@ -343,14 +343,14 @@
         /*装载测站对应关系*/
         function loadSTCD(){
             var url_bg_stat = app.bg_stat();
-            console.log(url_bg_stat);
+            //console.log(url_bg_stat);
 			mui.ajax(url_bg_stat, {
 				dataType: 'json', //服务器返回json格式数据
 				type: 'get', //HTTP请求类型
 				timeout: 60000, //超时时间设置为10秒；
 				cache:false,
 				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
                     if (data.rows.length > 0) {
                         stcdList = data.rows;
                         

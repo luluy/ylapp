@@ -430,7 +430,11 @@
 					"img/openStatus.png",
 					"img/temperature.png",
 					"img/humidity.png",
-					"img/sunshine.png"
+					"img/sunshine.png",
+					"js/formatDate.js",
+					"js/utils.js",
+					"js/websocket.js",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0
