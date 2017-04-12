@@ -104,20 +104,6 @@ body {
 	color: #fff;.
 }
 
-.reddot {
-	background-color: red;
-	width: 6px;
-	line-height: 6px;
-	float: left;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
-	color: red;
-	margin-top: -8px;
-	margin-left: 17px;
-	font-size: 1px;
-}
-
 .currentSelItem>a {
 	background-color: darkgray;
 	width: 42px;
@@ -249,13 +235,13 @@ body {
 						<div class="item lastItem">27</div>
 						<div class="item lastItem">28</div>
 						<div class="item " onclick="go(this);">1</div>
-						<div class="item " onclick="go(this);"><div class="currentItem">2</div><div class="reddot">d</div></div>
+						<div class="item dataItem" onclick="go(this);"><a>2</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>3</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>4</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>5</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>6</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>7</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>8</a><div class="reddot">d</div></div>
+						<div class="item dataItem" onclick="go(this);"><a>8</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>9</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>10</a></div>
 						<div class="item dataItem" onclick="go(this);"><a>11</a></div>
@@ -377,7 +363,6 @@ body {
 <script type="text/javascript">
 	var curobj = null;
 		$(document).ready(function(e) {
-			
 			CalendarHandler.initialize();
 		});
 
@@ -567,13 +552,10 @@ body {
 					//removeClass(cd[i],"lastItem");
 					if(j == nowday){
 						this.curday = nowday;
-						cd[i].innerHTML = "<a>" + j + "</a><div class='reddot'>d</div>";	
-						
+						cd[i].innerHTML = "<a>" + j + "</a>";	
 						cd[i].className = "item currentItem";
-						console.log(cd[i].parentNode.parentNode.innerHTML)
 						//addClass(cd[i],"currentItem");
 						curobj = cd[i];
-						
 					}
 					j++;
 				}
@@ -586,7 +568,6 @@ body {
 					addClass(cd[i],"lastItem");
 					j++;
 				}
-				$(curobj).trigger("create");
 				
 				curobj.click();
 				return "";
@@ -686,19 +667,16 @@ body {
 			var objs = obj.parentNode.children;
 			for(var i = CalendarHandler.efstartidx; i <= CalendarHandler.efendidx; i++){
 				if(objs[i].innerText == CalendarHandler.curday){
-					//objs[i].className = "item currentItem";
-					//objs[i].toggleClass(currentItem);
+					objs[i].className = "item currentItem";
 				}else if(objs[i].innerText == obj.innerText){
-					//objs[i].innerHTML = "<a>" + obj.innerText + "</a>";
+					objs[i].innerHTML = "<a>" + obj.innerText + "</a>";
 					objs[i].className = "item currentSelItem";
 					
 				}else{
-					//objs[i].innerHTML = objs[i].innerText ;
+					objs[i].innerHTML = objs[i].innerText ;
 					objs[i].className = "item dataItem";
 				}
-				$(objs[i]).trigger("create");
 			}
-			console.log(obj.parentNode.innerHTML);
 			var stm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + CalendarHandler.selday;// + "00:00:00";
 			var etm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + (parseInt(CalendarHandler.selday) + 1);// + "23:59:59";
 			console.log(stm + " - " + etm);
