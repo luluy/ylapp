@@ -88,12 +88,13 @@ body {
 	font-family: "微软雅黑";
 	font-size: 13px;
 	width: 42px; line-height: 34px; height: 34px;
+
 	
 }
 .item:hover {
 	color: #fff;
 }
-.currentItem>a {
+.currentItem {
 	background-color: #b9121b;
 	width: 42px;
 	line-height: 34px;
@@ -114,11 +115,27 @@ body {
 	border-radius: 50%;
 	color: red;
 	margin-top: -8px;
-	margin-left: 17px;
+	margin-left: 19px;
 	font-size: 1px;
 }
 
-.currentSelItem>a {
+.reddot_hide {
+	visibility: hidden;
+	background-color: red;
+	width: 6px;
+	line-height: 6px;
+	float: left;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	color: red;
+	margin-top: -8px;
+	margin-left: 19px;
+	font-size: 1px;
+}
+
+
+.currentSelItem {
 	background-color: darkgray;
 	width: 42px;
 	line-height: 34px;
@@ -232,6 +249,7 @@ body {
 			<a class="selectBtn currentDay" href="javascript:" onclick="CalendarHandler.CreateCurrentCalendar(0,0,0);" style="display: none;">今天</a>
 		</div>
 		<div id="context" style="height: 230px;">
+			<!--
 			<div class="week">
 				<div class="iw gray">日</div>
 				<div class="iw">一</div>
@@ -242,52 +260,60 @@ body {
 				<div class="iw gray">六</div>
 			
 			</div>
-			<div id="center" style="height: 200px;">
-				<div id="centerMain" style="">
-					<div id="selectYearDiv" style="height: 180px; width: 300px;"></div>
-					<div id="centerCalendarMain" style="height: 180px;width: 300px;">
-						<div class="item lastItem">27</div>
-						<div class="item lastItem">28</div>
-						<div class="item " onclick="go(this);">1</div>
-						<div class="item " onclick="go(this);"><div class="currentItem">2</div><div class="reddot">d</div></div>
-						<div class="item dataItem" onclick="go(this);"><a>3</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>4</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>5</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>6</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>7</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>8</a><div class="reddot">d</div></div>
-						<div class="item dataItem" onclick="go(this);"><a>9</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>10</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>11</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>12</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>13</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>14</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>15</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>16</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>17</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>18</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>19</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>20</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>21</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>22</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>23</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>24</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>25</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>26</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>27</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>28</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>29</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>30</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>31</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>1</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>2</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>3</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>4</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>5</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>6</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>7</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>8</a></div>
-						<div class="item dataItem" onclick="go(this);"><a>9</a></div>
+		-->
+			<div id="center" style="height:250px;">
+				<div id="centerMain">
+					<div id="selectYearDiv" style="height: 200px; width: 300px;"></div>
+					<div id="centerCalendarMain" style="height: 200px;width: 294px;">
+						<div class="iw gray">日</div>
+						<div class="iw">一</div>
+						<div class="iw">二</div>
+						<div class="iw">三</div>
+						<div class="iw">四</div>
+						<div class="iw">五</div>
+						<div class="iw gray">六</div>						
+						<div class="item " onclick="go(this);"><div class="lastItem">27</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div>28</div><div class="reddot">d</div></div>
+						<div class="item " onclick="go(this);"><div class="currentItem">1</div><div class="reddot">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">2</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">3</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">4</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">5</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">6</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">7</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">8</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">9</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">10</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">11</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">12</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">13</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">14</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">15</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">16</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">17</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">18</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">19</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">20</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">21</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">22</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">23</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">24</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">25</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">26</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">27</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">28</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">29</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">30</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">31</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">1</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">2</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">3</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">4</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">5</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">6</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">7</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">8</div><div class="reddot_hide">d</div></div>
+						<div class="item " onclick="go(this);"><div class="lastItem">9</div><div class="reddot_hide">d</div></div>
 					</div>
 					<div id="selectMonthDiv" style="height: 200px; width: 300px;"></div>
 				</div>
@@ -377,7 +403,7 @@ body {
 <script type="text/javascript">
 	var curobj = null;
 		$(document).ready(function(e) {
-			
+			//return;
 			CalendarHandler.initialize();
 		});
 
@@ -517,7 +543,6 @@ body {
 			},
 			CreateCalendar: function(y, m, d) {
 				//console.log(y + "-" + m + "-" + d );
-				$dayItem = $("<div class=\"dayItem\"></div>");
 				//获取当前月份的天数
 				var nowDate = new Date();
 				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0)) $(".currentDay").hide();
@@ -532,13 +557,9 @@ body {
 				firstDay.setDate(1);
 				firstDay.setYear(nowYear);
 				firstDay.setMonth(nowMonth-1);
-				var maxDay = new Date();
-				maxDay.setYear(firstDay.getFullYear());
-				maxDay.setMonth(firstDay.getMonth() + 1);
+				var maxDay = new Date(firstDay);
 				maxDay.setDate(0);
-				var preDay = new Date();
-				preDay.setYear(firstDay.getYear());
-				preDay.setMonth(firstDay.getMonth());
+				var preDay = new Date(firstDay);
 				preDay.setDate(0);
 				
 				var cd = $("#centerCalendarMain").children();
@@ -546,49 +567,51 @@ body {
 				var j = 1;
 				var startidx = firstDay.getDay();
 				var i = 0;
-				j = preDay.getDate() - startidx + 1;
-				for( i = 0; i < startidx; i++){
-					//cd[i].removeClass("dataItem");
-					cd[i].className = "item";
-					removeClass(cd[i],"dataItem");
-					addClass(cd[i],"lastItem");
-					cd[i].innerHTML = j;
+				j = preDay.getDate() - startidx + 1 ;
+				var preDay0 = new Date(preDay - (startidx -1) * 24*60*60*1000);
+				for( i = 7; i < 7+startidx; i++){
+					cd[i].children[0].innerHTML = j;
+					cd[i].children[0].className = "lastItem"
+					cd[i].children[1].className = "reddot_hide"
+					console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
+					$(cd[i]).attr("data-mydate",preDay0);
+					preDay0 = new Date(24*60*60*1000 + preDay0);
 					j++;					
 				}
+				
 				
 				j = 1;
 				i = startidx ;
 				var nowday = nowDate.getDate();
 				this.efstartidx = startidx;
-				for(i = startidx;i < startidx + maxDay.getDate(); i++){
-					cd[i].className = "item dateItem";
-					cd[i].innerHTML = j;
-					
+				for(i = startidx + 7;i < 7 + startidx + maxDay.getDate(); i++){
+					//cd[i].className = "item dateItem";
+					cd[i].children[0].innerHTML = j;
+					cd[i].children[0].className = "";
 					//removeClass(cd[i],"lastItem");
 					if(j == nowday){
 						this.curday = nowday;
-						cd[i].innerHTML = "<a>" + j + "</a><div class='reddot'>d</div>";	
+						cd[i].children[0].className = "currentItem";// innerHTML = "<a>" + j + "</a><div class='reddot'>d</div>";	
 						
-						cd[i].className = "item currentItem";
-						console.log(cd[i].parentNode.parentNode.innerHTML)
+						//cd[i].className = "item currentItem";
+						//console.log(cd[i].parentNode.parentNode.innerHTML)
 						//addClass(cd[i],"currentItem");
 						curobj = cd[i];
 						
 					}
 					j++;
 				}
-				this.efendidx = i -1;
+				//return;
+				this.efendidx = i -7;
 				j = 1;
-				for(; i < 42; i++){
-					cd[i].innerHTML = j;
-					cd[i].className = "item";
-					removeClass(cd[i],"dataItem");
-					addClass(cd[i],"lastItem");
+				for(; i < 42 + 7; i++){
+					cd[i].children[0].innerHTML = j;
+					
 					j++;
 				}
 				$(curobj).trigger("create");
 				
-				curobj.click();
+				//curobj.click();
 				return "";
 			},
 			CSS: function() {
@@ -681,28 +704,32 @@ body {
 		}
 		
 		function go(obj){
-			CalendarHandler.selday = obj.innerText;
-			//console.log(obj.innerHTML);
+			CalendarHandler.selday = obj.children[0].innerText;
+			console.log(JSON.stringify(CalendarHandler));
 			var objs = obj.parentNode.children;
-			for(var i = CalendarHandler.efstartidx; i <= CalendarHandler.efendidx; i++){
-				if(objs[i].innerText == CalendarHandler.curday){
+			for(var i = CalendarHandler.efstartidx + 7; i < CalendarHandler.efendidx + 7; i++){
+				console.log(objs[i].innerHTML);
+				if(objs[i].children[0].innerText == CalendarHandler.curday){
 					//objs[i].className = "item currentItem";
 					//objs[i].toggleClass(currentItem);
+					//objs[i].children[0].className= "currentItem";
 				}else if(objs[i].innerText == obj.innerText){
 					//objs[i].innerHTML = "<a>" + obj.innerText + "</a>";
-					objs[i].className = "item currentSelItem";
+					//objs[i].className = "item currentSelItem";
+					objs[i].children[0].className= "currentSelItem";
 					
 				}else{
 					//objs[i].innerHTML = objs[i].innerText ;
-					objs[i].className = "item dataItem";
+					//objs[i].className = "item dataItem";.
+					objs[i].children[0].className= "";
 				}
 				$(objs[i]).trigger("create");
 			}
-			console.log(obj.parentNode.innerHTML);
+			//console.log(obj.parentNode.innerHTML);
 			var stm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + CalendarHandler.selday;// + "00:00:00";
 			var etm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-" + (parseInt(CalendarHandler.selday) + 1);// + "23:59:59";
 			console.log(stm + " - " + etm);
-			console.log(window.app.gettaskurl());
+			//console.log(window.app.gettaskurl());
 			mui.ajax(window.app.gettaskurl(), {
 				data:{ 'action': 'getFineIrriPlanList','stm':stm,'etm':etm},
 				dataType: 'json', //服务器返回json格式数据
