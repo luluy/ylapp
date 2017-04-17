@@ -458,14 +458,14 @@ body {
 					$yearItem.click(function(){
 						$calendarItem=CalendarHandler.CreateCalendar(Number($(this).html()),1,1);
 						//$("#Container").append($calendarItem);
-						CalendarHandler.CSS()
+						//CalendarHandler.CSS()
 					    //CalendarHandler.isRunning = true;
-					    $($("#Container").find(".dayItem")[0]).animate({
-						height: "0px"
-					    }, 300, function() {
-						$(this).remove();
-						CalendarHandler.isRunning = false;
-					    });
+					    //$($("#Container").find(".dayItem")[0]).animate({
+						//height: "0px"
+					    //}, 300, function() {
+						//$(this).remove();
+						//CalendarHandler.isRunning = false;
+					    //});
 						$("#centerMain").animate({
 						marginLeft: -$("#center").width() + "px"
 					}, 500);
@@ -489,17 +489,19 @@ body {
 					$monthItem.click(function(){
 						$calendarItem=CalendarHandler.CreateCalendar(CalendarHandler.currentYear,Number($(this).attr("id")),1);
 						//$("#Container").append($calendarItem);
-						CalendarHandler.CSS()
+						//CalendarHandler.CSS()
+						//$("#selectMonthDiv").hide();
+						//return;
 					    //CalendarHandler.isRunning = true;
-					    $($("#Container").find(".dayItem")[0]).animate({
-						height: "0px"
-					    }, 300, function() {
-						$(this).remove();
-						CalendarHandler.isRunning = false;
-					    });
+					   // $($("#Container").find(".dayItem")[0]).animate({
+						//height: "0px"
+					   // }, 300, function() {
+						//$(this).remove();
+						//CalendarHandler.isRunning = false;
+					   // });
 						$("#centerMain").animate({
-						marginLeft: -$("#center").width() + "px"
-					}, 500);
+							marginLeft: -$("#center").width() + "px"
+						}, 500);
 					});
 					if (i == 1 || i == 5 || i == 9) $("#selectMonthDiv").find("#" + i).css("border-left-color", "#fff");
 					if (i == 4 || i == 8 || i == 12) $("#selectMonthDiv").find("#" + i).css("border-right-color", "#fff");
@@ -542,7 +544,7 @@ body {
 				return mDay;
 			},
 			CreateCalendar: function(y, m, d) {
-				//console.log(y + "-" + m + "-" + d );
+				console.log(y + "-" + m + "-" + d );
 				//获取当前月份的天数
 				var nowDate = new Date();
 				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0)) $(".currentDay").hide();
@@ -674,7 +676,8 @@ body {
 			CreateCurrentCalendar: function() {
 				if (this.isRunning == false) {
 					$(".currentDay").hide();
-					$calendarItem = this.CreateCalendar(0, 0, 0);
+					var nowdate = new Date();
+					$calendarItem = this.CreateCalendar(nowdate.getFullYear(), nowdate.getMonth() + 1, nowdate.getDate());
 					//$("#Container").append($calendarItem);
 					return;
 					this.isRunning = true;
