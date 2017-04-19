@@ -232,7 +232,7 @@
 									if(item0.VCD == item.valve[0].vcd){
 										var fm = fz_tem.clone(true);
 										fm.find(".fmname").html(item.hcd);
-										console.log(JSON.stringify(item));
+										//console.log(JSON.stringify(item));
 										fm.find(".fmimg").attr("src", item0.RUN_COND != "1" ? "img/closeStatus.png":"img/openStatus.png");
 										fm.find(".fmstate").html("状态：" + (item0.RUN_COND != "1" ? "关闭":"开启"));
 										var obj =fm.find(".mui-switch");

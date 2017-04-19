@@ -206,12 +206,12 @@
 				console.log(init);
 				$("#fz_sel").change(function(){
 					fz_sel_idx = $(this).children('option:selected').val();
-					console.log(fz_sel_idx);
+					//console.log(fz_sel_idx);
 					var fms = JSON.parse(fz_sel_idx);
 					$("#jc_box").empty();
 					
 					//url_getfm;
-					console.log(app.url_getghouse())
+					//console.log(app.url_getghouse())
 					mui.ajax(app.url_getghouse(), {
 						dataType: 'json', //服务器返回json格式数据
 						data:{id:fz_sel_idx},
@@ -219,7 +219,7 @@
 						timeout: 60000, //超时时间设置为10秒；
 						cache:false,
 						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-							console.log(JSON.stringify(data));
+							//console.log(JSON.stringify(data));
 							//mui.each(fms.ghouse,function(idx,item){
 								mui.each(data.rows,function(idx0,item){
 									//if(item0.VCD == item.valve[0].vcd){
@@ -229,7 +229,7 @@
 										fm.find(".jcatmp").html(item.ATMP);
 										fm.find(".jchum").html(item.HUM);
 										fm.find(".jcslm10").html(item.SLM10);
-										console.log(JSON.stringify(item));
+										//console.log(JSON.stringify(item));
 										//fm.find(".fmimg").attr("src", item0.RUN_COND != "1" ? "img/closeStatus.png":"img/openStatus.png");
 										//fm.find(".fmstate").html("状态：" + (item0.RUN_COND != "1" ? "关闭":"开启"));
 										var obj =fm.find(".mui-switch");
@@ -263,13 +263,13 @@
 					cache:false,
 					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
 						//plus.nativeUI.closeWaiting();
-						console.log(JSON.stringify(data));
+						//console.log(JSON.stringify(data));
 						$("#fz_sel").empty();
 						//console.log($("#sb_sel").html());
 						$("#fz_sel").append("<option value='' disabled='' selected>请选择分组</option>");
 							var selected0 = "";//" selected ";
 							mui.each(data,function(idxfz,itemfz){
-								console.log(JSON.stringify(itemfz));
+								//console.log(JSON.stringify(itemfz));
 								$("#fz_sel").append("<option value='"+itemfz.id+"' >"+itemfz.text+"</option>");
 								if(selected0 == "") selected0 = itemfz.id;
 							});
@@ -332,7 +332,7 @@
 					timeout: 60000, //超时时间设置为10秒；
 					cache:false,
 					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-						console.log(JSON.stringify(data));
+						//console.log(JSON.stringify(data));
 	                    if (data.rows.length > 0) {
 	                        stcdList = data.rows;
 	                        
