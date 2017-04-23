@@ -568,6 +568,8 @@ body {
 				//console.log(y + "-" + m + "-" + d );
 				//获取当前月份的天数
 				var nowDate = new Date();
+				console.log(m + " " + nowDate.getMonth());
+				if(m != (nowDate.getMonth() + 1)) $(".currentDay").show();
 				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0)) $(".currentDay").hide();
 				var nowYear = y == 0 ? nowDate.getFullYear() : y;
 				this.currentYear = nowYear;
@@ -613,6 +615,7 @@ body {
 					}
 					//console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
 					$(cd[i]).attr("data-mydate",preDay0);
+					//console.log(preDay0);
 					preDay0.setDate(preDay0.getDate() + 1);
 					//j++;					
 				}
@@ -713,21 +716,33 @@ body {
 		}
 		
 		function go(obj){
-			CalendarHandler.selday = obj.children[0].innerText;
+			var seldate = new Date($(obj).attr("data-mydate"));
+			CalendarHandler.selday = seldate.getDate();
 			console.log("go");
 			var objs = obj.parentNode.children;
+			if((seldate.getMonth() + 1) != CalendarHandler.currentMonth){
+					console.log(seldate + " " + itemdate + " " + CalendarHandler.currentMonth);
+					CalendarHandler.CreateCalendar(seldate.getFullYear(), seldate.getMonth() + 1, seldate.getDate());
+					return;
+			}
 			for(var i = 7; i < 49; i++){
 				//console.log($(objs[i]).attr("data-mydate"));
 				var itemdate = new Date($(objs[i]).attr("data-mydate"));
 				$(objs[i].children[0]).removeClass("currentSelItem");
-				if(itemdate.getMonth() == CalendarHandler.currentMonth && itemdate.getDate() == CalendarHandler.curday){
-					objs[i].children[0].className= "currentItem";
+				$(objs[i].children[0]).removeClass("currentItem");
+				var now0 = new Date();
+				if((itemdate.getMonth()) == now0.getMonth()){
+					if(itemdate.getDate() == now0.getDate()){
+						objs[i].children[0].className= "currentItem";
+					}
 				}
-				if(objs[i].children[0].innerText == obj.children[0].innerText){
-					objs[i].children[0].className= "currentSelItem";
-					
-				}else{
-				}
+					if(itemdate.getDate() == CalendarHandler.selday && itemdate.getMonth() == seldate.getMonth()){
+						objs[i].children[0].className= "currentSelItem";
+						
+					}else{
+					}					
+
+
 				$(objs[i]).trigger("create");
 			}
 			//console.log(obj.parentNode.innerHTML);

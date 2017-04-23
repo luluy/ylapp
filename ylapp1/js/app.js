@@ -12,6 +12,7 @@
 		loginInfo = loginInfo || {};
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
+		console.log("dddd");
 		if (loginInfo.account.length < 2) {
 			return callback('账号最短为 2 个字符');
 		}
@@ -177,6 +178,7 @@
 	owner.url_getfm = function(){ return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getVALVERealAllData";}
 	owner.url_getghouse = function(){return owner.hosturl + "monitor/ashx/bg_monitor.ashx?action=getGHOUSERealAllDataByID";};
 	owner.bg_stat = function(){ return owner.hosturl + "bases/ashx/bg_stat.ashx?action=getSTCDRel";}
+	owner.url_getlog = function(){ return owner.hosturl + "control/ashx/bg_summonlog.ashx?action=search";}
 	//owner.loginurl = owner.hosturl + "admin/ashx/bg_user_login.ashx";	
 	//owner.c_a_yangling = owner.hosturl + "control/ashx/yangling.ashx";
 	//owner.gettaskurl = owner.hosturl + "irriplan/ashx/bg_irriplan.ashx";

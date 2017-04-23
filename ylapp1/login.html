@@ -91,6 +91,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
+			<button id='setting' class=" mui-pull-right mui-btn-link">设置</button>
 		</header>
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
@@ -129,23 +130,28 @@
 			(function($, doc) {
 				
 				$.init({
-					statusBarBackground: '#f7f7f7'
+					statusBarBackground: '#f7f7f7',
+gestureConfig:{
+swiperight: true
+}					
 				});
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
 					var state = app.getState();
-					var mainPage = $.preload({
-						"id": 'main',
-						"url": 'main.html'
-					});
+
 					var main_loaded_flag = false;
-					mainPage.addEventListener("loaded",function () {
-						main_loaded_flag = true;
-					});
+
 					var toMain = function() {
 						//使用定时器的原因：
 						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+					var mainPage = $.preload({
+						"id": 'main',
+						"url": 'main.html'
+					});						
+					mainPage.addEventListener("loaded",function () {
+						main_loaded_flag = true;
+					});					
 						var id = setInterval(function () {
 							if(main_loaded_flag){
 								clearInterval(id);
@@ -237,12 +243,15 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
+						console.log("loginbutton tap");
 						app.login(loginInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
 							toMain();
+							settings.autoLogin = true;
+							app.setSettings(settings);							
 						});
 					});
 					$.enterfocus('#login-form input', function() {
@@ -306,7 +315,32 @@
 						}, 1000);
 						return false;
 					};
+					
+					var settingPage = $.preload({
+						"id": 'setting',
+						"url": 'setting.html'
+					});
+					//设置
+					var settingButton = doc.getElementById('setting');
+					//settingButton.style.display = settings.autoLogin ? 'block' : 'none';
+					settingButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							id: 'setting',
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					});					
+					
+					
 				});
+				
 			}(mui, document));
 		</script>
 	</body>

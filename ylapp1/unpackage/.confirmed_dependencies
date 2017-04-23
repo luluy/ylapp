@@ -31,7 +31,9 @@
 			"fonts/mui.ttf"
 		],
 		"refer": [
-			"main.html"
+			"main.html",
+			"unlock.html",
+			"setting.html"
 		]
 	},
 	"setting.html": {
@@ -254,6 +256,15 @@
 			"js/jquery.js",
 			"js/app.js",
 			"js/mui.min.js"
+		]
+	},
+	"unlock.html": {
+		"resources": [
+			"js/mui.locker.js"
+		],
+		"refer": [
+			"main.html",
+			"login.html"
 		]
 	}
 }

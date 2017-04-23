@@ -254,7 +254,8 @@
 					"unlock.html",
 					"forget_password.html",
 					"main.html",
-					"reg.html"
+					"reg.html",
+					"setting.html"
 				],
 				"priority": 0
 			},
