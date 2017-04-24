@@ -320,7 +320,17 @@
 					"img/add.png",
 					"img/home.png",
 					"img/grade.png",
-					"img/setting.png"
+					"img/setting.png",
+					"images/yl/miao2.jpg",
+					"images/yl/peng2.jpg",
+					"images/yl/jiaoshui.jpg",
+					"images/yl/peng.jpg",
+					"images/yl/miao.jpg",
+					"images/yl/jiaoshui2.jpg",
+					"images/yl/shouhuo.jpg",
+					"images/yl/shouhuo2.jpg",
+					"images/yl/shouhuo3.jpg",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"setting.html",
