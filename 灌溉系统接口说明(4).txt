@@ -1,0 +1,129 @@
+﻿websocket测试地址
+http://1.85.44.234/websockettest/
+http://1.85.44.234/websockettest/test.html
+
+
+URL:   http://1.85.44.234/   需要配置
+===================================================================
+/*登录接口*/
+接口地址： admin/ashx/bg_user_login.ashx
+接口参数：
+var param = { 'action': 'login', 'city': '', 'remember': 'sevenday', 'loginName': 'admin', 'loginPwd': 'admin' };
+action:login  登录
+city:城市，可为空
+remember：登录密码记住时间，默认一周７天
+loginName:登录名
+loginPwd:密码
+返回参数：
+{"msg":"返回信息","success":false}
+
+
+/*登录后查看登录用户信息*/
+接口地址：admin/ashx/bg_user_login.ashx                  //?action=getuser
+接口参数：{ 'action': 'getuser'}
+返回信息：
+{"msg":{"Id":72,"UserId":"admin","UserName":"管理员","UserPwd":"","IsAble":true,"IfChangePwd":true,"AddDate":"\/Date(-62135596800000)\/","Description":null,"DepartmentId":0},"success":true}
+
+错误返回：
+{"msg":"nocookie","success":false}
+
+/*查看用户信息*/
+接口址：admin/ashx/bg_user.ashx
+接口参数：{ 'action': 'getUserInfo'}
+返回信息：
+[{"UserId":"admin","UserName":"管理员","AddDate":"2014/1/8 10:32:57","RoleName":"超级管理员","DepartmentName":""}]
+
+
+/*退出登录*/
+接口地址：admin/ashx/bg_user_login.ashx
+接口参数：{ 'action': 'logout'}
+返回信息：
+{"msg":"退出成功！","success":true}
+
+
+
+/*获取所有的首部、轮灌组、大棚、泵站、阀门的接口（不含实时数据）*/
+
+接口址：control/ashx/yangling.ashx
+接口参数：无
+返回信息：
+
+
+/*获取测站跟大棚、首部对应关系*/
+bases/ashx/bg_stat.ashx
+接口参数：{'action': 'getSTCDRel'}
+返回信息：
+[{'STCD':'XXXXX','CD':'XXXX'},{'STCD':'XXXXX','CD':'XXXX'}]
+
+
+============================================================================实时监测
+/*泵站工况实时监测，含所有测站*/
+接口地址：monitor/ashx/bg_monitor.ashx
+接口参数：{ 'action': 'getPUMPRealAllData'}    // getPUMPRealData  实时数据，没有数据的测站不列出来
+返回信息：
+{"total": 2,"rows":[{"pcd":"H01-1","tm":"2017/1/18 11:32:07","run_cond":"1","v":380.000,"q":36.480,"acc_w":256.3,"p":1236.14,"pdwz":4.750,"runtm":"00:00"},{"pcd":"H02-1","tm":"2017/1/18 11:32:20","run_cond":"1","v":380.000,"q":36.480,"acc_w":256.3,"p":1236.14,"pdwz":4.750,"runtm":"00:00"}]}
+
+
+/*阀门工况实时监测，含所有测站*/
+接口地址：monitor/ashx/bg_monitor.ashx
+接口参数：{ 'action': 'getVALVERealAllData'}    // getVALVERealData  实时数据，没有数据的测站不列出来
+返回信息：
+{"total": 214,"rows":[{"VCD":"P0001-1","TM":"2017/1/18 11:24:54","RUN_COND":"1","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36},{"VCD":"P0001-2","TM":"","RUN_COND":"","V":"","Q":"","ACC_W":"","P":""},{"VCD":"P0002-1","TM":"","RUN_COND":"","V":"","Q":"","ACC_W":"","P":""},{"VCD":"P0002-2","TM":"2017/1/18 11:25:15","RUN_COND":"1","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36},{"VCD":"P0003-1","TM":"","RUN_COND":"","V":"","Q":"","ACC_W":"","P":""},{"VCD":"P0003-2","TM":"2017/1/18 11:25:28","RUN_COND":"2","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36},{"VCD":"P0004-1","TM":"","RUN_COND":"","V":"","Q":"","ACC_W":"","P":""}]}
+
+/*根据轮灌组ID取阀门工况实时监测，含所有测站*/
+接口地址：monitor/ashx/bg_monitor.ashx
+接口参数：{ 'action': 'getVALVERealAllDataByID','id':2}    
+返回信息：
+{"total": 10,"rows":[{"HCD":"P0001","VCD":"P0001-1","RUN_COND":"1","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36,"TM":"2017/1/18 11:24:54"},{"HCD":"P0002","VCD":"P0002-1","RUN_COND":"1","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36,"TM":"2017/1/18 11:25:15"},{"HCD":"P0003","VCD":"P0003-1","RUN_COND":"2","V":220.000,"Q":20.500,"ACC_W":125.4,"P":100.36,"TM":"2017/1/18 11:25:28"},{"HCD":"P0004","VCD":"P0004-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0005","VCD":"P0005-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0006","VCD":"P0006-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0007","VCD":"P0007-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0008","VCD":"P0008-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0009","VCD":"P0009-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""},{"HCD":"P0010","VCD":"P0010-1","RUN_COND":"","V":"","Q":"","ACC_W":"","P":"","TM":""}]}
+
+
+/*大棚环境量实时监测，含所有测站*/
+接口地址：monitor/ashx/bg_monitor.ashx
+接口参数：{ 'action': 'getGHOUSERealAllData'}    // getGHOUSERealData  实时数据，没有数据的测站不列出来
+返回信息：
+{"total": 107,"rows":[{"HCD":"P0001","TM":"2017/1/18 11:36:03","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0002","TM":"2017/1/18 11:36:08","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0003","TM":"2017/1/18 11:36:11","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0004","TM":"2017/1/18 11:36:14","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0005","TM":"2017/1/18 11:36:17","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0006","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""}]}
+
+/*根据轮灌组ID取大棚环境量实时数据，含所有测站*/
+接口地址：monitor/ashx/bg_monitor.ashx
+接口参数：{ 'action': 'getGHOUSERealAllDataByID','id':2}    
+返回信息：
+{"total": 10,"rows":[{"HCD":"P0001","TM":"2017/1/18 11:36:03","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0002","TM":"2017/1/18 11:36:08","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0003","TM":"2017/1/18 11:36:11","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0004","TM":"2017/1/18 11:36:14","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0005","TM":"2017/1/18 11:36:17","ATMP":23.5,"HUM":30.3,"CO2":15.36,"ILMI":7,"STMP":40.2,"SLMT":15.4,"SLM10":25.6},{"HCD":"P0006","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""},{"HCD":"P0007","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""},{"HCD":"P0008","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""},{"HCD":"P0009","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""},{"HCD":"P0010","TM":"","ATMP":"","HUM":"","CO2":"","ILMI":"","STMP":"","SLMT":"","SLM10":""}]}
+
+
+
+===============================================
+/*计划任务列表数据*/
+接口地址：irriplan/ashx/bg_irriplan.ashx
+接口参数：{'action':'getFineIrriPlanList'}   //还可以定义  stm    etm      yyyy-MM-dd 格式，表示从哪一天到哪一天的数据，默认是当天向后三天的数据
+返回信息：
+{"total": 3,"rows":[{"ID":4,"TITLE":"测试自定义组","SGNM":"自定义分组1","BGNM":"自定义组","PID":131,"SID":132,"CCD":"H01","TLNG":2.0,"DAYS":1,"GTP":"2","STM":"2017/2/22 8:00:00","ETM":"2017/2/22 10:00:00","RUNMODE":"1","RUNSTATE":"1","HCD":"P0001","ACTSTM":"","ACTETM":"","MSG":""},{"ID":4,"TITLE":"测试自定义组","SGNM":"自定义分组1","BGNM":"自定义组","PID":131,"SID":132,"CCD":"H01","TLNG":2.0,"DAYS":1,"GTP":"2","STM":"2017/2/22 8:00:00","ETM":"2017/2/22 10:00:00","RUNMODE":"1","RUNSTATE":"1","HCD":"P0002","ACTSTM":"","ACTETM":"","MSG":""},{"ID":4,"TITLE":"测试自定义组","SGNM":"自定义分组1","BGNM":"自定义组","PID":131,"SID":132,"CCD":"H01","TLNG":2.0,"DAYS":1,"GTP":"2","STM":"2017/2/22 8:00:00","ETM":"2017/2/22 10:00:00","RUNMODE":"1","RUNSTATE":"1","HCD":"P0003","ACTSTM":"","ACTETM":"","MSG":""}]}
+
+
+/*更新任务状态信息*/
+RUNMODE:  0 表示手动执行  1表示自动执行  2 开始执行  3 表示结束执行  4表示执行出错
+接口地址：irriplan/ashx/bg_irrplan.ashx
+接口参数：{'action':'updateIrriPlanState',"ID":4,"State":2,"STM":"2017/2/22 8:00:00","HCD":"P0002","ACTTM":"","MSG":""}
+
+ACTTM  表示实际开始执行的时间   如果State为2，就表示开始执行的时间(相当于开启);如果State为3，就表示开始结束执行的时间(相当于关闭)
+如果 开始或结束执行的时候出错了，就将State值为 4 ，将出错信息记录在MSG里
+
+
+
+
+======================================================
+/*取首部编码名称*/
+接口地址：irriplan/ashx/bg_irrigroup.ashx
+接口参数：{'action':'getCDNM'}
+返回信息：
+[{"id":"H01","text":"创业园首部1"},{"id":"H02","text":"创业园首部2"}]
+
+
+
+/*根据首部编码取轮灌分组信息*/
+接口地址：irriplan/ashx/bg_irrigroup.ashx
+接口参数：{'action':'getGroupCDNM','ccd':'H01'}
+返回信息：
+[{"id":"2","text":"轮灌组1"},{"id":"3","text":"轮灌组2"},{"id":"6","text":"轮灌组3"},{"id":"7","text":"轮灌组4"},{"id":"8","text":"轮灌组5"}]
+
+
+

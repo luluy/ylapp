@@ -330,8 +330,6 @@ body {
 		<div class="mui-card-header" style="margin-left: 6px; margin-top: 6px;">页眉</div>
 		<!--内容区-->
 		<div class="mui-card-content" style="margin-left: 6px; margin-top: 6px;">内容区</div>
-		<div class="mui-card-content" style="margin-left: 6px; margin-top: 6px;">内容区</div>
-		<div class="mui-card-content" style="margin-left: 6px; margin-top: 6px;">内容区</div>
 		<!--页脚，放置补充信息或支持的操作-->
 		<div class="mui-card-footer" style="margin-left: 6px; margin-top: 6px;margin-bottom: 6px;">页脚</div>
 	</div>
@@ -393,40 +391,21 @@ body {
 					//setTimeout(function() {
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
-					initall();
+
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
-					initall();
 				});
 			}
 		</script>
 		
 <script type="text/javascript">
 	var curobj = null;
-	
-	function initall(){
-		//$(document).ready(function(e) {
-			
+		$(document).ready(function(e) {
 			//return;
 			CalendarHandler.initialize();
-			gettaskdata();
-			
-		//});
-		
-			//(function($, doc) {
-				//console.log('direction');
-				//$.init();
-			
-				window.addEventListener('show', function() {
-					//var state = app.getState();
-					console.log('lgjh_show');
-					gettaskdata();
-					//account.innerText = state.account;
-				}, false);					
-			//}(mui, document));
-			}
+		});
 
 		var CalendarHandler = {
 			currentYear: 0,
@@ -565,11 +544,9 @@ body {
 				return mDay;
 			},
 			CreateCalendar: function(y, m, d) {
-				//console.log(y + "-" + m + "-" + d );
+				console.log(y + "-" + m + "-" + d );
 				//获取当前月份的天数
 				var nowDate = new Date();
-				console.log(m + " " + nowDate.getMonth());
-				if(m != (nowDate.getMonth() + 1)) $(".currentDay").show();
 				if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0)) $(".currentDay").hide();
 				var nowYear = y == 0 ? nowDate.getFullYear() : y;
 				this.currentYear = nowYear;
@@ -594,36 +571,57 @@ body {
 				var i = 0;
 				j = preDay.getDate() - startidx + 1 ;
 				var preDay0 = new Date(preDay) ;//new Date(preDay - (startidx -1) * 24*60*60*1000);
-				this.efstartidx =-1;
 				preDay0.setDate(preDay.getDate() - (startidx -1));
-				for( i = 7; i < 49; i++){
+				for( i = 7; i < 7+startidx; i++){
 					cd[i].children[0].innerHTML = preDay0.getDate();
-					if((preDay0.getMonth() + 1) == nowMonth ){
-						if(this.efstartidx == -1){
-							this.efstartidx = i;
-						}
-						cd[i].children[0].className = "";
-						if(preDay0.getMonth() == nowDate.getMonth() &&  (preDay0.getDate() == nowDate.getDate())){
-							this.curday = nowDay;
-							cd[i].children[0].className = "currentItem";// innerHTML = "<a>" + j + "</a><div class='reddot'>d</div>";	
-							curobj = cd[i];
-						}
-						cd[i].children[1].className = "reddot_hide"
-					}else{
-						cd[i].children[0].className = "lastItem"
-						cd[i].children[1].className = "reddot_hide"
-					}
-					//console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
+					cd[i].children[0].className = "lastItem"
+					cd[i].children[1].className = "reddot_hide"
+					console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
 					$(cd[i]).attr("data-mydate",preDay0);
-					//console.log(preDay0);
 					preDay0.setDate(preDay0.getDate() + 1);
-					//j++;					
+					j++;					
 				}
+				
+				
+				j = 1;
+				i = startidx ;
+				var nowday = nowDate.getDate();
+				this.efstartidx = startidx;
+				for(i = startidx + 7;i < 7 + startidx + maxDay.getDate() -1; i++){
+					//cd[i].className = "item dateItem";
+					cd[i].children[0].innerHTML = preDay0.getDate();
+					cd[i].children[0].className = "";
+					//removeClass(cd[i],"lastItem");
+					if(j == nowday){
+						this.curday = nowday;
+						cd[i].children[0].className = "currentItem";// innerHTML = "<a>" + j + "</a><div class='reddot'>d</div>";	
+						
+						//cd[i].className = "item currentItem";
+						//console.log(cd[i].parentNode.parentNode.innerHTML)
+						//addClass(cd[i],"currentItem");
+						curobj = cd[i];
+						
+					}
+					console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
+					$(cd[i]).attr("data-mydate",preDay0);
+					preDay0.setDate(preDay0.getDate() + 1);
+					
+					j++;
+				}
+				//return;
 				this.efendidx = i -7;
+				j = 1;
+				for(; i < 42 + 7; i++){
+					cd[i].children[0].innerHTML = preDay0.getDate();
+					console.log(preDay0.getFullYear() + "-" +(preDay0.getMonth() + 1) + "-" + preDay0.getDate() +" "+ preDay0.getHours());
+					$(cd[i]).attr("data-mydate",preDay0);
+					preDay0.setDate(preDay0.getDate() + 1);					
+					j++;
+				}
 				$(curobj).trigger("create");
-				gettaskdata();
+				
+				//curobj.click();
 				return "";
-
 			},
 			CSS: function() {
 				var itemPaddintTop = $("#centerCalendarMain").height() / 6;
@@ -716,33 +714,25 @@ body {
 		}
 		
 		function go(obj){
-			var seldate = new Date($(obj).attr("data-mydate"));
-			CalendarHandler.selday = seldate.getDate();
-			console.log("go");
+			CalendarHandler.selday = obj.children[0].innerText;
+			console.log(JSON.stringify(CalendarHandler));
 			var objs = obj.parentNode.children;
-			if((seldate.getMonth() + 1) != CalendarHandler.currentMonth){
-					console.log(seldate + " " + itemdate + " " + CalendarHandler.currentMonth);
-					CalendarHandler.CreateCalendar(seldate.getFullYear(), seldate.getMonth() + 1, seldate.getDate());
-					return;
-			}
-			for(var i = 7; i < 49; i++){
-				//console.log($(objs[i]).attr("data-mydate"));
-				var itemdate = new Date($(objs[i]).attr("data-mydate"));
-				$(objs[i].children[0]).removeClass("currentSelItem");
-				$(objs[i].children[0]).removeClass("currentItem");
-				var now0 = new Date();
-				if((itemdate.getMonth()) == now0.getMonth()){
-					if(itemdate.getDate() == now0.getDate()){
-						objs[i].children[0].className= "currentItem";
-					}
+			for(var i = CalendarHandler.efstartidx + 7; i < CalendarHandler.efendidx + 7; i++){
+				console.log(objs[i].innerHTML);
+				if(objs[i].children[0].innerText == CalendarHandler.curday){
+					//objs[i].className = "item currentItem";
+					//objs[i].toggleClass(currentItem);
+					//objs[i].children[0].className= "currentItem";
+				}else if(objs[i].innerText == obj.innerText){
+					//objs[i].innerHTML = "<a>" + obj.innerText + "</a>";
+					//objs[i].className = "item currentSelItem";
+					objs[i].children[0].className= "currentSelItem";
+					
+				}else{
+					//objs[i].innerHTML = objs[i].innerText ;
+					//objs[i].className = "item dataItem";.
+					objs[i].children[0].className= "";
 				}
-					if(itemdate.getDate() == CalendarHandler.selday && itemdate.getMonth() == seldate.getMonth()){
-						objs[i].children[0].className= "currentSelItem";
-						
-					}else{
-					}					
-
-
 				$(objs[i]).trigger("create");
 			}
 			//console.log(obj.parentNode.innerHTML);
@@ -761,12 +751,10 @@ body {
 					$("#taskitems").empty();
 					for(var i = 0; i < data.total; i++){
 						var subitems =  $("#taskitems_copy").children().children();
-						subitems[0].innerText = "标题：" + data.rows[i].TITLE;
+						subitems[0].innerText = data.rows[i].TITLE;
 						//console.log(subitems.length);
-						subitems[1].innerText = "阀门：" + data.rows[i].HCD;
-						subitems[2].innerText = "时间：" + data.rows[i].STM + "-" + data.rows[i].ETM;
-						subitems[3].innerText = "模式：" + (data.rows[i].RUNMODE == 0 ? "手动执行" : "自动执行");
-						subitems[4].innerText = "分类：" + data.rows[i].SGNM + " - " + data.rows[i].BGNM;
+						subitems[1].innerText = data.rows[i].STM + " - " + data.rows[i].ETM;
+						subitems[2].innerText = data.rows[i].SGNM + " - " + data.rows[i].BGNM;
 						$("#taskitems").append($("#taskitems_copy").html());
 						//console.log("dd");
 					}
@@ -781,43 +769,12 @@ body {
 				}
 			});					
 			
-
+			//obj.className = "item currentSelItem";
+			//console.log(obj.parentNode.innerHTML);
+			//alert(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
+			//console.log(obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.innerHTML);
+			//console.log(CalendarHandler.currentMonth + CalendarHandler.selday);
 		}
-		
-		function gettaskdata(){
-			var stm = CalendarHandler.currentYear + "-" + CalendarHandler.currentMonth + "-1";// + CalendarHandler.selday;// + "00:00:00";
-			var etm = CalendarHandler.currentYear + "-" + (CalendarHandler.currentMonth+1) + "-1";// + (parseInt(CalendarHandler.selday) + 1);// + "23:59:59";
-			console.log(stm + " - " + etm);
-			//console.log(window.app.gettaskurl());
-			mui.ajax(window.app.gettaskurl(), {
-				data:{ 'action': 'getFineIrriPlanList','stm':stm,'etm':etm},
-				dataType: 'json', //服务器返回json格式数据
-				type: 'get', //HTTP请求类型
-				timeout: 60000, //超时时间设置为10秒；
-				cache:false,
-				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
-					console.log(JSON.stringify(data));
-					var cd = $("#centerCalendarMain").children();
-					for(var i = 0; i < data.total; i++){
-						var stm = new Date(data.rows[i].STM);
-						var idx = CalendarHandler.efstartidx + stm.getDate() -1;
-						//console.log(JSON.stringify(data.rows[i].STM) + CalendarHandler.efstartidx + " " + stm.getDate() + " " + (idx));
-						//console.log(cd[idx].innerHTML);
-						cd[idx].children[1].className = "reddot";
-						$(cd[idx]).trigger("create");
-					}
-				},
-				error: function(xhr, type, errorThrown) {
-					console.log(app.gettaskurl() +  errorThrown);
-					//异常处理；
-					//plus.nativeUI.closeWaiting();
-					//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
-					return;
-				}
-			});								
-		}
-		
-	
 		</script>
 		
 		

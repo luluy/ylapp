@@ -18,7 +18,7 @@
 		<div class="mui-card" style="margin: 3px;padding: 3px;">
 			<div class="mui-card-header">		
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="sb_sel">
 						<option value="" disabled >请选择首部</option>
 						<option value="首部一" selected>首部一</option>
 						<option value="首部二">首部二</option>
@@ -39,7 +39,7 @@
 			<div class="mui-card-header">
 				
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="fz_sel">
 						<option value="" disabled >请选择分组</option>
 						<option value="分组一" selected>分组一</option>
 						<option value="分组二">分组二</option>
@@ -54,121 +54,49 @@
 			</div>
 		</div>
 		
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
+		<div id="fm_box">
+			<div id="fm_tem" class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
+				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span class="fmname">大棚一</span><span class="mui-pull-right" style="color: gray;display: none;">2017-01-20 17:00:00</span></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
+					        <div style="text-align: center;">
+							    <div class="mui-row">
+							        <div class="mui-col-sm-6 mui-col-xs-12">
+					                    <img src="img/openStatus.png" style="width:130px;" class="fmimg">
+					                    <div style="margin-top: 10px;" class="fmstate">状态：开启</div>
+							        </div>
+							        <div class="mui-col-sm-6 mui-col-xs-12">
+										<div class="mui-switch mui-switch-blue mui-active" style="margin: 10px auto; ">
+											<div class="mui-switch-handle"></div>
+										</div>
+							        </div>
+							    </div>
 					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
 						</div>
 					</div>
 				</div>
-			</div>	
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/openStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：开启</div>
-					        </div>
-					        <div class="mui-col-xs-6" style="text-align: center;">
-					        	<img src="img/closeStatus.png" style="width:130px;">
-					        	<div style="margin-top: 10px;">状态：关闭</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>				
-                
+			</div>			
+        </div>        
 
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/websocket.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/formatDate.js"></script>
 		<script>
+	        var valveList = [];　//阀门列表信息
+	        var stcdList = [];   //测站关系表
+        var bumpList = [{ pcd: 'H01-1', run_cond: '1', v: 380, q: 53, acc_w: 1234.6, p: 1.2, tm: '2017-01-12 12:56:02',runtm:'' },
+        { pcd: 'H02-1', run_cond: '0', v: 380, q: 50, acc_w: 3234.6, p: 1.2, tm: '2017-01-12 10:05:02', runtm: ''}];
+			
+			var isToggleMan = true;
+			var sb_sel_idx = "";
+			var fz_sel_idx = "";
+			var fz_tem = $("#fm_tem").clone(true);
+			$("#fm_box").empty();
+			
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -222,17 +150,218 @@
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
 					//console.log(JSON.stringify(app.shoubu));
-					
+					init00();
 					var shoubu = getdata("shoubu");
-					mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
+					//mui.each(shoubu,function(idx,item){console.log("tjkz-" + JSON.stringify(item));});
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
-					
-					mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
+					init00();
+					//mui.each(app.shoubu,function(idx,item){console.log(JSON.stringify(item));});
 				});
 			}
+			
+			function init00(){
+				$("#fz_sel").empty();
+				$("#sb_sel").empty();
+				$("#sb_sel").change(function(){
+					sb_sel_idx = $(this).children('option:selected').val();
+					//console.log(sb_sel_idx);
+					$("#fm_box").empty();
+					loadfz();
+					//$("#sb_show").show();
+				});				
+				loadSTCD();
+                /*初始化网络并登录*/
+                /*登录*/
+                sys_irri.packet.ctp = 0;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.op = "EF";
+                fun_initWebSocket(sys_irri.packet.toString());				
+				
+				mui.ajax(app.c_a_yangling(), {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						//plus.nativeUI.closeWaiting();
+						savedata("shoubu",data);
+						$("#sb_sel").empty();
+						var selected0 = "";
+						//console.log($("#sb_sel").html());
+						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						mui.each(data,function(idx,item){
+							//console.log(JSON.stringify(item));
+							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
+							if(selected0 == "") selected0 = item.ccd;
+							
+						});
+
+						$('#sb_sel').val(selected0).trigger('change');						
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//console.log(data);
+						//异常处理；
+						//plus.nativeUI.closeWaiting();
+						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					}
+				});					
+			}
+			
+			function loadfz(init){
+				
+				$("#fz_sel").change(function(){
+					fz_sel_idx = $(this).children('option:selected').val();
+					//console.log(fz_sel_idx);
+					var fms = JSON.parse(fz_sel_idx);
+					$("#fm_box").empty();
+					
+					//url_getfm;
+					mui.ajax(app.url_getfm(), {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						cache:false,
+						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+							mui.each(fms.ghouse,function(idx,item){
+								mui.each(data.rows,function(idx0,item0){
+									if(item0.VCD == item.valve[0].vcd){
+										var fm = fz_tem.clone(true);
+										fm.find(".fmname").html(item.hcd);
+										//console.log(JSON.stringify(item));
+										fm.find(".fmimg").attr("src", item0.RUN_COND != "1" ? "img/closeStatus.png":"img/openStatus.png");
+										fm.find(".fmstate").html("状态：" + (item0.RUN_COND != "1" ? "关闭":"开启"));
+										var obj =fm.find(".mui-switch");
+										mui(obj)['switch']();
+										$(obj).attr("id","sw" + item.hcd);
+										$(obj).attr("class",item0.RUN_COND != "1" ?"mui-switch mui-switch-blue":"mui-switch mui-switch-blue mui-active");
+										
+										mui(obj)[0].addEventListener('toggle',fz_toggle)
+										$("#fm_box").append(fm);										
+										
+										return false;
+									}
+								});
+							});							
+						},
+						error: function(xhr, type, errorThrown) {
+							//console.log(data);
+							//异常处理；
+							//plus.nativeUI.closeWaiting();
+							//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+						}
+					});						
+				});	
+				
+				var shoubu = getdata("shoubu");
+				
+				$("#fz_sel").empty();
+				//console.log($("#sb_sel").html());
+				$("#fz_sel").append("<option value='' disabled='' selected>请选择分组</option>");
+				mui.each(shoubu,function(idx,item){
+					if(item.ccd == sb_sel_idx){
+						var selected0 = "";//" selected ";
+						mui.each(item.group,function(idxfz,itemfz){
+							//console.log(JSON.stringify(item));
+							$("#fz_sel").append("<option value='"+JSON.stringify(itemfz)+"' >"+itemfz.gnm+"</option>");
+							if(selected0 == "") selected0 = JSON.stringify(itemfz);
+						});
+						$('#fz_sel').val(selected0).trigger('change');
+						return false;
+					}
+				});
+										
+			}
+			
+			function fz_toggle (event) {
+				//event.detail.isActive 可直接获取当前状态
+				var btn = ['是', '否'];
+				var idstr0 = $(this).attr("id");
+				var idstr = $(this).attr("id").substring(2);
+				if(!isToggleMan){ isToggleMan = true;return;}
+				isToggleMan = true;
+				if(event.detail.isActive){
+					mui.confirm('你确定要开启编码为'+idstr+'的阀门吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!ghouseoperate(idstr,true)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}
+						else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}else{
+					mui.confirm('你确定要关闭编码为'+idstr+'的阀门吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!ghouseoperate(idstr,false)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}
+			}		
+					
+				
+		    /*模拟阀门启闭操作  operate为"11"二进制字符串*/
+		    function ghouseoperate(house, operate) {
+		        /*此处的house是大棚的编码，取相对应的stcd*/
+		        var stcd = getObjByValue(stcdList, "CD", house);
+		        if (stcd) {
+		            /*阀门操作*/
+		            sys_irri.packet.ctp = 1;
+		            sys_irri.packet.uid = app.getState().account;
+		            sys_irri.packet.utp = 1;
+		            sys_irri.packet.rtu = stcd.STCD;
+		            sys_irri.packet.op = "4D";
+		            sys_irri.packet.value = operate == "1" ? '0101' : '0100';
+		
+		            if (ws && ws.readyState == 1) {
+		                ws.send(sys_irri.packet.toString());
+		            } else {
+		               mui.toast("连接已经断开，操作失败！");
+		            }
+		        } else {
+		        	mui.toast("没有找到对应的测站！");
+		        }
+		
+		    };
+				
+				
+        /*装载测站对应关系*/
+        function loadSTCD(){
+            var url_bg_stat = app.bg_stat();
+            //console.log(url_bg_stat);
+			mui.ajax(url_bg_stat, {
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 60000, //超时时间设置为10秒；
+				cache:false,
+				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(JSON.stringify(data));
+                    if (data.rows.length > 0) {
+                        stcdList = data.rows;
+                        
+                    }
+
+				},
+				error: function(xhr, type, errorThrown) {
+				}
+			});			            
+        };				
+			
 		</script>
 	</body>
 

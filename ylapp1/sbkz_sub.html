@@ -12,12 +12,14 @@
 			.listt{width:140px;display:inline-block;}
 			.switch-open{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse.png);height: 180px;padding-top:80px;}
 			.switch-close{background-position:center;background-size:contain;background-repeat:no-repeat;background-image:url(img/machineHouse_gray.png);height: 180px;padding-top:80px;}
+
 		</style>
 	</head>
 
 	<body>
 			<section>
-				<select>
+				<div class="mui-input-row mui-select">
+				<select id="sb_sel">
 					<option value="" disabled >请选择首部</option>
 					<option value="首部一" selected>首部一</option>
 					<option value="首部二">首部二</option>
@@ -28,37 +30,59 @@
 					<option value="首部七">首部七</option>
 					
 				</select>
+				</div>
 			</section>			
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			
 			<div class="mui-scroll">
 				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell">
-						<div class="switch-open">
-							<div class="mui-switch mui-switch-blue mui-active" style="margin:0 auto;">
-								<div class="mui-switch-handle"></div>
-							</div>
-						</div>
-					</li>
-					<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span>H01-1</span></li>
-					<li class="mui-table-view-cell"><span class="listt">运行状态</span><span>开启</span></li>
-					<li class="mui-table-view-cell"><span class="listt">启动时间</span><span>01:10</span></li>
-					<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span>63立方米/小时</span></li>
-					<li class="mui-table-view-cell"><span class="listt">累计流量</span><span>234.536立方米</span></li>
-					<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
-					<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
-					<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
-				</ul>
-				
+				<div id="sb_show_box">
+					<div id="sb_show"  class="sb_tem">
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<div class="switch-open">
+									<div class="mui-switch mui-switch-blue mui-active" style="margin: 0 auto;">
+										<div class="mui-switch-handle"></div>
+									</div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell"><span class="listt">泵站编码</span><span class="sb_pcd">H01-1</span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行状态</span><span class="sb_run_cond">开启</span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行电压</span><span class="sb_v">0.00</span></li>
+							<li class="mui-table-view-cell"><span class="listt">瞬时流量</span><span class="sb_q">0.00立方米/小时</span></li>
+							<li class="mui-table-view-cell"><span class="listt">累计流量</span><span class="sb_acc_w">0.000立方米</span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行压力</span><span class="sb_p">0.00</span></li>
+							<li class="mui-table-view-cell"><span class="listt">地下水位</span><span class="sb_pdwz">0.00/span></li>
+							<li class="mui-table-view-cell"><span class="listt">运行时长</span><span class="sb_runtm">00:00</span></li>
+							<!--
+							<li class="mui-table-view-cell"><span class="listt">故障报警</span><span>无</span></li>
+							<li class="mui-table-view-cell"><span class="listt">网络连接</span><span>正常</span></li>
+							<li class="mui-table-view-cell"><span class="listt">当前时间</span><span>2017-01-20-17:17:17</span></li>
+							-->
+						</ul>
+					</div>
+				</div>
 				
 				
 			</div>
 		</div> 
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/websocket.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/formatDate.js"></script>
 		<script>
+			var isToggleMan = true;
+			var sb_sel_idx = "";
+	        var valveList = [];　//阀门列表信息
+	        var stcdList = [];   //测站关系表
+        var bumpList = [{ pcd: 'H01-1', run_cond: '1', v: 380, q: 53, acc_w: 1234.6, p: 1.2, tm: '2017-01-12 12:56:02',runtm:'' },
+        { pcd: 'H02-1', run_cond: '0', v: 380, q: 50, acc_w: 3234.6, p: 1.2, tm: '2017-01-12 10:05:02', runtm: ''}];
+			
+			var show_box = $("#sb_show_box").children(".sb_tem").clone(true);
+			$("#sb_show_box").children(".sb_tem").hide();
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -120,10 +144,24 @@
 			}
 			
 			function sbkz_init(){
+				loadSTCD();
+                /*初始化网络并登录*/
+                /*登录*/
+                sys_irri.packet.ctp = 0;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.op = "EF";
+                fun_initWebSocket(sys_irri.packet.toString());
 				
 				//plus.nativeUI.showWaiting("正在获取首部数据...");
+				$("#sb_sel").change(function(){
+					sb_sel_idx = $(this).children('option:selected').val();
+					//console.log(sb_sel_idx);
+					loadbz();
+					//$("#sb_show").show();
+				});
 			
-				mui.ajax(app.c_a_yangling, {
+				mui.ajax(app.c_a_yangling(), {
 					dataType: 'json', //服务器返回json格式数据
 					type: 'get', //HTTP请求类型
 					timeout: 60000, //超时时间设置为10秒；
@@ -131,11 +169,24 @@
 					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
 						//plus.nativeUI.closeWaiting();
 						savedata("shoubu",data);
-						//mui.each(data,function(idx,item){console.log(JSON.stringify(item));});
+						$("#sb_sel").empty();
+						//console.log($("#sb_sel").html());
+						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						var selected0 = "";//" selected ";
+						mui.each(data,function(idx,item){
+							//console.log(JSON.stringify(item));
+							$("#sb_sel").append("<option value='"+item.ccd+"' >"+item.cnm+"</option>");
+							if(selected0 == "") selected0 = item.ccd;
+						});
+						//console.log(sel_val);
+						//sb_sel_idx = $("#sb_sel").children('option:selected').val();
+						//console.log(sb_sel_idx);
+						//loadbz();
+						$('#sb_sel').val(selected0).trigger('change');
 
 					},
 					error: function(xhr, type, errorThrown) {
-						console.log(data);
+						//console.log(data);
 						//异常处理；
 						//plus.nativeUI.closeWaiting();
 						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
@@ -145,30 +196,185 @@
 				
 			}
 			
-			mui('.mui-content .mui-switch').each(function() { //循环所有toggle
-				//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
-				/**
-				 * toggle 事件监听
-				 */
-				this.addEventListener('toggle', function(event) {
-					//event.detail.isActive 可直接获取当前状态
-					var btn = ['是', '否'];
-					if(event.detail.isActive){
-							mui.confirm('你确定要开启编码为H01-1的泵站吗？', '', btn, function(e) {
-								e.index == 0 ? mui.toast('感谢您的支持!') : mui.toast('MUI 没有得到你的认可,继续加油!')
-							})						
-						removeClass(this.parentNode,"switch-close");
-						addClass(this.parentNode,"switch-open");
-					}else{
-						removeClass(this.parentNode,"switch-open");
-						addClass(this.parentNode,"switch-close");
-					}
-					//this.parentNode.parentNode.className = "";
-					//this.parentNode.parentNode.className = "switch-close";
-					//this.parentNode.querySelector('span').innerText = '状态：' + (event.detail.isActive ? 'true' : 'false');
-				});
-			});			
 			
+			function sb_toggle (event) {
+				//event.detail.isActive 可直接获取当前状态
+				var btn = ['是', '否'];
+				var idstr0 = $(this).attr("id");
+				var idstr = $(this).attr("id").substring(6);
+				if(!isToggleMan){ isToggleMan = true;return;}
+				isToggleMan = true;
+				if(event.detail.isActive){
+					mui.confirm('你确定要开启编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!pumpoperate(idstr,true)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}
+						else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}else{
+					mui.confirm('你确定要关闭编码为'+idstr+'的泵站吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!pumpoperate(idstr,false)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}
+			}		
+			
+			
+        /*模拟泵站操作*/
+        function pumpoperate(code, operate) {
+            /*此处的code是泵站编码，stcd对应的是首部编码，所以要处理一下*/
+            var stcd = getObjByValue(stcdList, "CD", code.substring(0, 3));
+            if (stcd) {
+                /*泵站操作*/
+                sys_irri.packet.ctp = 1;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.rtu = stcd.STCD;
+                sys_irri.packet.op = "4C";
+                sys_irri.packet.value = operate == true ? '0101' : '0100';
+                console.log(JSON.stringify(sys_irri));
+                if (ws && ws.readyState == 1) {
+                    ws.send(sys_irri.packet.toString());
+                    return true;
+                } else {
+                    //layer.closeAll();
+                    mui.toast("连接已经断开，操作失败！");
+                    //window.clearTimeout(bumptimeout);
+                }
+            } else {
+                mui.toast("没有找到对应的测站！");
+                //window.clearTimeout(bumptimeout);
+            }
+            return false;
+        }
+			
+        /*装载测站对应关系*/
+        function loadSTCD(){
+            var url_bg_stat = app.bg_stat();
+            //console.log(url_bg_stat);
+			mui.ajax(url_bg_stat, {
+				dataType: 'json', //服务器返回json格式数据
+				type: 'get', //HTTP请求类型
+				timeout: 60000, //超时时间设置为10秒；
+				cache:false,
+				success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log(JSON.stringify(data));
+                    if (data.rows.length > 0) {
+                        stcdList = data.rows;
+                        
+                    }
+
+				},
+				error: function(xhr, type, errorThrown) {
+				}
+			});			            
+        };
+        
+        function loadbz(){
+					var url_monitor = app.bg_monitor();
+					mui.ajax(url_monitor, {
+						dataType: 'json', //服务器返回json格式数据
+						type: 'get', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						cache:false,
+						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+							//plus.nativeUI.closeWaiting();
+							
+							
+							var show_tem = $(show_box).clone(true,false);
+							mui.each(data.rows,function(idx,item){
+								
+								var curobj = $("#sb_show_box").children("."+item.pcd);
+								if(curobj[0] == undefined){
+									var new0 = $(show_tem).clone(true);
+
+									$("#sb_show_box").prepend(new0);//.append(new0);
+									curobj[0] = new0;
+								}
+									$(curobj[0]).attr("class",item.pcd);
+									$(curobj[0]).attr("id","box"+item.pcd);
+								
+								mui.each($(curobj[0]).children(),function(i,it){
+									mui.each($(it).children().children(".switch-open"),function(i0,it0){
+										$(it0).attr("id","switch_state"+item.pcd);
+										$(it0).attr("class",item.run_cond==0?"switch-close":"switch-open");
+										$($(it0).children()[0]).attr("id","switch" + item.pcd);
+										$($(it0).children()[0]).attr("class",item.run_cond==0?"mui-switch mui-switch-blue":"mui-switch mui-switch-blue mui-active");
+									})										
+									mui.each($(it).children().children(".sb_pcd"),function(i0,it0){
+										it0.innerHTML = item.pcd;
+									})
+									mui.each($(it).children().children(".sb_run_cond"),function(i0,it0){
+										it0.innerHTML = item.run_cond == 0?"关闭":"开启";
+									})	
+									mui.each($(it).children().children(".sb_v"),function(i0,it0){
+										it0.innerHTML = item.v;
+									})	
+									mui.each($(it).children().children(".sb_q"),function(i0,it0){
+										it0.innerHTML = item.q+"立方米/小时"
+									})										
+									mui.each($(it).children().children(".sb_acc_w"),function(i0,it0){
+										it0.innerHTML = item.acc_w + "立方米";
+									})										
+									mui.each($(it).children().children(".sb_p"),function(i0,it0){
+										it0.innerHTML = item.p;
+									})	
+									mui.each($(it).children().children(".sb_pdwz"),function(i0,it0){
+										it0.innerHTML = item.pdwz;
+									})											
+									mui.each($(it).children().children(".sb_runtm"),function(i0,it0){
+										it0.innerHTML = item.runtm;
+									})										
+								});								
+								
+								$(curobj[0]).hide();
+								if($(curobj[0]).attr("class").indexOf(sb_sel_idx) >= 0){
+									
+									$(curobj[0]).show();
+								}
+								
+								
+								
+							});
+							//console.log($("#sb_show_box").html());
+							mui('.mui-content .mui-switch')['switch']();
+							mui('.mui-content .mui-switch').each(function() { //循环所有toggle
+								//toggle.classList.contains('mui-active') 可识别该toggle的开关状态
+								/**
+								 * toggle 事件监听
+								 */
+
+								this.removeEventListener('toggle',sb_toggle);
+								this.addEventListener('toggle', sb_toggle);
+							});			
+										
+
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(errorThrown);
+							//异常处理；
+							//plus.nativeUI.closeWaiting();
+							//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+						}
+					});				        	
+        }
+			
+
 		</script>
 	</body>
 

@@ -15,7 +15,7 @@
 		<div class="mui-card" style="margin: 3px;padding: 3px;">
 			<div class="mui-card-header">		
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="sb_sel">
 						<option value="" disabled >请选择首部</option>
 						<option value="首部一" selected>首部一</option>
 						<option value="首部二">首部二</option>
@@ -36,7 +36,7 @@
 			<div class="mui-card-header">
 				
 				<div class="mui-input-row mui-select">
-					<select style="margin: 0px;">
+					<select style="margin: 0px;" id="fz_sel">
 						<option value="" disabled >请选择分组</option>
 						<option value="分组一" selected>分组一</option>
 						<option value="分组二">分组二</option>
@@ -50,138 +50,45 @@
 				</div>						
 			</div>
 		</div>
-		
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
+		<div id="jc_box">
+			<div id="jc_tem" class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
+				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span class="fmname">大棚一</span><span class="mui-pull-right jctm" style="color: gray;">2017-01-20 17:00:00</span></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
 					        <div class="mui-col-xs-4" style="text-align: center;">
 					        	<img src="img/temperature.png">
-					        	<div style="margin-top: 10px;">22</div>
+					        	<div style="margin-top: 10px;" class="jcatmp">22</div>
 					        	<div style="margin-top: 10px;color: gray;">空气温度</div>
 					        </div>
 					        <div class="mui-col-xs-4" style="text-align: center;">
 					        	<img src="img/humidity.png">
-					        	<div style="margin-top: 10px;">22</div>
+					        	<div style="margin-top: 10px;" class="jchum">22</div>
 					        	<div style="margin-top: 10px;color: gray;">空气湿度</div>
 					        </div>							
 					        <div class="mui-col-xs-4" style="text-align: center;">
 					        	<img src="img/sunshine.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">光照度</div>
+					        	<div style="margin-top: 10px;" class="jcslm10">22</div>
+					        	<div style="margin-top: 10px;color: gray;">土壤温度</div>
 					        </div>							
 						</div>
 					</div>
 				</div>
 			</div>	
+		</div>	
 			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/temperature.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气温度</div>
-					        </div>
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/humidity.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气湿度</div>
-					        </div>							
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/sunshine.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">光照度</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/temperature.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气温度</div>
-					        </div>
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/humidity.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气湿度</div>
-					        </div>							
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/sunshine.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">光照度</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/temperature.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气温度</div>
-					        </div>
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/humidity.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气湿度</div>
-					        </div>							
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/sunshine.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">光照度</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>	
-			
-			
-			<div class="mui-card" style="margin: 3px;padding: 3px;margin-top: 10px;">
-				<div class="mui-card-header" style="font-size: 1.1em;padding: 6px;"><span>大棚一</span><span class="mui-pull-right" style="color: gray;">2017-01-20 17:00:00</span></div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<div class="mui-row" style="margin-top: 8px;margin-bottom: 8px;">
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/temperature.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气温度</div>
-					        </div>
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/humidity.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">空气湿度</div>
-					        </div>							
-					        <div class="mui-col-xs-4" style="text-align: center;">
-					        	<img src="img/sunshine.png">
-					        	<div style="margin-top: 10px;">22</div>
-					        	<div style="margin-top: 10px;color: gray;">光照度</div>
-					        </div>							
-						</div>
-					</div>
-				</div>
-			</div>				
 	
 
 		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/websocket.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/formatDate.js"></script>		
 		<script>
+			var fz_tem = $("#jc_tem").clone(true);
+			$("#jc_box").empty();			
+			
 			mui.init({
 				pullRefresh: {
 					container: '#pullrefresh',
@@ -234,13 +141,210 @@
 					//setTimeout(function() {
 					//	mui('#pullrefresh').pullRefresh().pullupLoading();
 					//}, 1000);
+					init00();
 
 				});
 			} else {
 				mui.ready(function() {
 					//mui('#pullrefresh').pullRefresh().pullupLoading();
+					init00();
 				});
 			}
+			
+			
+			function init00(){
+				$("#fz_sel").empty();
+				$("#sb_sel").empty();
+				$("#sb_sel").change(function(){
+					sb_sel_idx = $(this).children('option:selected').val();
+					console.log(sb_sel_idx);
+					$("#jc_box").empty();
+					loadfz(sb_sel_idx);
+					//$("#sb_show").show();
+				});				
+				loadSTCD();
+                /*初始化网络并登录*/
+                /*登录*/
+                sys_irri.packet.ctp = 0;
+                sys_irri.packet.uid = app.getState().account;
+                sys_irri.packet.utp = 1;
+                sys_irri.packet.op = "EF";
+                fun_initWebSocket(sys_irri.packet.toString());				
+				
+				mui.ajax(app.url_getsb(), {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						//plus.nativeUI.closeWaiting();
+						savedata("shoubu",data);
+						$("#sb_sel").empty();
+						var selected0 = "";
+						//console.log($("#sb_sel").html());
+						$("#sb_sel").append("<option value='' disabled='' selected>请选择首部</option>");
+						mui.each(data,function(idx,item){
+							//console.log(JSON.stringify(item));
+							$("#sb_sel").append("<option value='"+item.id+"' >"+item.text+"</option>");
+							if(selected0 == "") selected0 = item.id;
+							
+						});
+
+						$('#sb_sel').val(selected0).trigger('change');						
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//console.log(data);
+						//异常处理；
+						//plus.nativeUI.closeWaiting();
+						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					}
+				});					
+			}
+			
+			function loadfz(init){
+				console.log(init);
+				$("#fz_sel").change(function(){
+					fz_sel_idx = $(this).children('option:selected').val();
+					//console.log(fz_sel_idx);
+					var fms = JSON.parse(fz_sel_idx);
+					$("#jc_box").empty();
+					
+					//url_getfm;
+					//console.log(app.url_getghouse())
+					mui.ajax(app.url_getghouse(), {
+						dataType: 'json', //服务器返回json格式数据
+						data:{id:fz_sel_idx},
+						type: 'get', //HTTP请求类型
+						timeout: 60000, //超时时间设置为10秒；
+						cache:false,
+						success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+							//console.log(JSON.stringify(data));
+							//mui.each(fms.ghouse,function(idx,item){
+								mui.each(data.rows,function(idx0,item){
+									//if(item0.VCD == item.valve[0].vcd){
+										var fm = fz_tem.clone(true);
+										fm.find(".fmname").html(item.HCD);
+										fm.find(".jctm").html(item.TM);
+										fm.find(".jcatmp").html(item.ATMP);
+										fm.find(".jchum").html(item.HUM);
+										fm.find(".jcslm10").html(item.SLM10);
+										//console.log(JSON.stringify(item));
+										//fm.find(".fmimg").attr("src", item0.RUN_COND != "1" ? "img/closeStatus.png":"img/openStatus.png");
+										//fm.find(".fmstate").html("状态：" + (item0.RUN_COND != "1" ? "关闭":"开启"));
+										var obj =fm.find(".mui-switch");
+										mui(obj)['switch']();
+										$(obj).attr("id","sw" + item.hcd);
+										//$(obj).attr("class",item0.RUN_COND != "1" ?"mui-switch mui-switch-blue":"mui-switch mui-switch-blue mui-active");
+										
+										//mui(obj)[0].addEventListener('toggle',fz_toggle)
+										$("#jc_box").append(fm);										
+										
+										//return false;
+									//}
+								});
+							//});							
+						},
+						error: function(xhr, type, errorThrown) {
+							console.log(errorThrown);
+							//异常处理；
+							//plus.nativeUI.closeWaiting();
+							//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+						}
+					});						
+				});	
+				
+				
+				mui.ajax(app.url_getfz(), {
+					dataType: 'json', //服务器返回json格式数据
+					data:{ccd:init},
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						//plus.nativeUI.closeWaiting();
+						//console.log(JSON.stringify(data));
+						$("#fz_sel").empty();
+						//console.log($("#sb_sel").html());
+						$("#fz_sel").append("<option value='' disabled='' selected>请选择分组</option>");
+							var selected0 = "";//" selected ";
+							mui.each(data,function(idxfz,itemfz){
+								//console.log(JSON.stringify(itemfz));
+								$("#fz_sel").append("<option value='"+itemfz.id+"' >"+itemfz.text+"</option>");
+								if(selected0 == "") selected0 = itemfz.id;
+							});
+							$('#fz_sel').val(selected0).trigger('change');
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(data);
+						//异常处理；
+						//plus.nativeUI.closeWaiting();
+						//plus.nativeUI.toast('网络遇到问题，请检测(' +type + ')');
+					}
+				});									
+
+			}
+			
+			function fz_toggle (event) {
+				//event.detail.isActive 可直接获取当前状态
+				var btn = ['是', '否'];
+				var idstr0 = $(this).attr("id");
+				var idstr = $(this).attr("id").substring(2);
+				if(!isToggleMan){ isToggleMan = true;return;}
+				isToggleMan = true;
+				if(event.detail.isActive){
+					mui.confirm('你确定要开启编码为'+idstr+'的阀门吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!ghouseoperate(idstr,true)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}
+						else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}else{
+					mui.confirm('你确定要关闭编码为'+idstr+'的阀门吗？', '', btn, function(e) {
+						if(e.index == 0){
+							if(!ghouseoperate(idstr,false)){
+								isToggleMan = false;
+								mui("#"+idstr0).switch().toggle();
+								
+							}
+						}else{
+							isToggleMan = false;
+							mui("#"+idstr0).switch().toggle();
+						}
+					})						
+				}
+			}		
+					
+	        /*装载测站对应关系*/
+	        function loadSTCD(){
+	            var url_bg_stat = app.bg_stat();
+	            //console.log(url_bg_stat);
+				mui.ajax(url_bg_stat, {
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 60000, //超时时间设置为10秒；
+					cache:false,
+					success: function(data,status,xhr) {//服务器返回响应，根据响应结果，分析是否登录成功；
+						console.log(JSON.stringify(data));
+	                    if (data.rows.length > 0) {
+	                        stcdList = data.rows;
+	                        
+	                    }
+	
+					},
+					error: function(xhr, type, errorThrown) {
+					}
+				});			            
+	        };						
+					
+			
 		</script>
 	</body>
 

@@ -21,21 +21,20 @@ namespace JihuaUI
         System.Timers.Timer timer1;
         CookieCollection cookies = new CookieCollection();
         static TimeSpan ts = new TimeSpan(1, 0, 0);
-        static String user0 = "admin";
-        static String pwd0 = "admin";
+        static String user0 = "service";
+        static String pwd0 = "123456";
         static String DefaultUserAgent = "Jihua";
         static String host = "http://1.85.44.234/";
         static String url_login = host + "admin/ashx/bg_user_login.ashx";
-        static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";//?action=getFineIrriPlanList";
+        static String url_gettask = host + "irriplan/ashx/bg_irriplan.ashx";
         static String url_getrtu = host + "bases/ashx/bg_stat.ashx";
-        static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";//"irriplan/ashx/bg_irrplan.ashx";
+        static String url_update = host + "irriplan/ashx/bg_irriplan.ashx";
         int getrtutimeout = 6000;
         List<x1> start, end,outdate,ok,pending,pendinge;
         static object _lock = new object();
 
         volatile bool exit;
         Thread jihua;
-
         public bool init()
         {
             login();
@@ -61,16 +60,12 @@ namespace JihuaUI
             doo();
             return true;
         }
-
         private void timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             //执行SQL语句或其他操作
             //doo();
             doo();
         }
-
-
-
         async void doo()
         {
             //if (login())
@@ -82,8 +77,6 @@ namespace JihuaUI
         private void reconnect()
         {
             int timeout = 6000;
-            
-
         }
 
         private void connect()
@@ -105,7 +98,7 @@ namespace JihuaUI
 
             };
             wss.OnOpen += (s, e1) => {
-                String a = @"{ctp:""0"",uid:""service"",utp:""1"",op:""0""}";
+                String a = "{ctp:\"0\",uid:\""+ user0 + "\",utp:\"1\",op:\"0\"}";
                 lock (wss_lock)
                 {
                     wss.Send(a);
@@ -129,10 +122,10 @@ namespace JihuaUI
             int state = 4;
             String hcd = utr[x.rtu];
             String Guid = x.serial;
+            String msg = "未知错误！";
 
             if (x.uid != "service") return false;
-
-
+            msg = x.message;
             if (x.success)
             {
                 if(x.value == "0101") //开机
@@ -172,6 +165,7 @@ namespace JihuaUI
             }
             else
             {
+               
                 lock (_lock)
                 {
                     foreach (x1 o in pending)
@@ -179,12 +173,15 @@ namespace JihuaUI
                         if (o.GUID == Guid)
                         {
                             stm = o.STM;
-                            outdate.Add(o);
-                            pendinge.Remove(o);
+                            msg = x.message +"[重试("+o.getretry().ToString()+")]";
+                            //o.getretry();
+                            //outdate.Add(o);
+                            //pendinge.Remove(o);
                             break;
                         }
                     }
                 }
+               
             }
             
             IDictionary<string, string> parameters = new Dictionary<string, string>();
@@ -193,7 +190,7 @@ namespace JihuaUI
             parameters.Add("stm", stm);
             parameters.Add("hcd", hcd);
             parameters.Add("acttm", DateTime.Now.ToString());
-            parameters.Add("msg", x.message);
+            parameters.Add("msg", msg);
             parameters.Add("id", "1");
             parameters.Add("guid", Guid);
             loginstatus ret = new loginstatus();
@@ -201,11 +198,8 @@ namespace JihuaUI
             HttpWebResponse response = CreatePostHttpResponse(url_update, parameters, null, null, Encoding.UTF8, cookies);
             if (response != null)
             {
-
-                //cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
-                //Console.WriteLine(txt);
                 ret = JsonConvert.DeserializeObject<loginstatus>(txt);
                 return ret.success;
             }
@@ -217,8 +211,8 @@ namespace JihuaUI
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "login");
             parameters.Add("remember", "sevenday");
-            parameters.Add("loginName", "service");
-            parameters.Add("loginPwd", "123456");
+            parameters.Add("loginName", user0);
+            parameters.Add("loginPwd", pwd0);
             loginstatus ret = new loginstatus();
 
             HttpWebResponse response = CreatePostHttpResponse(url_login, parameters, null, null, Encoding.UTF8, cookies);
@@ -236,17 +230,13 @@ namespace JihuaUI
 
         public bool gettask()
         {
-            
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("action", "getFineIrriPlanList");
             try
             {
                 HttpWebResponse response = CreatePostHttpResponse(url_gettask, parameters, null, null, Encoding.UTF8, cookies);
-
-                //cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
-                //Console.WriteLine(txt);
                 tasks ret = JsonConvert.DeserializeObject<tasks>(txt);
                 if (ret.total > 0)
                 {
@@ -256,8 +246,6 @@ namespace JihuaUI
                         {
                             if (x.RUNSTATE == "1")
                             {
-                                //if((!start.Contains(x)) && (!end.Contains(x)) &&(!outdate.Contains(x)))
-                                //    start.Add(x);
                                 if (start.Contains(x))
                                     continue;
                                 if (end.Contains(x))
@@ -280,7 +268,6 @@ namespace JihuaUI
             catch (Exception c1) { }
             return true;
         }
-
         public HttpWebResponse CreatePostHttpResponse(string url, IDictionary<string, string> parameters, int? timeout, string userAgent, Encoding requestEncoding, CookieCollection cookies)
         {
             try
@@ -357,12 +344,10 @@ namespace JihuaUI
             }
             return null;
         }
-
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {
             return true; //总是接受  
         }
-
         private void JihuaThread()
         {
             while (!exit)
@@ -414,10 +399,6 @@ namespace JihuaUI
                             }
                         }
                     }
-                    else
-                    {
-                        //Console.WriteLine("任务等待启动...");
-                    }
                 }
 
                 x = null;
@@ -434,9 +415,7 @@ namespace JihuaUI
                 }
                 if (x != null)
                 {
-                    //Console.Write(x.STM);
                     DateTime s = Convert.ToDateTime(x.ETM);
-
                     lock (_lock)
                     {
                         x.initretry();
@@ -481,8 +460,6 @@ namespace JihuaUI
                         }
                     }
                 }
-
-
                 Thread.Sleep(1);
             }
         }
@@ -496,11 +473,8 @@ namespace JihuaUI
             try
             {
                 HttpWebResponse response = CreatePostHttpResponse(url_getrtu, parameters, null, null, Encoding.UTF8, cookies);
-
-                //cookies = response.Cookies;
                 StreamReader sr = new StreamReader(response.GetResponseStream());
                 String txt = sr.ReadToEnd();
-                //Console.WriteLine(txt);
                 rtus ret = JsonConvert.DeserializeObject<rtus>(txt);
                 if (ret.total > 0)
                 {
@@ -527,9 +501,7 @@ namespace JihuaUI
 
                 wss.Send(cmd);
                 Console.WriteLine(x.STM + "发送开启阀门命令...");
-
             }
-
         }
 
         private void closeswitch(x1 x)
@@ -543,9 +515,7 @@ namespace JihuaUI
                 Console.WriteLine(x.ETM + "发送关闭阀门命令...");
             }
         }
-
     }
-
 
 
     public class loginstatus
@@ -557,10 +527,6 @@ namespace JihuaUI
 
     public class x1
     {
-       //public  enum OType{
-       //     waitforstart,
-       //     waitforend
-       // }
         public String ID { get; set; }
         public String TITLE;
         public String SGNM;
@@ -599,13 +565,6 @@ namespace JihuaUI
             }
             return false;
         }
-        //public OType type;
-
-        //public x1()
-        //{
-        //    type = OType.waitforstart;
-        //}
-
         public override bool Equals(object o)
         {
             if (o is x1)
@@ -619,28 +578,9 @@ namespace JihuaUI
                     return false;
                 if (this.GUID != obj.GUID) return false;
                 return true;
-                if (this.TITLE != obj.TITLE) return false;
-                if (this.SGNM != obj.SGNM) return false;
-                if (this.BGNM != obj.BGNM) return false;
-                if (this.PID != obj.PID) return false;
-                if (this.SID != obj.SID) return false;
-                if (this.CCD != obj.CCD) return false;
-                if (this.TLNG != obj.TLNG) return false;
-                if (this.DAYS != obj.DAYS) return false;
-                if (this.GTP != obj.GTP) return false;
-                if (this.STM != obj.STM) return false;
-                if (this.ETM != obj.ETM) return false;
-                if (this.RUNMODE != obj.RUNMODE) return false;
-                if (this.RUNSTATE != obj.RUNSTATE) return false;
-                if (this.HCD != obj.HCD) return false;
-                if (this.ACTSTM != obj.ACTSTM) return false;
-                if (this.ACTETM != obj.ACTETM) return false;
-                if (this.MSG != obj.MSG) return false;
-                return true;
             }
             return false;
         }
-
     }
 
     public class tasks

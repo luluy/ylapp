@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "gg.yx.xa",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "智能灌溉",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
@@ -121,7 +121,7 @@
 					"ldpi": "img/app48.png", /*大屏程序图标，分辨率：48x48*/
 					"hdpi": "img/app72.png", /*高分屏程序图标，分辨率：72x72*/
 					"xhdpi": "img/app96.png",/*720P高分屏程序图标，分辨率：96x96*/
-					"xxhdpi": "img/app144.png"
+					"xxhdpi": "img/app144.png","xxxhdpi":"img/app192.png"
 				}
 			},
 			"splashscreen": {
@@ -254,7 +254,8 @@
 					"unlock.html",
 					"forget_password.html",
 					"main.html",
-					"reg.html"
+					"reg.html",
+					"setting.html"
 				],
 				"priority": 0
 			},
@@ -319,7 +320,17 @@
 					"img/add.png",
 					"img/home.png",
 					"img/grade.png",
-					"img/setting.png"
+					"img/setting.png",
+					"images/yl/miao2.jpg",
+					"images/yl/peng2.jpg",
+					"images/yl/jiaoshui.jpg",
+					"images/yl/peng.jpg",
+					"images/yl/miao.jpg",
+					"images/yl/jiaoshui2.jpg",
+					"images/yl/shouhuo.jpg",
+					"images/yl/shouhuo2.jpg",
+					"images/yl/shouhuo3.jpg",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"setting.html",
@@ -358,7 +369,13 @@
 					"css/mui.min.css",
 					"css/demo.css",
 					"img/machineHouse.png",
-					"img/machineHouse_gray.png"
+					"img/machineHouse_gray.png",
+					"js/app.js",
+					"js/mui.min.js",
+					"js/jquery.js",
+					"js/websocket.js",
+					"js/utils.js",
+					"js/formatDate.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -424,7 +441,11 @@
 					"img/openStatus.png",
 					"img/temperature.png",
 					"img/humidity.png",
-					"img/sunshine.png"
+					"img/sunshine.png",
+					"js/formatDate.js",
+					"js/utils.js",
+					"js/websocket.js",
+					"js/jquery.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -433,7 +454,14 @@
 				"resources": [
 					"css/mui.min.css",
 					"img/openStatus.png",
-					"img/closeStatus.png"
+					"img/closeStatus.png",
+					"fonts/mui.ttf",
+					"js/formatDate.js",
+					"js/utils.js",
+					"js/websocket.js",
+					"js/jquery.js",
+					"js/app.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -442,7 +470,9 @@
 				"resources": [
 					"css/mui.min.css",
 					"js/calendar.js",
-					"js/jquery.js"
+					"js/jquery.js",
+					"js/app.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

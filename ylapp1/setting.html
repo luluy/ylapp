@@ -163,25 +163,38 @@
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<ul class="mui-table-view mui-table-view-chevron">
-							<li class="mui-table-view-cell">
-								<a id="rate" class="mui-navigate-right">评分鼓励</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a id="share" class="mui-navigate-right">分享推荐</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a id="tel" class="mui-navigate-right">客服电话</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a id="feedback-btn" href="#feedback" class="mui-navigate-right">问题反馈</a>
-							</li>
-						</ul>
-						<ul class="mui-table-view mui-table-view-chevron">
-							<li class="mui-table-view-cell">
-								<a href="#lock" class="mui-navigate-right">设置锁屏图案</a>
-							</li>
-						</ul>
+						<div>
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									<a href="#web_adr" class="mui-navigate-right">WEB地址</a>
+								</li>
+								<li class="mui-table-view-cell">
+									<a href="#ws_adr" class="mui-navigate-right">WS地址</a>
+								</li>
+							</ul>							
+						</div>
+						<div style="display:none;">
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									<a id="rate" class="mui-navigate-right">评分鼓励</a>
+								</li>
+								<li class="mui-table-view-cell">
+									<a id="share" class="mui-navigate-right">分享推荐</a>
+								</li>
+								<li class="mui-table-view-cell">
+									<a id="tel" class="mui-navigate-right">客服电话</a>
+								</li>
+								<li class="mui-table-view-cell">
+									<a id="feedback-btn" href="#feedback" class="mui-navigate-right">问题反馈</a>
+								</li>
+							</ul>
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									<a href="#lock" class="mui-navigate-right">设置锁屏图案</a>
+								</li>
+							</ul>
+						
+						</div>
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell" style="text-align: center;">
 								<a id='exit'>退出</a>
@@ -217,6 +230,48 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="web_adr" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">WEB地址</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-content-padded">
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<!--<label>地址：</label>-->
+								<input style="width: 100%;" id='web_adr_txt' type="text" value="admin" class="mui-input-clear mui-input">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div id="ws_adr" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">WS地址</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-content-padded">
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<div class="mui-input-row">
+								<!--<label>地址：</label>-->
+								<input id='ws_adr_txt' type="text" value="admin" class="mui-input-clear mui-input">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>		
 
 		<div id="lock" class="mui-page">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
@@ -439,6 +494,8 @@
 		(function($, doc) {
 			//$.init();
 			$.plusReady(function() {
+				if(app.hosturl != "") mui("#web_adr_txt")[0].value = app.hosturl;
+				if(app.wsurl != "") mui("#ws_adr_txt")[0].value = app.wsurl;
 				var settings = app.getSettings();
 				var lockStateButton = doc.getElementById("lockState");
 				var locker = doc.querySelector('.mui-locker');
@@ -490,6 +547,7 @@
 			//处理view的后退与webview后退
 			var oldBack = $.back;
 			$.back = function() {
+				console.log("back");
 				if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
 					viewApi.back();
 				} else { //执行webview后退
@@ -519,7 +577,13 @@
 				//				console.log(e.detail.page.id + ' beforeBack');
 			});
 			view.addEventListener('pageBack', function(e) {
-				//				console.log(e.detail.page.id + ' back');
+								console.log(e.detail.page.id + ' back' + mui("#web_adr_txt")[0].value);
+				if(e.detail.page.id == 'web_adr'){
+					app.hosturl = mui("#web_adr_txt")[0].value;
+					
+				}else if(e.detail.page.id == 'ws_adr'){
+					app.wsurl = mui("#ws_adr_txt")[0].value;
+				}
 			});
 		})(mui);
 	</script>

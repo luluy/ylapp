@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css">
+	</head>
+	<body>
+		
+        <div class="mui-content" id="main">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <p>Hello</p>
+                        <span></span>
+                        <div class="mui-switch mui-active">
+                            <div class="mui-switch-handle"></div>
+                        </div>
+                    </li>
+                </ul>
+        </div>		
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/jquery.js"></script>
+		<script>
+var newitem = $('<li class="mui-table-view-cell"><p>ddd</p><span></span><div class="mui-switch  mui-active" data-switch="1"><div class="mui-switch-handle"></div></div></li>');
+ $("#main").find('ul').append(newitem);			
+			mui('.mui-switch')['switch']();//手动初始化
+			mui('.mui-content .mui-switch')['switch']();
+		</script>
+	</body>
+</html>
